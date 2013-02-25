@@ -5,7 +5,7 @@
 class Alien : public Obstacle
 {
 public:
-    Alien(int initx, int inity, int initspeed = 10);
+    Alien(QWidget *parent, int initx, int inity);
 
     // Move the item down the screen
     void move();

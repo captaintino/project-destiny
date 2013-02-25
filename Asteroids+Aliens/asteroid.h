@@ -5,7 +5,7 @@
 class Asteroid : public Obstacle
 {
 public:
-    Asteroid(int initx, int inity, int initspeed = 10);
+    Asteroid(QWidget * parent, int initx, int inity);
 
     // Move the item down the screen
     void move();

@@ -1,22 +1,28 @@
 #ifndef SHIP_H
 #define SHIP_H
+#include<QLabel>
+#include<QTimer>
 
-class Ship
+class Ship : public QLabel
 {
-private:
-    int x, y;
-    bool hit;
+    Q_OBJECT;
+    QTimer * fireShot, * updateShip;
+    bool fire;
+    QWidget * window;
 public:
-    Ship();
+    Ship(QWidget * parent);
 
-    //Getter methods...
-    int getX(){return x;}
-    int getY(){return y;}
+    // Mouse events
+    void mouseMoveEvent(QMouseEvent *ev);
 
-    //Setter methods...
-    void setX(int newX) { x = newX;}
-    void setY(int newY) { y = newY;}
-    void setHit(bool updateVal) { hit = updateVal;}
+    void mousePressEvent(QMouseEvent *ev);
+
+    // Saves the item state
+    std::string save();
+
+private slots:
+    void canFire();
+    void shipToMouse();
 };
 
 #endif // SHIP_H

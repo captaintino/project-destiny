@@ -1,14 +1,19 @@
 #include "alien.h"
 
-#include<obstacle.h>
-Alien::Alien(int initx, int inity, int initspeed):Obstacle(initx, inity, 60, 61, ":/images/asteroid.png", initspeed)
+Alien::Alien(QWidget * parent, int initx, int inity): Obstacle(parent)
 {
-   //Remember to get an alien image eventually....
+    setGeometry(initx, inity, 61, 60);
+    setScaledContents(true);
+    QPixmap img(":/ALIENIMAGE.jpg");
+    setPixmap(img);
 }
 
 void Alien::move()
 {
-    y+=speed;
+    this->setGeometry(x(), y() + 2, width(), height());
+    if(y() > 660){
+        // delete this guy and make a new guy show up
+    }
 }
 
 std::string Alien::save()

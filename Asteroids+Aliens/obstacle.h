@@ -1,25 +1,14 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
-#include <QString>
 
-class Obstacle
+#include<QLabel>
+
+class Obstacle : public QLabel
 {
-protected:
-    int x,y,h,w,speed;
-    QString type;
 public:
-    Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed);
-
-    //Getter methods
-    virtual int getX();
-    virtual int getY();
-    virtual int getH();
-    virtual int getW();
-    virtual QString getType();
+    Obstacle(QWidget * parent):QLabel(parent){}
 
     virtual void move() = 0;
-
-    virtual void setSpeed(int newSpeed) { speed = newSpeed; }
 
     virtual std::string save() = 0;
 };
