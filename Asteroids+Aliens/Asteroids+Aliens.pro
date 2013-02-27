@@ -11,8 +11,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    universe.cpp \
+    obstacle.cpp \
+    world.cpp \
+    ship.cpp \
+    asteroid.cpp \
+    alien.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    universe.h \
+    obstacle.h \
+    world.h \
+    ship.h \
+    asteroid.h \
+    alien.h
 
 FORMS    += mainwindow.ui
