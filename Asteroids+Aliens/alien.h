@@ -6,6 +6,8 @@ class Alien : public Obstacle
 {
 public:
     Alien();
+
+    void move();
 };
 
 #endif // ALIEN_H

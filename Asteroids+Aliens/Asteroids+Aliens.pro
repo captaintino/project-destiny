@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     world.cpp \
     ship.cpp \
     asteroid.cpp \
-    alien.cpp
+    alien.cpp \
+    projectile.cpp
 
 HEADERS  += mainwindow.h \
     universe.h \
@@ -25,6 +26,7 @@ HEADERS  += mainwindow.h \
     world.h \
     ship.h \
     asteroid.h \
-    alien.h
+    alien.h \
+    projectile.h
 
 FORMS    += mainwindow.ui

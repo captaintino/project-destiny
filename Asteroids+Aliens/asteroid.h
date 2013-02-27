@@ -6,6 +6,8 @@ class Asteroid : public Obstacle
 {
 public:
     Asteroid();
+
+    void move();
 };
 
 #endif // ASTEROID_H

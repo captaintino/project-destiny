@@ -1,13 +1,13 @@
-#include "asteroid.h"
+#include "projectile.h"
 
-Asteroid::Asteroid()
+Projectile::Projectile()
 {
 }
 
-void Asteroid::move()
+void Projectile::move()
 {
     this->setGeometry(x(), y() + 2, width(), height());
-    if(y() > 660){
+    if(y() > 605){
         // delete this guy and make a new guy show up
     }
 }

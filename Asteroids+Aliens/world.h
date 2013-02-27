@@ -3,20 +3,24 @@
 
 #include<QTimer>
 #include<vector>
-#include<universe.h>
 #include<obstacle.h>
+#include<projectile.h>
+#include<ship.h>
 
 using namespace std;
 
-class World : public Universe
+class World
 {
 private:
     vector<Obstacle *> asteroids;
     vector<Obstacle *> aliens;
+    vector<Projectile *> enemyProjectiles;
+    vector<Projectile *> projectiles;
     bool hasShip;
     QTimer speed;
+    Ship * playerShip;
 public:
-    World(int worldSpeed);
+    World(int worldSpeed, bool hasAShip, Ship * player);
 
     void collision();
 
