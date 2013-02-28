@@ -4,9 +4,6 @@
 
 World::World(QWidget * host, int worldSpeed, bool hasAShip, Ship *player):hostWindow(host), hasShip(hasAShip), playerShip(player)
 {
-    speed.setInterval(/*worldSpeed*/ 100);
-    dynamic_cast<MainWindow *>(host)->connectWorldTimer(&speed);
-    speed.start();
     for(int i = 0; i < 13; ++i){
         asteroids.push_back(new Asteroid(hostWindow, i * 61.5, -60));
     }

@@ -17,3 +17,7 @@ void Asteroid::move()
         // delete this guy and make a new guy show up
     }
 }
+
+std::string Asteroid::save()
+{
+}

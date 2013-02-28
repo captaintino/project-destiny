@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     ship.cpp \
     asteroid.cpp \
     alien.cpp \
-    projectile.cpp
+    projectile.cpp \
+    highscores.cpp
 
 HEADERS  += mainwindow.h \
     universe.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     ship.h \
     asteroid.h \
     alien.h \
-    projectile.h
+    projectile.h \
+    highscores.h
 
 FORMS    += mainwindow.ui
 

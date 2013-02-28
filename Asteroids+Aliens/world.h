@@ -17,7 +17,6 @@ private:
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     bool hasShip;
-    QTimer speed;
     Ship * playerShip;
     QWidget * hostWindow;
 public:
@@ -26,6 +25,12 @@ public:
     void collision();
 
     void move();
+
+    // Saves the world state
+    string save();
+
+    // Loads the world state
+    void load();
 };
 
 #endif // WORLD_H

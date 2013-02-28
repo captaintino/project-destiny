@@ -9,6 +9,8 @@ public:
     Obstacle(QWidget * parent):QLabel(parent){}
 
     virtual void move() = 0;
+
+    virtual std::string save() = 0;
 };
 
 #endif // OBSTACLE_H

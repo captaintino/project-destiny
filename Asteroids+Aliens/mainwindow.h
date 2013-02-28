@@ -17,6 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    // connect the World's timer object to the
     void connectWorldTimer(QTimer *t);
 
 private slots:
