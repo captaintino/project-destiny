@@ -5,7 +5,7 @@
 class Alien : public Obstacle
 {
 public:
-    Alien();
+    Alien(QWidget *parent, int initx, int inity);
 
     void move();
 };

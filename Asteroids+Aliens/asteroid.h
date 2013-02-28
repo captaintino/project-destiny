@@ -5,7 +5,7 @@
 class Asteroid : public Obstacle
 {
 public:
-    Asteroid();
+    Asteroid(QWidget * parent, int initx, int inity);
 
     void move();
 };

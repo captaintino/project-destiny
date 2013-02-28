@@ -1,7 +1,12 @@
 #include "asteroid.h"
+#include<QPixmap>
 
-Asteroid::Asteroid()
+Asteroid::Asteroid(QWidget *parent, int initx, int inity): Obstacle(parent)
 {
+    setGeometry(initx, inity, 61, 60);
+    setScaledContents(true);
+    QPixmap img(":/ASTEROIDIMAGE.jpg");
+    setPixmap(img);
 }
 
 void Asteroid::move()

@@ -1,7 +1,11 @@
 #include "alien.h"
 
-Alien::Alien()
+Alien::Alien(QWidget * parent, int initx, int inity): Obstacle(parent)
 {
+    setGeometry(initx, inity, 61, 60);
+    setScaledContents(true);
+    QPixmap img(":/ALIENIMAGE.jpg");
+    setPixmap(img);
 }
 
 void Alien::move()

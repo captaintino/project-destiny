@@ -30,3 +30,6 @@ HEADERS  += mainwindow.h \
     projectile.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    Images.qrc

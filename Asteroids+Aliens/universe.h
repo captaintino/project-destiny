@@ -12,8 +12,9 @@ private:
     QTimer clock;
     vector<World *> dimensions;
     unsigned char level;
+    QWidget * window;
 public:
-    Universe(char lvl);
+    Universe(QWidget * parent, char lvl);
 };
 
 #endif // UNIVERSE_H

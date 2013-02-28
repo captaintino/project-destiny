@@ -19,8 +19,9 @@ private:
     bool hasShip;
     QTimer speed;
     Ship * playerShip;
+    QWidget * hostWindow;
 public:
-    World(int worldSpeed, bool hasAShip, Ship * player);
+    World(QWidget * host, int worldSpeed, bool hasAShip, Ship * player);
 
     void collision();
 

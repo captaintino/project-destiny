@@ -5,7 +5,7 @@
 class Ship : public QLabel
 {
 public:
-    Ship();
+    Ship(QWidget * parent);
 
     // Mouse events
     void mouseMoveEvent(QMouseEvent *ev);

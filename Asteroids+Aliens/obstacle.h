@@ -6,7 +6,7 @@
 class Obstacle : public QLabel
 {
 public:
-    Obstacle();
+    Obstacle(QWidget * parent):QLabel(parent){}
 
     virtual void move() = 0;
 };

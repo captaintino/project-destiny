@@ -21,6 +21,6 @@ void MainWindow::on_btnStart_clicked()
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
-    this->cursor().setPos(380, 640);
-    universe = new Universe(1);
+    this->cursor().setPos(380, 540);
+    universe = new Universe(this, 1);
 }

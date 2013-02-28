@@ -1,9 +1,8 @@
 #include "universe.h"
 
-Universe::Universe(char lvl)
+Universe::Universe(QWidget * parent, char lvl): window(parent), level(lvl)
 {
-    level = lvl;
-    Ship * playerShip = new Ship();
-    dimensions.push_back(new World(level, true, playerShip));
+    Ship * playerShip = new Ship(window);
+    dimensions.push_back(new World(window, level, true, playerShip));
     dimensions.at(0);
 }
