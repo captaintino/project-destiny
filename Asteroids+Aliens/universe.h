@@ -11,10 +11,12 @@ class Universe
 private:
     QTimer clock;
     vector<World *> dimensions;
-    unsigned char level;
+    unsigned short level;
     QWidget * window;
 public:
     Universe(QWidget * parent, char lvl);
+
+    void move();
 };
 
 #endif // UNIVERSE_H

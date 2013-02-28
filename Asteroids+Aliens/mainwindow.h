@@ -16,9 +16,12 @@ class MainWindow : public QWidget
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    
+
+    void connectWorldTimer(QTimer *t);
+
 private slots:
     void on_btnStart_clicked();
+    void worldClick();
 
 private:
     Ui::MainWindow *ui;
