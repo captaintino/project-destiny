@@ -5,6 +5,7 @@
 
 class Ship : public QLabel
 {
+    Q_OBJECT;
     QTimer * fireShot, * updateShip;
     bool fire;
     QWidget * window;

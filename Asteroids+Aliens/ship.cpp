@@ -22,8 +22,7 @@ Ship::Ship(QWidget *parent): QLabel(parent), fire(true), window(parent)
 
 void Ship::shipToMouse()
 {
-    qDebug("Fire");
-    this->setGeometry(window->cursor().pos().x() - 100, window->cursor().pos().y() - 100,width(),height());
+    this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90,width(),height());
 }
 
 void Ship::mouseMoveEvent(QMouseEvent *ev)
@@ -35,12 +34,14 @@ void Ship::mousePressEvent(QMouseEvent *ev)
 {
     if(fire){
         // Shoot a projectile
+        qDebug("fire");
         fire = false;
-        fireShot->singleShot(1000, this, SLOT(canFire()));
+        QTimer::singleShot(1000, this, SLOT(canFire()));
     }
 }
 
 void Ship::canFire()
 {
+    qDebug("signal Fired");
     fire = true;
 }
