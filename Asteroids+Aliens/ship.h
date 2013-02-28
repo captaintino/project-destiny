@@ -5,8 +5,9 @@
 
 class Ship : public QLabel
 {
-    QTimer fireShot;
+    QTimer * fireShot, * updateShip;
     bool fire;
+    QWidget * window;
 public:
     Ship(QWidget * parent);
 
@@ -20,6 +21,7 @@ public:
 
 private slots:
     void canFire();
+    void shipToMouse();
 };
 
 #endif // SHIP_H

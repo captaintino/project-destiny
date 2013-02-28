@@ -2,4 +2,5 @@
 
 HighScores::HighScores()
 {
+
 }
