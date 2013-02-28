@@ -2,6 +2,7 @@
 #include<QMouseEvent>
 #include<QLabel>
 #include<QTimer>
+#include<QDebug>
 
 Ship::Ship(QWidget *parent): QLabel(parent), fire(true)
 {
@@ -11,11 +12,12 @@ Ship::Ship(QWidget *parent): QLabel(parent), fire(true)
     QPixmap img(":/images/test.jpg");
     setPixmap(img);
     show();
+    setMouseTracking(true);
 }
 
 void Ship::mouseMoveEvent(QMouseEvent *ev)
 {
-    this->setGeometry(ev->x(),ev->y(),width(),height());
+    this->setGeometry(ev->pos().x() - 20,ev->pos().y() + 20,width(),height());
 }
 
 void Ship::mousePressEvent(QMouseEvent *ev)
