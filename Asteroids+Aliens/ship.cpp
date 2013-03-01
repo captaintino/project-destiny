@@ -8,9 +8,8 @@
 Ship::Ship(QWidget *parent): QLabel(parent), fire(true), window(parent)
 {
     setGeometry(380, 540, 40, 40);
-    grabMouse();
     setScaledContents(true);
-    QPixmap img(":/images/test.jpg");
+    QPixmap img(":/images/Player_Ship.png");
     setPixmap(img);
     show();
     setMouseTracking(true);

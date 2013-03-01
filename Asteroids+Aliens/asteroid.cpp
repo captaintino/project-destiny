@@ -5,7 +5,7 @@ Asteroid::Asteroid(QWidget *parent, int initx, int inity): Obstacle(parent)
 {
     setGeometry(initx, inity, 61, 60);
     setScaledContents(true);
-    QPixmap img(":/images/test.jpg");
+    QPixmap img(":/images/asteroid.png");
     setPixmap(img);
     show();
 }
