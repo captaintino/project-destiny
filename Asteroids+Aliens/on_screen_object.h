@@ -12,8 +12,9 @@ class on_screen_object : public QLabel
 private:
     Obstacle *game_object;
     World *this_world;
+    int level;
 public:
-    explicit on_screen_object(QWidget *parent, World *get_world);
+    explicit on_screen_object(QWidget *parent, World *get_world, int initlevel);
     
     void move();
 

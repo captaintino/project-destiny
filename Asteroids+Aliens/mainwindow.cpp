@@ -3,6 +3,7 @@
 #include<universe.h>
 #include<QTimer>
 #include<QString>
+#include<cmath>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -13,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     backgroundTimer = new QTimer(this);
     backgroundTimer->setInterval(33);
     background_counter = 1;
+    itemSpawn = new QThread(this);
+    connect(itemSpawn, SIGNAL(started()), this, SLOT(spawnItems()));
 }
 
 MainWindow::~MainWindow()
@@ -34,10 +37,17 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     this->cursor().setPos(380, 540);
-    universe = new Universe(1);
+    level = 1;
+    universe = new Universe(level);
     user = new Ship_Label(this);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
+    // Must be done last
+    //itemSpawn->start(); ???
+    for(int i = 0; i < 13; ++i){
+        objects[i] = new on_screen_object(this, this->universe->getWorld(0), level);
+        //sleep(1000/sqrt(level));
+    }
 }
 
 void MainWindow::worldClick(){
@@ -51,4 +61,12 @@ void MainWindow::rotateBackground()
     ui->label->setPixmap(":/images/background/" + QString::number(background_counter)+ ".jpg");
 
     ++background_counter;
+}
+
+void MainWindow::spawnItems()
+{
+    for(int i = 0; i < 13; ++i){
+        objects[i] = new on_screen_object(this, this->universe->getWorld(1), level);
+        sleep(1000/sqrt(level));
+    }
 }
