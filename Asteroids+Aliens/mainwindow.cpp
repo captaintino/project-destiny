@@ -30,7 +30,8 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     this->cursor().setPos(380, 540);
-    universe = new Universe(this, 1);
+    universe = new Universe(1);
+    user = new Ship_Label(this);
 }
 
 void MainWindow::worldClick(){

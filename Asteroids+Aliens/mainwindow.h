@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTimer>
 #include<universe.h>
+#include <ship_label.h>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     QTimer backgroundTimer;
     Universe * universe;
+    Ship_Label * user;
 };
 
 #endif // MAINWINDOW_H

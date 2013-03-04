@@ -1,21 +1,20 @@
 #include "asteroid.h"
-#include<QPixmap>
 
-Asteroid::Asteroid(QWidget *parent, int initx, int inity): Obstacle(parent)
+Asteroid::Asteroid(int initx, int inity):Obstacle(initx, inity, 60, 61, ":/images/asteroid.png")
 {
-    setGeometry(initx, inity, 61, 60);
-    setScaledContents(true);
-    QPixmap img(":/images/asteroid.png");
-    setPixmap(img);
-    show();
+    /*
+    x=initx;
+    y=inity;
+    //image witdth and height
+    w = 61;
+    h = 60;
+    type = ":/images/asteroid.png";
+    */
 }
 
 void Asteroid::move()
 {
-    this->setGeometry(x(), y() + 2, width(), height());
-    if(y() > 660){
-        // delete this guy and make a new guy show up
-    }
+    y+=2;
 }
 
 std::string Asteroid::save()

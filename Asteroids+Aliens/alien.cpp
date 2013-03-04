@@ -1,19 +1,21 @@
 #include "alien.h"
 
-Alien::Alien(QWidget * parent, int initx, int inity): Obstacle(parent)
+#include<obstacle.h>
+Alien::Alien(int initx, int inity):Obstacle(initx, inity, 60, 61, ":/images/asteroid.png")
 {
-    setGeometry(initx, inity, 61, 60);
-    setScaledContents(true);
-    QPixmap img(":/ALIENIMAGE.jpg");
-    setPixmap(img);
+    /*
+    x=initx;
+    y=inity;
+    //image width and height...
+    w = 61;
+    h = 60;
+    type = ":/images/ALIEN_IMAGE.png";
+    */
 }
 
 void Alien::move()
 {
-    this->setGeometry(x(), y() + 2, width(), height());
-    if(y() > 660){
-        // delete this guy and make a new guy show up
-    }
+    y+=2;
 }
 
 std::string Alien::save()

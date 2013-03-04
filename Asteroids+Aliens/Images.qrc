@@ -1,9 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/test.jpg</file>
-        <file>images/moving-space.gif</file>
-        <file>images/Main_Menu.jpg</file>
         <file>images/asteroid.png</file>
+        <file>images/Main_Menu.jpg</file>
+        <file>images/moving-space.gif</file>
         <file>images/Player_Ship.png</file>
     </qresource>
 </RCC>

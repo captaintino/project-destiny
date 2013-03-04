@@ -18,9 +18,10 @@ private:
     vector<Projectile *> projectiles;
     bool hasShip;
     Ship * playerShip;
-    QWidget * hostWindow;
 public:
-    World(QWidget * host, int worldSpeed, bool hasAShip, Ship * player);
+    World(int worldSpeed, bool hasAShip, Ship * player);
+
+    Obstacle* createAsteroid();
 
     void collision();
 

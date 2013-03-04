@@ -1,11 +1,11 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
-#include<QLabel>
+#include <obstacle.h>
 
-class Projectile : public QLabel
+class Projectile:public Obstacle
 {
 public:
-    Projectile();
+    Projectile(int initx, int inity);
 
     void move();
 };
