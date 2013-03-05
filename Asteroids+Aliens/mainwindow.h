@@ -24,12 +24,14 @@ public:
 private slots:
     void on_btnStart_clicked();
     void worldClick();
+    void rotateBackground();
 
 private:
     Ui::MainWindow *ui;
-    QTimer backgroundTimer;
+    QTimer * backgroundTimer;
     Universe * universe;
     Ship_Label * user;
+    int background_counter;
 };
 
 #endif // MAINWINDOW_H
