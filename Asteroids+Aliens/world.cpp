@@ -3,6 +3,7 @@
 #include<mainwindow.h>
 #include<QTimer>
 #include<cmath>
+#include<QString>
 
 World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
 {
@@ -22,7 +23,7 @@ void World::lameToWalk()
 {
     for(Obstacle* obj:objects)
     {
-        obj->setSpeed(2);
+        obj->setSpeed(10);
     }
 }
 
@@ -41,6 +42,7 @@ void World::deleteObject(Obstacle *object_to_delete)
 
 Obstacle* World::createObject(int level)
 {
+
     int lane = (rand() % 13);
     while(!lanes[lane]){
         lane = (rand() % 13);
@@ -48,7 +50,8 @@ Obstacle* World::createObject(int level)
     }
     lanes[lane] = false;
     qDebug("Found a lane... should be creating soon.");
-    QTimer::singleShot(1000/sqrt(level), this, SLOT(resetLane()));
+    QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane()));
+
     lanesToReset.push_back(lane);
     qDebug("Connected the slot.");
     objects.push_back(new Asteroid(61.5 * lane, -60));

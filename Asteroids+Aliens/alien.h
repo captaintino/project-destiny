@@ -5,7 +5,7 @@
 class Alien : public Obstacle
 {
 public:
-    Alien(int initx, int inity, int initspeed = 2);
+    Alien(int initx, int inity, int initspeed = 10);
 
     // Move the item down the screen
     void move();

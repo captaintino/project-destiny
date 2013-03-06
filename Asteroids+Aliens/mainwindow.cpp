@@ -39,7 +39,7 @@ void MainWindow::on_btnStart_clicked()
     //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
-    level = 3;
+    level = 1;
     universe = new Universe(level);
     user = new Ship_Label(this);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
