@@ -13,35 +13,52 @@ World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
 
 void World::move()
 {
-    for(int i = 0; i < asteroids.size(); ++i){
-        asteroids.at(i)->move(); // Move all the asteroids
+    for(int i = 0; i < objects.size(); ++i){
+        objects.at(i)->move(); // Move all the asteroids
     }
 }
 
 void World::lameToWalk()
 {
-    for(Obstacle* obj:asteroids)
+    for(Obstacle* obj:objects)
     {
         obj->setSpeed(2);
     }
 }
 
-Obstacle* World::createAsteroid(int level)
+void World::deleteObject(Obstacle *object_to_delete)
+{
+    for(int i = 0; i < objects.size(); ++i)
+    {
+        if(objects.at(i) == object_to_delete)
+        {
+            delete object_to_delete;
+            objects.erase(objects.begin()+i);
+            break;
+        }
+    }
+}
+
+Obstacle* World::createObject(int level)
 {
     int lane = (rand() % 13);
     while(!lanes[lane]){
         lane = (rand() % 13);
+        qDebug("Checking next lane...");
     }
     lanes[lane] = false;
+    qDebug("Found a lane... should be creating soon.");
     QTimer::singleShot(1000/sqrt(level), this, SLOT(resetLane()));
     lanesToReset.push_back(lane);
-    return new Asteroid(61.5 * lane, -60);
+    qDebug("Connected the slot.");
+    objects.push_back(new Asteroid(61.5 * lane, -60));
+    return objects.at(objects.size() - 1);
 }
 
-Obstacle *World::createLameAsteroid()
+Obstacle *World::createLameOjbect()
 {
-    asteroids.push_back(new Asteroid(61.5 * asteroids.size(), -60 -(20*(rand()%27)), 0));
-    return asteroids.at(asteroids.size() - 1);
+    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0));
+    return objects.at(objects.size() - 1);
 }
 
 void World::resetLane(){

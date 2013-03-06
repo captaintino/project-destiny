@@ -13,7 +13,7 @@ class World: public QObject
 {
 private:
     Q_OBJECT;
-    vector<Obstacle *> asteroids;
+    vector<Obstacle *> objects;
     vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
@@ -24,15 +24,17 @@ private:
 public:
     World(bool hasAShip, Ship *player);
 
-    Obstacle* createAsteroid(int level);
+    Obstacle* createObject(int level);
 
-    Obstacle* createLameAsteroid();
+    Obstacle* createLameOjbect();
 
     void collision();
 
     void move();
 
     void lameToWalk();
+
+    void deleteObject(Obstacle * object_to_delete);
 
     // Saves the world state
     string save();

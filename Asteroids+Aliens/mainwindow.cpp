@@ -4,6 +4,9 @@
 #include<QTimer>
 #include<QString>
 #include<cmath>
+#include <QCursor>
+#include <QDesktopWidget>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -33,8 +36,10 @@ void MainWindow::on_btnStart_clicked()
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
-    this->cursor().setPos(380, 540);
-    level = 1;
+    //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
+    this->setCursor(Qt::BlankCursor);
+    QApplication::desktop()->cursor().setPos(0,0);
+    level = 3;
     universe = new Universe(level);
     user = new Ship_Label(this);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
