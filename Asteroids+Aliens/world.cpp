@@ -18,6 +18,14 @@ void World::move()
     }
 }
 
+void World::lameToWalk()
+{
+    for(Obstacle* obj:asteroids)
+    {
+        obj->setSpeed(2);
+    }
+}
+
 Obstacle* World::createAsteroid(int level)
 {
     int lane = (rand() % 13);
@@ -27,7 +35,13 @@ Obstacle* World::createAsteroid(int level)
     lanes[lane] = false;
     QTimer::singleShot(1000/sqrt(level), this, SLOT(resetLane()));
     lanesToReset.push_back(lane);
-    return new Asteroid(61.5 * level, -60);
+    return new Asteroid(61.5 * lane, -60);
+}
+
+Obstacle *World::createLameAsteroid()
+{
+    asteroids.push_back(new Asteroid(61.5 * asteroids.size(), -60 -(20*(rand()%27)), 0));
+    return asteroids.at(asteroids.size() - 1);
 }
 
 void World::resetLane(){

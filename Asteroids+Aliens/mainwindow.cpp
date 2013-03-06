@@ -14,8 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     backgroundTimer = new QTimer(this);
     backgroundTimer->setInterval(33);
     background_counter = 1;
-    itemSpawn = new QThread(this);
-    connect(itemSpawn, SIGNAL(started()), this, SLOT(spawnItems()));
+    updateTimer = new QTimer(this);
+    updateTimer->setInterval(33);
+
 }
 
 MainWindow::~MainWindow()
@@ -23,10 +24,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::connectWorldTimer(QTimer * t)
-{
-    connect(t, SIGNAL(timeout()), this, SLOT(worldClick()));
-}
 
 
 
@@ -42,17 +39,15 @@ void MainWindow::on_btnStart_clicked()
     user = new Ship_Label(this);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
-    // Must be done last
-    //itemSpawn->start(); ???
-    for(int i = 0; i < 13; ++i){
-        objects[i] = new on_screen_object(this, this->universe->getWorld(0), level);
-        //sleep(1000/sqrt(level));
+    for(int i = 0; i < 13; ++i)
+    {
+        objects[i] = new on_screen_object(this,universe->getWorld(0),level);
     }
+    universe->getWorld(0)->lameToWalk();
+    QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
+    updateTimer->start();
 }
 
-void MainWindow::worldClick(){
-    universe->move();
-}
 
 void MainWindow::rotateBackground()
 {
@@ -63,10 +58,12 @@ void MainWindow::rotateBackground()
     ++background_counter;
 }
 
-void MainWindow::spawnItems()
+void MainWindow::update_positions()
 {
-    for(int i = 0; i < 13; ++i){
-        objects[i] = new on_screen_object(this, this->universe->getWorld(1), level);
-        sleep(1000/sqrt(level));
+    for(int i=0; i<13; ++i)
+    {
+        objects[i]->update();
     }
 }
+
+

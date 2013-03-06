@@ -20,18 +20,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    // connect the World's timer object to the
-    void connectWorldTimer(QTimer *t);
-
 private slots:
     void on_btnStart_clicked();
-    void worldClick();
     void rotateBackground();
-    void spawnItems();
+    void update_positions();
 
 private:
     Ui::MainWindow *ui;
-    QTimer * backgroundTimer;
+    QTimer * backgroundTimer, *updateTimer;
     Universe * universe;
     Ship_Label * user;
     int background_counter, level;

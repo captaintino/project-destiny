@@ -18,7 +18,10 @@ void Universe::move()
 
 void Universe::update_worlds()
 {
-
+    for(int i=0; i<dimensions.size(); ++i)
+    {
+        dimensions.at(i)->move();
+    }
 }
 
 // Loads game state from file

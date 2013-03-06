@@ -16,7 +16,7 @@ private:
 public:
     explicit on_screen_object(QWidget *parent, World *get_world, int initlevel);
     
-    void move();
+    void update();
 
 signals:
     

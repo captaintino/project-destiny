@@ -1,21 +1,14 @@
 #include "alien.h"
 
 #include<obstacle.h>
-Alien::Alien(int initx, int inity):Obstacle(initx, inity, 60, 61, ":/images/asteroid.png")
+Alien::Alien(int initx, int inity, int initspeed):Obstacle(initx, inity, 60, 61, ":/images/asteroid.png", initspeed)
 {
-    /*
-    x=initx;
-    y=inity;
-    //image width and height...
-    w = 61;
-    h = 60;
-    type = ":/images/ALIEN_IMAGE.png";
-    */
+   //Remember to get an alien image eventually....
 }
 
 void Alien::move()
 {
-    y+=2;
+    y+=speed;
 }
 
 std::string Alien::save()

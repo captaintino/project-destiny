@@ -26,9 +26,13 @@ public:
 
     Obstacle* createAsteroid(int level);
 
+    Obstacle* createLameAsteroid();
+
     void collision();
 
     void move();
+
+    void lameToWalk();
 
     // Saves the world state
     string save();

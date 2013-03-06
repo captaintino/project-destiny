@@ -5,10 +5,10 @@
 class Obstacle
 {
 protected:
-    int x,y,h,w;
+    int x,y,h,w,speed;
     QString type;
 public:
-    Obstacle(int initx, int inity, int inith, int initw, QString inittype);
+    Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed);
 
     //Getter methods
     virtual int getX();
@@ -18,6 +18,8 @@ public:
     virtual QString getType();
 
     virtual void move() = 0;
+
+    virtual void setSpeed(int newSpeed) { speed = newSpeed; }
 
     virtual std::string save() = 0;
 };

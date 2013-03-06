@@ -23,6 +23,8 @@ SOURCES += main.cpp\
     ship_label.cpp \
     ship.cpp
 
+QMAKE_CXXFLAGS += -std=c++0x
+
 HEADERS  += mainwindow.h \
     universe.h \
     obstacle.h \
