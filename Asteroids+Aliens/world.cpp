@@ -12,6 +12,7 @@ World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
     }
 }
 
+// Move positions of all the items in the world
 void World::move()
 {
     for(int i = 0; i < objects.size(); ++i){
@@ -19,6 +20,7 @@ void World::move()
     }
 }
 
+// Set all objects in the world to moving
 void World::lameToWalk()
 {
     for(Obstacle* obj:objects)
@@ -27,6 +29,7 @@ void World::lameToWalk()
     }
 }
 
+// Find <object_to_delete> in the world and delete it
 void World::deleteObject(Obstacle *object_to_delete)
 {
     for(int i = 0; i < objects.size(); ++i)
@@ -40,31 +43,30 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
+// Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {
 
-    int lane = (rand() % 13);
-    while(!lanes[lane]){
+    int lane = (rand() % 13); //Pick random lane to place object into
+    while(!lanes[lane]){      //Check and repeat until we find a random lane that is clear
         lane = (rand() % 13);
-        qDebug("Checking next lane...");
     }
-    lanes[lane] = false;
-    qDebug("Found a lane... should be creating soon.");
-    QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane()));
-
-    lanesToReset.push_back(lane);
-    qDebug("Connected the slot.");
-    objects.push_back(new Asteroid(61.5 * lane, -60));
-    return objects.at(objects.size() - 1);
+    lanes[lane] = false; // set lane to closed
+    QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane())); // Fire off timer that will reopen the lane
+    lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
+    objects.push_back(new Asteroid(61.5 * lane, -60)); // add item to world
+    return objects.at(objects.size() - 1); // send item back to label
 }
 
+// Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0));
+    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0)); // This code is designed to be called 13 times
     return objects.at(objects.size() - 1);
 }
 
+// Open up lane for another item to be created in it
 void World::resetLane(){
-    lanes[lanesToReset.at(0)] = true;
-    lanesToReset.erase(lanesToReset.begin());
+    lanes[lanesToReset.at(0)] = true; // Reopen the lane that has been closed the longest
+    lanesToReset.erase(lanesToReset.begin()); // shift vector over
 }
