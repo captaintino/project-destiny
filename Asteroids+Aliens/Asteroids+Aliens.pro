@@ -15,26 +15,29 @@ SOURCES += main.cpp\
     universe.cpp \
     obstacle.cpp \
     world.cpp \
-    ship.cpp \
     asteroid.cpp \
     alien.cpp \
     projectile.cpp \
-    highscores.cpp
+    highscores.cpp \
+    on_screen_object.cpp \
+    ship_label.cpp \
+    ship.cpp
+
+QMAKE_CXXFLAGS += -std=c++0x
 
 HEADERS  += mainwindow.h \
     universe.h \
     obstacle.h \
     world.h \
-    ship.h \
     asteroid.h \
     alien.h \
     projectile.h \
-    highscores.h
+    highscores.h \
+    on_screen_object.h \
+    ship_label.h \
+    ship.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += \
     Images.qrc
-
-OTHER_FILES += \
-    highscores.txt

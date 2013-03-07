@@ -3,18 +3,21 @@
 #include<QTimer>
 #include<vector>
 #include<world.h>
+#include<QObject>
 
 using namespace std;
 
-class Universe
-{
+class Universe: public QObject
+{    
 private:
-    QTimer clock, worldMove;
+    Q_OBJECT
+    QTimer worldMove;
     vector<World *> dimensions;
     unsigned short level;
-    QWidget * window;
 public:
-    Universe(QWidget * parent, char lvl);
+    Universe(int lvl);
+
+    World * getWorld(int w){return dimensions.at(w);}
 
     // Moves all the objects in the game
     void move();
@@ -24,6 +27,9 @@ public:
 
     // Saves game state to file
     void save();
+
+private slots:
+    void update_worlds();
 };
 
 #endif // UNIVERSE_H

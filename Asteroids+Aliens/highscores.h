@@ -4,15 +4,10 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class HighScores
 {
-//std::vector<string> usernames;
-//std::vector<int> scores;
-vector<HighScores> scoreList;
-string username;
-string score;
+std::vector<std::string> usernames;
+std::vector<int> scores;
 
 public:
     HighScores();

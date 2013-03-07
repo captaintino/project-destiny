@@ -9,28 +9,40 @@
 
 using namespace std;
 
-class World
+class World: public QObject
 {
 private:
-    vector<Obstacle *> asteroids;
+    Q_OBJECT;
+    vector<Obstacle *> objects;
     vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
+    vector<int> lanesToReset;
     bool hasShip;
     Ship * playerShip;
-    QWidget * hostWindow;
+    bool lanes[13];
 public:
-    World(QWidget * host, int worldSpeed, bool hasAShip, Ship * player);
+    World(bool hasAShip, Ship *player);
+
+    Obstacle* createObject(int level);
+
+    Obstacle* createLameOjbect();
 
     void collision();
 
     void move();
+
+    void lameToWalk();
+
+    void deleteObject(Obstacle * object_to_delete);
 
     // Saves the world state
     string save();
 
     // Loads the world state
     void load();
+private slots:
+    void resetLane();
 };
 
 #endif // WORLD_H
