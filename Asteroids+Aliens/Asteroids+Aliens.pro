@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     highscores.cpp \
     on_screen_object.cpp \
     ship_label.cpp \
-    ship.cpp
+    ship.cpp \
+    universethread.cpp
 
 QMAKE_CXXFLAGS += -std=c++0x
 
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     highscores.h \
     on_screen_object.h \
     ship_label.h \
-    ship.h
+    ship.h \
+    universethread.h
 
 FORMS    += mainwindow.ui
 

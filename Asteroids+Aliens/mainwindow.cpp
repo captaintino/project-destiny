@@ -41,6 +41,7 @@ void MainWindow::on_btnStart_clicked()
     level = 1;
     universe = new Universe(level);
     user = new Ship_Label(this);
+    modelUpdater = new UniverseThread(universe, level);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
     for(int i = 0; i < 13; ++i)
@@ -51,6 +52,7 @@ void MainWindow::on_btnStart_clicked()
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
     updateTimer->start();
     levelTimer->start();
+    modelUpdater->start();
 }
 
 
@@ -78,7 +80,7 @@ void MainWindow::levelEnd()
     }
     updateTimer->stop();
 
-    // PAUSE COLLISION DETECTION THREAD
+    modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
     universe->setLevel(level);
@@ -88,6 +90,8 @@ void MainWindow::levelEnd()
     {
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
     }
+    modelUpdater->updateTimer(level);
+    modelUpdater->start();
     universe->getWorld(0)->lameToWalk();
     updateTimer->start();
     qDebug("Current Level is:" + QString::number(level).toAscii());

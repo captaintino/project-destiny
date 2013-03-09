@@ -7,11 +7,9 @@
 
 using namespace std;
 
-class Universe: public QObject
+class Universe
 {    
 private:
-    Q_OBJECT
-    QTimer worldMove;
     vector<World *> dimensions;
     unsigned short level;
     Ship * player;
@@ -37,9 +35,6 @@ public:
 
     // sets the level
     void setLevel(int lvl){level = lvl;}
-
-private slots:
-    void update_worlds();
 };
 
 #endif // UNIVERSE_H

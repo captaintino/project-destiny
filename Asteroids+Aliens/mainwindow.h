@@ -7,6 +7,7 @@
 #include<universe.h>
 #include <ship_label.h>
 #include<on_screen_object.h>
+#include<universethread.h>
 
 namespace Ui {
 class MainWindow;
@@ -32,7 +33,7 @@ private:
     Universe * universe;
     Ship_Label * user;
     int background_counter, level;
-    QThread * itemSpawn;
+    UniverseThread * modelUpdater;
     vector<on_screen_object *> objects;
 };
 
