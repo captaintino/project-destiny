@@ -24,15 +24,16 @@ private slots:
     void on_btnStart_clicked();
     void rotateBackground();
     void update_positions();
+    void levelEnd();
 
 private:
     Ui::MainWindow *ui;
-    QTimer * backgroundTimer, *updateTimer;
+    QTimer * backgroundTimer, *updateTimer, *levelTimer;
     Universe * universe;
     Ship_Label * user;
     int background_counter, level;
     QThread * itemSpawn;
-    on_screen_object * objects[13];
+    vector<on_screen_object *> objects;
 };
 
 #endif // MAINWINDOW_H

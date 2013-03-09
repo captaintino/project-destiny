@@ -16,7 +16,6 @@ void on_screen_object::update()
     {
         this_world->deleteObject(game_object);
         game_object = this_world->createObject(level);
-        qDebug("We ran through the delete/replace logic");
         this->setGeometry(game_object->getX(), game_object->getY(), width(), height());
 
     }

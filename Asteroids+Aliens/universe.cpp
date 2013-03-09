@@ -4,10 +4,9 @@
 
 Universe::Universe(int lvl): level(lvl)
 {
-    Ship * playerShip = new Ship();
-    dimensions.push_back(new World(true, playerShip));
-    dimensions.at(0);
-    worldMove.start(sqrt(1000/lvl));
+    player = new Ship();
+    dimensions.push_back(new World(true, player));
+    worldMove.start(sqrt(1000/lvl)); // This goes away with a thread
     QObject::connect(&worldMove, SIGNAL(timeout()), this, SLOT(update_worlds()));
 }
 
@@ -34,4 +33,19 @@ void Universe::load(string filename)
 void Universe::save()
 {
 
+}
+
+void Universe::clearWorlds()
+{
+    worldMove.stop(); // This disapears if we thread it
+    for(int i = 0; i < dimensions.size();){
+        delete dimensions.at(i);
+        dimensions.erase(dimensions.begin());
+    }
+}
+
+void Universe::createWorlds()
+{
+    dimensions.push_back(new World(true, player));
+    worldMove.start(sqrt(1000/level)); // This goes away with a thread
 }
