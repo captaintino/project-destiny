@@ -36,6 +36,7 @@ void MainWindow::on_btnStart_clicked()
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
+    ui->btnInstructions->setShown(false);
     //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
     //this->cursor().setShape(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
