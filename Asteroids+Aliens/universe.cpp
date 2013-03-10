@@ -8,6 +8,15 @@ Universe::Universe(int lvl): level(lvl)
     dimensions.push_back(new World(true, player));
 }
 
+Universe::~Universe()
+{
+    for(int i = 0; i<dimensions.size();){
+        delete dimensions.at(i);
+        dimensions.erase(dimensions.begin());
+    }
+    delete player;
+}
+
 void Universe::move()
 {
     for(int i=0; i<dimensions.size(); ++i)

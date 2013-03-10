@@ -16,6 +16,8 @@ private:
 public:
     Universe(int lvl);
 
+    ~Universe();
+
     World * getWorld(int w){return dimensions.at(w);}
 
     // Moves all the objects in the game

@@ -8,13 +8,17 @@ class UniverseThread: public QThread
     Universe * theUniverse;
     QTimer * timer;
     Q_OBJECT
-    public:
-        explicit UniverseThread(Universe * initUni, int level);
-        void run(){
+public:
+    explicit UniverseThread(Universe * initUni, int level);
+
+    // Gets called when you call .start on the thread
+    void run(){
             timer->start();
         }
-        void updateTimer(int level){timer->setInterval(sqrt(1000/level));}
-        ~UniverseThread(){timer->deleteLater();}
+
+    // Updates the timer's interval to be what it should be based on the current <level>
+    void updateTimer(int level){timer->setInterval(sqrt(1000/level));}
+
 private slots:
     void updateModel(){theUniverse->move();}
 };

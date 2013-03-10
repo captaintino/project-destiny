@@ -12,6 +12,22 @@ World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
     }
 }
 
+World::~World()
+{
+    for(int i = 0; i < objects.size();){
+        delete objects.at(i);
+        objects.erase(objects.begin());
+    }
+    for(int i = 0; i < enemyProjectiles.size();){
+        delete enemyProjectiles.at(i);
+        enemyProjectiles.erase(enemyProjectiles.begin());
+    }
+    for(int i = 0; i < projectiles.size();){
+        delete projectiles.at(i);
+        projectiles.erase(projectiles.begin());
+    }
+}
+
 // Move positions of all the items in the world
 void World::move()
 {

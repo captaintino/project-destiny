@@ -20,13 +20,23 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
-    levelTimer->setInterval(60000);
+    levelTimer->setInterval(30000);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    modelUpdater->terminate();
+    backgroundTimer->deleteLater();
+    updateTimer->deleteLater();
+    levelTimer->deleteLater();
+    delete universe;
+    user->deleteLater();
+    modelUpdater->deleteLater();
+    for(int i = 0; i < objects.size(); ++i){
+        delete objects.at(i);
+    }
 }
 
 void MainWindow::on_btnStart_clicked()

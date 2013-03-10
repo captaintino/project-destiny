@@ -14,7 +14,6 @@ class World: public QObject
 private:
     Q_OBJECT;
     vector<Obstacle *> objects;
-    vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
@@ -23,6 +22,8 @@ private:
     bool lanes[13];
 public:
     World(bool hasAShip, Ship *player);
+
+    ~World();
 
     Obstacle* createObject(int level);
 
