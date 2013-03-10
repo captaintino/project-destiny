@@ -31,10 +31,18 @@ void Ship_Label::shipToMouse()
 
 void Ship_Label::crashed()
 {
+    int ship_frame = 0;
     updateShip->disconnect();
-    //QPixmap e_img(":/images/Crash_Outline.png");
-    //setPixmap(e_img);
     qDebug("Ship Crashed!");
+
+    for(ship_frame; ship_frame < 30; ++ship_frame)
+    {
+
+        this->setPixmap(":/images/explosion/shipExp" + QString::number(ship_frame) + ".png");
+
+    }
+
+
 }
 
 

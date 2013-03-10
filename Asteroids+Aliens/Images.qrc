@@ -45,5 +45,35 @@
         <file>images/background/39.jpg</file>
         <file>images/Player_Ship.png</file>
         <file>images/Crash_Outline.png</file>
+        <file>images/explosion/shipExp0.png</file>
+        <file>images/explosion/shipExp1.png</file>
+        <file>images/explosion/shipExp2.png</file>
+        <file>images/explosion/shipExp3.png</file>
+        <file>images/explosion/shipExp4.png</file>
+        <file>images/explosion/shipExp5.png</file>
+        <file>images/explosion/shipExp6.png</file>
+        <file>images/explosion/shipExp7.png</file>
+        <file>images/explosion/shipExp8.png</file>
+        <file>images/explosion/shipExp9.png</file>
+        <file>images/explosion/shipExp10.png</file>
+        <file>images/explosion/shipExp11.png</file>
+        <file>images/explosion/shipExp12.png</file>
+        <file>images/explosion/shipExp13.png</file>
+        <file>images/explosion/shipExp14.png</file>
+        <file>images/explosion/shipExp15.png</file>
+        <file>images/explosion/shipExp16.png</file>
+        <file>images/explosion/shipExp17.png</file>
+        <file>images/explosion/shipExp18.png</file>
+        <file>images/explosion/shipExp19.png</file>
+        <file>images/explosion/shipExp20.png</file>
+        <file>images/explosion/shipExp21.png</file>
+        <file>images/explosion/shipExp22.png</file>
+        <file>images/explosion/shipExp23.png</file>
+        <file>images/explosion/shipExp24.png</file>
+        <file>images/explosion/shipExp25.png</file>
+        <file>images/explosion/shipExp26.png</file>
+        <file>images/explosion/shipExp27.png</file>
+        <file>images/explosion/shipExp28.png</file>
+        <file>images/explosion/shipExp29.png</file>
     </qresource>
 </RCC>
