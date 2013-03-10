@@ -50,6 +50,7 @@ void World::checkUserShip()
     for(int cur = 0; cur < objects.size(); ++cur)
     {
         Obstacle * obj = objects.at(cur);
+
         if(!((obj->getX() - (playerShip->getX() + playerShip->getW()) > 0) ||
             ((obj->getX() + obj->getW()) - playerShip->getX() < 0)) &&
             !((obj->getY() - (playerShip->getY() + playerShip->getH()) > 0) ||
@@ -62,13 +63,16 @@ void World::checkUserShip()
             double objRad = obj->getW() / 2;
             double objX = obj->getX() + objRad;
             double objY = obj->getY() + objRad;
-
+            /*
             //What follows is known as magic. It is what should never have to be done.
             //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
             if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
                 ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
                 !(((shipY + (cos(222*PI/180)*shipRad)) > (objY + (sin(135*PI/180) * objRad))) ||
                 ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (sin(135*PI/180) * shipRad)))))
+            {
+            */
+            if(sqrt((shipX - objX) + (shipY - objY)) < 20)
             {
                 playerShip->setHit(true);
                 shipCrashed();

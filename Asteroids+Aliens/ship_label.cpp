@@ -32,8 +32,8 @@ void Ship_Label::shipToMouse()
 void Ship_Label::crashed()
 {
     updateShip->disconnect();
-    QPixmap e_img(":/images/Crash_Outline.png");
-    setPixmap(e_img);
+    //QPixmap e_img(":/images/Crash_Outline.png");
+    //setPixmap(e_img);
     qDebug("Ship Crashed!");
 }
 
