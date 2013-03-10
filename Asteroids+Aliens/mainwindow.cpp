@@ -72,3 +72,10 @@ void MainWindow::update_positions()
 }
 
 
+
+void MainWindow::on_btnInstructions_clicked()
+{
+    instructionWindow.show();
+    instructionWindow.raise();
+    instructionWindow.activateWindow();
+}

@@ -7,6 +7,7 @@
 #include<universe.h>
 #include <ship_label.h>
 #include<on_screen_object.h>
+#include <instructionwindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,8 @@ private slots:
     void rotateBackground();
     void update_positions();
 
+    void on_btnInstructions_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer;
@@ -33,6 +36,7 @@ private:
     int background_counter, level;
     QThread * itemSpawn;
     on_screen_object * objects[13];
+    InstructionWindow instructionWindow;
 };
 
 #endif // MAINWINDOW_H
