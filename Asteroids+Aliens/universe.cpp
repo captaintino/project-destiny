@@ -4,9 +4,11 @@
 
 Universe::Universe(int lvl): level(lvl)
 {
+
     Ship * playerShip = new Ship();
     dimensions.push_back(new World(true, playerShip));
     dimensions.at(0);
+    current_dimension = 0;
     worldMove.start(sqrt(1000/lvl));
     QObject::connect(&worldMove, SIGNAL(timeout()), this, SLOT(update_worlds()));
 }
@@ -21,6 +23,7 @@ void Universe::update_worlds()
     for(int i=0; i<dimensions.size(); ++i)
     {
         dimensions.at(i)->move();
+        dimensions.at(i)->checkUserShip();
     }
 }
 

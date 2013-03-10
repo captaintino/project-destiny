@@ -37,11 +37,11 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
-    this->setCursor(Qt::BlankCursor);
+    //this->cursor().setShape(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
     level = 1;
     universe = new Universe(level);
-    user = new Ship_Label(this);
+    user = new Ship_Label(this, universe->getWorld(0));
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
     for(int i = 0; i < 13; ++i)
@@ -51,6 +51,7 @@ void MainWindow::on_btnStart_clicked()
     universe->getWorld(0)->lameToWalk();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
     updateTimer->start();
+    QObject::connect(universe->getWorld(0), SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
 }
 
 
@@ -69,6 +70,14 @@ void MainWindow::update_positions()
     {
         objects[i]->update();
     }
+}
+
+void MainWindow::userShipCrashed()
+{
+    updateTimer->disconnect();
+    user->crashed();
+    backgroundTimer->disconnect();
+    qDebug("Exiting update... user has crashed.");
 }
 
 

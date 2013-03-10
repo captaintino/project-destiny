@@ -25,6 +25,7 @@ private slots:
     void on_btnStart_clicked();
     void rotateBackground();
     void update_positions();
+    void userShipCrashed();
 
     void on_btnInstructions_clicked();
 
