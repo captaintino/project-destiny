@@ -5,6 +5,8 @@
 #include<cmath>
 #include<QString>
 
+#define PI 3.14159265
+
 World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
 {
     for(int i = 0; i < 13; ++i){
@@ -53,67 +55,27 @@ void World::checkUserShip()
             !((obj->getY() - (playerShip->getY() + playerShip->getH()) > 0) ||
             ((obj->getY() + obj->getH()) - playerShip->getY() < 0)))
         {
-            playerShip->setHit(true);
-            shipCrashed();
-        }
-    }
-    // Code below was from an earlier version... some features may need to be implemented from it, so I'm saving it for now. #Konrad
-    /*
-    bool ship_dead = false;
-    for(int cur = 0; cur < objects.size(); ++cur)
-    {
-        Obstacle * obj = objects.at(cur);
-        if(new_x == obj->getX() && new_y == obj->getY())
-        {
-            ship_dead = true;
-        }
-    }
-    */
-    /*
-    for(int cur = 0; cur < objects.size(); ++cur)
-    {
-        Obstacle * obj = objects.at(cur);
-        if(!(new_x + playerShip->getR() < obj->getX()))
-        {
-            if(!(new_x > obj->getX() + obj->getW()))
+            double shipRad = playerShip->getW() / 2;
+            double shipX = playerShip->getX() + shipRad;
+            double shipY = playerShip->getY() + shipRad;
+
+            double objRad = obj->getW() / 2;
+            double objX = obj->getX() + objRad;
+            double objY = obj->getY() + objRad;
+
+            //What follows is known as magic. It is what should never have to be done.
+            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                !(((shipY + (cos(222*PI/180)*shipRad)) > (objY + (sin(135*PI/180) * objRad))) ||
+                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (sin(135*PI/180) * shipRad)))))
             {
-                for(int i = obj->getX(); i <= obj->getW(); ++i)
-                {
-                    for(int j = new_x; j <= new_x; ++j)
-                    {
-                        if(j == i)
-                        {
-                            ship_dead = true;
-                        }
-                    }
-                }
-            }
-        }
-        if(!(new_y + playerShip->getR() < obj->getY()))
-        {
-            if(!(new_y > obj->getY() + obj->getH()))
-            {
-                for(int i = obj->getY(); i <= obj->getY(); ++i)
-                {
-                    for(int j = new_y; j <= new_y; ++j)
-                    {
-                        if(j == i)
-                        {
-                            ship_dead = true;
-                        }
-                    }
-                }
+                playerShip->setHit(true);
+                shipCrashed();
             }
         }
     }
 
-    if(ship_dead == true)
-    {
-        playerShip->setHit(true);
-        shipCrashed();
-
-    }
-    */
 }
 
 void World::setUserShip(int new_x, int new_y, int width, int height)
