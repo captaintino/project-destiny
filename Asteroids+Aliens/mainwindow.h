@@ -8,6 +8,7 @@
 #include <ship_label.h>
 #include<on_screen_object.h>
 #include <instructionwindow.h>
+#include<highscorewindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,8 @@ private slots:
 
     void on_btnInstructions_clicked();
 
+    void on_btnHighScores_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer;
@@ -38,6 +41,7 @@ private:
     QThread * itemSpawn;
     on_screen_object * objects[13];
     InstructionWindow instructionWindow;
+    HighScoreWindow highScoreWindow;
 };
 
 #endif // MAINWINDOW_H

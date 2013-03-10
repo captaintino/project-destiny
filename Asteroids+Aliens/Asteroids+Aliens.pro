@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     on_screen_object.cpp \
     ship_label.cpp \
     ship.cpp \
-    instructionwindow.cpp
+    instructionwindow.cpp \
+    highscorewindow.cpp
 
 QMAKE_CXXFLAGS += -std=c++0x
 
@@ -37,10 +38,15 @@ HEADERS  += mainwindow.h \
     on_screen_object.h \
     ship_label.h \
     ship.h \
-    instructionwindow.h
+    instructionwindow.h \
+    highscorewindow.h
 
 FORMS    += mainwindow.ui \
-    instructionwindow.ui
+    instructionwindow.ui \
+    highscorewindow.ui
 
 RESOURCES += \
     Images.qrc
+
+OTHER_FILES += \
+    highscores.txt

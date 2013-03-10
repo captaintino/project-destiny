@@ -90,3 +90,10 @@ void MainWindow::on_btnInstructions_clicked()
     instructionWindow.raise();
     instructionWindow.activateWindow();
 }
+
+void MainWindow::on_btnHighScores_clicked()
+{
+    highScoreWindow.show();
+    highScoreWindow.raise();
+    highScoreWindow.activateWindow();
+}
