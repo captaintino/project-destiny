@@ -24,6 +24,7 @@ private slots:
     void on_btnStart_clicked();
     void rotateBackground();
     void update_positions();
+    void userShipCrashed();
 
 private:
     Ui::MainWindow *ui;

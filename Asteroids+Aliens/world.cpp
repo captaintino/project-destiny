@@ -43,6 +43,85 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
+void World::checkUserShip()
+{
+    for(int cur = 0; cur < objects.size(); ++cur)
+    {
+        Obstacle * obj = objects.at(cur);
+        if(!((obj->getX() - (playerShip->getX() + playerShip->getW()) > 0) ||
+            ((obj->getX() + obj->getW()) - playerShip->getX() < 0)) &&
+            !((obj->getY() - (playerShip->getY() + playerShip->getH()) > 0) ||
+            ((obj->getY() + obj->getH()) - playerShip->getY() < 0)))
+        {
+            playerShip->setHit(true);
+            shipCrashed();
+        }
+    }
+    // Code below was from an earlier version... some features may need to be implemented from it, so I'm saving it for now. #Konrad
+    /*
+    bool ship_dead = false;
+    for(int cur = 0; cur < objects.size(); ++cur)
+    {
+        Obstacle * obj = objects.at(cur);
+        if(new_x == obj->getX() && new_y == obj->getY())
+        {
+            ship_dead = true;
+        }
+    }
+    */
+    /*
+    for(int cur = 0; cur < objects.size(); ++cur)
+    {
+        Obstacle * obj = objects.at(cur);
+        if(!(new_x + playerShip->getR() < obj->getX()))
+        {
+            if(!(new_x > obj->getX() + obj->getW()))
+            {
+                for(int i = obj->getX(); i <= obj->getW(); ++i)
+                {
+                    for(int j = new_x; j <= new_x; ++j)
+                    {
+                        if(j == i)
+                        {
+                            ship_dead = true;
+                        }
+                    }
+                }
+            }
+        }
+        if(!(new_y + playerShip->getR() < obj->getY()))
+        {
+            if(!(new_y > obj->getY() + obj->getH()))
+            {
+                for(int i = obj->getY(); i <= obj->getY(); ++i)
+                {
+                    for(int j = new_y; j <= new_y; ++j)
+                    {
+                        if(j == i)
+                        {
+                            ship_dead = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if(ship_dead == true)
+    {
+        playerShip->setHit(true);
+        shipCrashed();
+
+    }
+    */
+}
+
+void World::setUserShip(int new_x, int new_y, int width, int height)
+{
+
+    playerShip->setCoords(new_x, new_y, width, height);
+}
+
 // Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {
@@ -61,7 +140,7 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0)); // This code is designed to be called 13 times
+    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(60*(rand()%27)), 0)); // This code is designed to be called 13 times
     return objects.at(objects.size() - 1);
 }
 

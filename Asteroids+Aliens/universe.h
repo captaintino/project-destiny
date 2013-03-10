@@ -13,6 +13,7 @@ private:
     Q_OBJECT
     QTimer worldMove;
     vector<World *> dimensions;
+    int current_dimension;
     unsigned short level;
 public:
     Universe(int lvl);

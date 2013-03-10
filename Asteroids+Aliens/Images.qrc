@@ -44,5 +44,6 @@
         <file>images/background/38.jpg</file>
         <file>images/background/39.jpg</file>
         <file>images/Player_Ship.png</file>
+        <file>images/Crash_Outline.png</file>
     </qresource>
 </RCC>
