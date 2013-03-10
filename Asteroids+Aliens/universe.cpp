@@ -22,8 +22,8 @@ void Universe::update_worlds()
 {
     for(int i=0; i<dimensions.size(); ++i)
     {
-        dimensions.at(i)->move();
         dimensions.at(i)->checkUserShip();
+        dimensions.at(i)->move();
     }
 }
 

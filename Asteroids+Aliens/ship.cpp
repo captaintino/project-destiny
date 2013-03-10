@@ -9,6 +9,20 @@ Ship::Ship()
     hit = false;
 }
 
+void Ship::setCoords(int new_x, int new_y, int new_w, int new_h)
+{
+    nextX = new_x;
+    nextY = new_y;
+    w = new_w;
+    h = new_h;
+}
+
+void Ship::updateCoords()
+{
+    x = nextX;
+    y = nextY;
+}
+
 
 
 

@@ -67,6 +67,7 @@ void MainWindow::rotateBackground()
 
 void MainWindow::update_positions()
 {
+    user->updateCoords();
     for(int i=0; i<13; ++i)
     {
         objects[i]->update();

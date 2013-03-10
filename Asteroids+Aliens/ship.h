@@ -5,6 +5,7 @@ class Ship
 {
 private:
     int x, y, w, h;
+    int nextX, nextY;
     bool hit;
 public:
     Ship();
@@ -16,13 +17,10 @@ public:
     int getH(){return h;}
 
     //Setter methods...
-    void setCoords(int new_x, int new_y, int new_w, int new_h)
-    {
-        x = new_x;
-        y = new_y;
-        w = new_w;
-        h = new_h;
-    }
+    void setCoords(int new_x, int new_y, int new_w, int new_h);
+
+    void updateCoords();
+
     void setHit(bool updateVal) { hit = updateVal;}
 
 

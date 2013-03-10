@@ -40,6 +40,8 @@ public:
 
     void setUserShip(int new_x, int new_y, int width, int height);
 
+    Ship* getShip();
+
     // Saves the world state
     string save();
 

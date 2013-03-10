@@ -24,24 +24,29 @@ Ship_Label::Ship_Label(QWidget *parent, World *get_world): QLabel(parent), fire(
 
 void Ship_Label::shipToMouse()
 {
-    this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 100, width(), height());
-    this_world->setUserShip(this->x(), this->y(), this->width(), this->height());
+    //this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 100, width(), height());
+    this_world->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
 
+}
+
+void Ship_Label::updateCoords()
+{
+    this->setGeometry(this_world->getShip()->getX(), this_world->getShip()->getY(), this->width(), this->height());
 }
 
 void Ship_Label::crashed()
 {
-    int ship_frame = 0;
     updateShip->disconnect();
+    QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
     qDebug("Ship Crashed!");
+}
 
-    for(ship_frame; ship_frame < 30; ++ship_frame)
-    {
-
-        this->setPixmap(":/images/explosion/shipExp" + QString::number(ship_frame) + ".png");
-
-    }
-
+void Ship_Label::expAnimate()
+{
+    if(ship_frame > 39)
+        ship_frame = 1;
+    this->setPixmap(":/images/explosion/shipExp" + QString::number(ship_frame) + ".png");
+    ++ship_frame;
 
 }
 

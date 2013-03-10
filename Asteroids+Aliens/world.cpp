@@ -17,6 +17,7 @@ World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
 // Move positions of all the items in the world
 void World::move()
 {
+    playerShip->updateCoords();
     for(int i = 0; i < objects.size(); ++i){
         objects.at(i)->move(); // Move all the asteroids
     }
@@ -64,18 +65,17 @@ void World::checkUserShip()
                   ((objY + objRad) < (shipY - shipRad))))
         {
 
-            /*
             //What follows is known as magic. It is what should never have to be done.
             //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
             if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
                 ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
-                !(((shipY + (cos(222*PI/180)*shipRad)) > (objY + (sin(135*PI/180) * objRad))) ||
-                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (sin(135*PI/180) * shipRad)))))
+                !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
             {
-            */
 
-            if(sqrt((shipX - objX) + (shipY - objY)) < 20)
-            {
+
+            //if(sqrt((shipX - objX) + (shipY - objY)) < 20)
+            //{
                 playerShip->setHit(true);
                 shipCrashed();
             }
@@ -88,6 +88,11 @@ void World::setUserShip(int new_x, int new_y, int width, int height)
 {
 
     playerShip->setCoords(new_x, new_y, width, height);
+}
+
+Ship *World::getShip()
+{
+    return playerShip;
 }
 
 // Create an object in the model and return a pointer to it

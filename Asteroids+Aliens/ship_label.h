@@ -12,12 +12,14 @@ class Ship_Label : public QLabel
     bool fire;
     QWidget * window;
     World * this_world;
+    int ship_frame;
 
 public:
     Ship_Label(QWidget * parent, World * get_world);
 
     void mousePressEvent(QMouseEvent *ev);
     void crashed();
+    void updateCoords();
 
 
     // Saves the item state
@@ -26,6 +28,9 @@ public:
 private slots:
     void canFire();
     void shipToMouse();
+    void expAnimate();
+
+
 };
 
 #endif // SHIP_LABEL_H
