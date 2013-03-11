@@ -46,8 +46,8 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     ui->btnInstructions->setShown(false);
-    //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
-    //this->cursor().setShape(Qt::BlankCursor);
+    this->grabMouse(); // <-- we need to have an <Esc> option...
+    this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
     level = 1;
     universe = new Universe(level);
@@ -116,6 +116,8 @@ void MainWindow::userShipCrashed()
     modelUpdater->terminate();
     user->crashed();
     backgroundTimer->disconnect();
+    this->releaseMouse();
+    this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
 }
 
