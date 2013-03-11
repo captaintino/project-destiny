@@ -37,7 +37,9 @@ void Ship_Label::updateCoords()
 void Ship_Label::crashed()
 {
     updateShip->disconnect();
+    updateShip->setInterval(30);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
+    setGeometry(this->x(), this->y(), 80, 80);
     qDebug("Ship Crashed!");
 }
 
