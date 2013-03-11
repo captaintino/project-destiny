@@ -4,6 +4,7 @@
 
 Universe::Universe(int lvl): level(lvl)
 {
+    score = 0;
     player = new Ship();
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));

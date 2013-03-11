@@ -38,7 +38,6 @@ void Ship_Label::crashed()
     updateShip->disconnect();
     updateShip->setInterval(30);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
-    setGeometry(this->x(), this->y(), 80, 80);
     qDebug("Ship Crashed!");
 }
 
@@ -47,6 +46,8 @@ void Ship_Label::expAnimate()
     if(ship_frame > 39)
         ship_frame = 1;
     this->setPixmap(":/images/explosion/shipExp" + QString::number(ship_frame) + ".png");
+    setGeometry(this->x(), this->y(), 80, 80);
+
     ++ship_frame;
 
 }

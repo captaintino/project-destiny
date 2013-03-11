@@ -12,7 +12,7 @@ class Universe: public QObject
 private:
     Q_OBJECT
     vector<World *> dimensions;
-    int current_dimension;
+    int current_dimension, score;
     unsigned short level;
     Ship * player;
     Ship * playerShip;
@@ -41,11 +41,15 @@ public:
     // sets the level
     void setLevel(int lvl){level = lvl;}
 
+    void incrementScore(){score += 50;}
+
     void checkUserShip();
 
     void setUserShip(int new_x, int new_y, int width, int height);
 
+    // Getter Methods:
     Ship* getShip();
+    int getScore(){return score;}
 
 signals:
     void shipCrashed();
@@ -54,4 +58,4 @@ private slots:
     void shipCrashedSignal();
 };
 
-#endif // UNIVERSE_H
+#endif // UNIVERSE_Hl

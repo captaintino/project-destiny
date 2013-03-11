@@ -45,6 +45,8 @@ private:
     QThread * itemSpawn;
     InstructionWindow instructionWindow;
     HighScoreWindow highScoreWindow;
+    QLabel * the_Score;
+
 };
 
 #endif // MAINWINDOW_H

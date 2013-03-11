@@ -41,6 +41,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnStart_clicked()
 {
+    the_Score = new QLabel(this);
+    the_Score->setGeometry(50,50,500,50); // Needs work *
+    the_Score->show();
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
@@ -83,6 +86,7 @@ void MainWindow::update_positions()
     {
         objects.at(i)->update();
     }
+    the_Score->setText(QString::number(universe->getScore()));
 }
 
 void MainWindow::levelEnd()

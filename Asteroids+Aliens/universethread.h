@@ -20,6 +20,6 @@ public:
     void updateTimer(int level){timer->setInterval(sqrt(1000/level));}
 
 private slots:
-    void updateModel(){theUniverse->move();}
+    void updateModel(){theUniverse->move();theUniverse->incrementScore();}
 };
 #endif // UNIVERSETHREAD_H
