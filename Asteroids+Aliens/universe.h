@@ -14,6 +14,7 @@ private:
     int current_dimension;
     unsigned short level;
     Ship * player;
+    Ship * playerShip;
 public:
     Universe(int lvl);
 
@@ -38,6 +39,12 @@ public:
 
     // sets the level
     void setLevel(int lvl){level = lvl;}
+
+    void checkUserShip();
+
+    void setUserShip(int new_x, int new_y, int width, int height);
+
+    Ship* getShip();
 };
 
 #endif // UNIVERSE_H

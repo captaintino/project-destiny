@@ -11,11 +11,11 @@ class Ship_Label : public QLabel
     QTimer * fireShot, * updateShip;
     bool fire;
     QWidget * window;
-    World * this_world;
+    Universe * this_Universe;
     int ship_frame;
 
 public:
-    Ship_Label(QWidget * parent, World * get_world);
+    Ship_Label(QWidget * parent, Universe * get_universe);
 
     void mousePressEvent(QMouseEvent *ev);
     void crashed();

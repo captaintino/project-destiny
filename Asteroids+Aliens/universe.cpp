@@ -5,7 +5,7 @@
 Universe::Universe(int lvl): level(lvl)
 {
     player = new Ship();
-    dimensions.push_back(new World(true, player));
+    dimensions.push_back(new World(true));
     current_dimension = 0;
 }
 
@@ -20,9 +20,10 @@ Universe::~Universe()
 
 void Universe::move()
 {
+    player->updateCoords();
     for(int i=0; i<dimensions.size(); ++i)
     {
-        dimensions.at(i)->checkUserShip();
+        dimensions.at(i)->checkUserShip(player);
         dimensions.at(i)->move();
     }
 }
@@ -49,5 +50,15 @@ void Universe::clearWorlds()
 
 void Universe::createWorlds()
 {
-    dimensions.push_back(new World(true, player));
+    dimensions.push_back(new World(true));
+}
+
+void Universe::setUserShip(int new_x, int new_y, int width, int height)
+{
+    player->setCoords(new_x, new_y, width, height);
+}
+
+Ship *Universe::getShip()
+{
+    return player;
 }

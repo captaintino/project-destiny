@@ -18,10 +18,9 @@ private:
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
     bool hasShip;
-    Ship * playerShip;
     bool lanes[13];
 public:
-    World(bool hasAShip, Ship *player);
+    World(bool hasAShip);
 
     ~World();
 
@@ -37,7 +36,7 @@ public:
 
     void deleteObject(Obstacle * object_to_delete);
 
-    void checkUserShip();
+    void checkUserShip(Ship *playerShip);
 
     void setUserShip(int new_x, int new_y, int width, int height);
 

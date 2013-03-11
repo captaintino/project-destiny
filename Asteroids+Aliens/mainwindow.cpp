@@ -52,7 +52,7 @@ void MainWindow::on_btnStart_clicked()
     level = 1;
     universe = new Universe(level);
     modelUpdater = new UniverseThread(universe, level);
-    user = new Ship_Label(this, universe->getWorld(0));
+    user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
     for(int i = 0; i < 13; ++i)
