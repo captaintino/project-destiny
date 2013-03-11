@@ -64,7 +64,7 @@ void MainWindow::on_btnStart_clicked()
     updateTimer->start();
     levelTimer->start();
     modelUpdater->start();
-    QObject::connect(universe->getWorld(0), SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
+    QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
 }
 
 

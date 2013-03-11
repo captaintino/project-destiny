@@ -7,9 +7,10 @@
 
 using namespace std;
 
-class Universe
+class Universe: public QObject
 {    
 private:
+    Q_OBJECT
     vector<World *> dimensions;
     int current_dimension;
     unsigned short level;
@@ -45,6 +46,12 @@ public:
     void setUserShip(int new_x, int new_y, int width, int height);
 
     Ship* getShip();
+
+signals:
+    void shipCrashed();
+
+private slots:
+    void shipCrashedSignal();
 };
 
 #endif // UNIVERSE_H
