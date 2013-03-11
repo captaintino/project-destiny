@@ -58,4 +58,4 @@ private slots:
     void shipCrashedSignal();
 };
 
-#endif // UNIVERSE_H
+#endif // UNIVERSE_Hl
