@@ -53,15 +53,16 @@ void HighScores::display()
 void HighScores::parseData(string dataString)
 {
     string data;
+    vector<string>dataList;
         int pos = 0;
         while (dataString.find(':') != -1)
         {
         pos = dataString.find(':');
         data = dataString.substr(0,pos);
-        //scoreList.push_back(data);
+        dataList.push_back(data);
         dataString = dataString.substr(pos+1);
         }
     data = dataString;
-    //scoreList.push_back(data);
+    dataList.push_back(data);
 
 }
