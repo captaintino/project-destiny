@@ -21,7 +21,16 @@ Ship_Label::Ship_Label(QWidget *parent): QLabel(parent), fire(true), window(pare
 
 void Ship_Label::shipToMouse()
 {
-    this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90,width(),height());
+    if ((window->cursor().pos().x() - 90) > 765) {
+        this->setGeometry(765, window->cursor().pos().y() - 90,width(),height());
+    } else if ((window->cursor().pos().x() - 90) < 0) {
+        this->setGeometry(0, window->cursor().pos().y() - 90, width(), height());
+    } else if ((window->cursor().pos().y() - 90) > 560){
+        //this->setGeometry(window->cursor().pos().x() - 90, 560, width(), height());
+    } else {
+        this->setGeometry(window->cursor().pos().x() - 90,
+            window->cursor().pos().y() - 90,width(),height());
+    }
 }
 
 
