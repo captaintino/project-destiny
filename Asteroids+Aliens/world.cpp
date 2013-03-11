@@ -96,16 +96,6 @@ void World::checkUserShip(Ship * playerShip)
     }
 }
 
-void World::setUserShip(int new_x, int new_y, int width, int height)
-{
-    //NULL METHOD?
-}
-
-Ship *World::getShip()
-{
-    //NULL METHOD?
-}
-
 // Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {

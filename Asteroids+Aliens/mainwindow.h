@@ -41,6 +41,7 @@ private:
     vector<on_screen_object *> objects;
     QThread * itemSpawn;
     InstructionWindow instructionWindow;
+    QLabel * the_Score;
 };
 
 #endif // MAINWINDOW_H
