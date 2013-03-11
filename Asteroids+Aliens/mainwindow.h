@@ -8,6 +8,7 @@
 #include <ship_label.h>
 #include<on_screen_object.h>
 #include<universethread.h>
+#include <instructionwindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,9 @@ private slots:
     void rotateBackground();
     void update_positions();
     void levelEnd();
+    void userShipCrashed();
+
+    void on_btnInstructions_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -35,6 +39,8 @@ private:
     int background_counter, level;
     UniverseThread * modelUpdater;
     vector<on_screen_object *> objects;
+    QThread * itemSpawn;
+    InstructionWindow instructionWindow;
 };
 
 #endif // MAINWINDOW_H

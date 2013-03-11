@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
-    levelTimer->setInterval(30000);
+    levelTimer->setInterval(10000);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
@@ -45,13 +45,14 @@ void MainWindow::on_btnStart_clicked()
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
+    ui->btnInstructions->setShown(false);
     //this->grabMouse(); // <-- we'll add this back once we have an <Esc> option...
-    this->setCursor(Qt::BlankCursor);
+    //this->cursor().setShape(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
     level = 1;
     universe = new Universe(level);
-    user = new Ship_Label(this);
     modelUpdater = new UniverseThread(universe, level);
+    user = new Ship_Label(this, universe->getWorld(0));
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
     for(int i = 0; i < 13; ++i)
@@ -63,6 +64,7 @@ void MainWindow::on_btnStart_clicked()
     updateTimer->start();
     levelTimer->start();
     modelUpdater->start();
+    QObject::connect(universe->getWorld(0), SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
 }
 
 
@@ -76,6 +78,7 @@ void MainWindow::rotateBackground()
 
 void MainWindow::update_positions()
 {
+    user->updateCoords();
     for(int i=0; i<objects.size(); ++i)
     {
         objects.at(i)->update();
@@ -84,11 +87,11 @@ void MainWindow::update_positions()
 
 void MainWindow::levelEnd()
 {
+    updateTimer->stop();
     for(int i = 0; i < objects.size();){
         objects.at(i)->deleteLater();
         objects.erase(objects.begin());
     }
-    updateTimer->stop();
 
     modelUpdater->terminate(); // Not sure if this is the right method
 
@@ -107,4 +110,20 @@ void MainWindow::levelEnd()
     qDebug("Current Level is:" + QString::number(level).toAscii());
 }
 
+void MainWindow::userShipCrashed()
+{
+    updateTimer->disconnect();
+    modelUpdater->terminate();
+    user->crashed();
+    backgroundTimer->disconnect();
+    qDebug("Exiting update... user has crashed.");
+}
 
+
+
+void MainWindow::on_btnInstructions_clicked()
+{
+    instructionWindow.show();
+    instructionWindow.raise();
+    instructionWindow.activateWindow();
+}

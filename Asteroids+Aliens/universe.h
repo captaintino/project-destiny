@@ -11,6 +11,7 @@ class Universe
 {    
 private:
     vector<World *> dimensions;
+    int current_dimension;
     unsigned short level;
     Ship * player;
 public:

@@ -37,6 +37,12 @@ public:
 
     void deleteObject(Obstacle * object_to_delete);
 
+    void checkUserShip();
+
+    void setUserShip(int new_x, int new_y, int width, int height);
+
+    Ship* getShip();
+
     // Saves the world state
     string save();
 
@@ -44,6 +50,9 @@ public:
     void load();
 private slots:
     void resetLane();
+
+signals:
+    void shipCrashed();
 };
 
 #endif // WORLD_H

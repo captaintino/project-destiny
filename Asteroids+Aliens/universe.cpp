@@ -6,6 +6,7 @@ Universe::Universe(int lvl): level(lvl)
 {
     player = new Ship();
     dimensions.push_back(new World(true, player));
+    current_dimension = 0;
 }
 
 Universe::~Universe()
@@ -21,6 +22,7 @@ void Universe::move()
 {
     for(int i=0; i<dimensions.size(); ++i)
     {
+        dimensions.at(i)->checkUserShip();
         dimensions.at(i)->move();
     }
 }

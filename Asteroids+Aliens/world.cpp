@@ -5,6 +5,8 @@
 #include<cmath>
 #include<QString>
 
+#define PI 3.14159265
+
 World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
 {
     for(int i = 0; i < 13; ++i){
@@ -31,6 +33,7 @@ World::~World()
 // Move positions of all the items in the world
 void World::move()
 {
+    playerShip->updateCoords();
     for(int i = 0; i < objects.size(); ++i){
         objects.at(i)->move(); // Move all the asteroids
     }
@@ -59,6 +62,55 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
+void World::checkUserShip()
+{
+    for(int cur = 0; cur < objects.size(); ++cur)
+    {
+        Obstacle * obj = objects.at(cur);
+        double shipRad = playerShip->getW() / 2;
+        double shipX = playerShip->getX() + shipRad;
+        double shipY = playerShip->getY() + shipRad;
+
+        double objRad = obj->getW() / 2;
+        double objX = obj->getX() + objRad;
+        double objY = obj->getY() + objRad;
+
+        if(!(((objX - objRad) > (shipX + shipRad)) ||
+              ((shipX - shipRad) > (objX + objRad))) &&
+                !(((shipY + shipRad) < (objY - objRad)) ||
+                  ((objY + objRad) < (shipY - shipRad))))
+        {
+
+            //What follows is known as magic. It is what should never have to be done.
+            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+            {
+
+
+            //if(sqrt((shipX - objX) + (shipY - objY)) < 20)
+            //{
+                playerShip->setHit(true);
+                shipCrashed();
+            }
+        }
+    }
+
+}
+
+void World::setUserShip(int new_x, int new_y, int width, int height)
+{
+
+    playerShip->setCoords(new_x, new_y, width, height);
+}
+
+Ship *World::getShip()
+{
+    return playerShip;
+}
+
 // Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {
@@ -77,7 +129,7 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0)); // This code is designed to be called 13 times
+    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(60*(rand()%27)), 0)); // This code is designed to be called 13 times
     return objects.at(objects.size() - 1);
 }
 
