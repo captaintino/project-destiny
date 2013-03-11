@@ -52,13 +52,16 @@
    <property name="font">
     <font>
      <family>FreeMono</family>
-     <pointsize>16</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
    <property name="text">
-    <string>   Instructions Go Here</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Instructions:&lt;/p&gt;&lt;p&gt;Maneuver through the field of&lt;/p&gt;&lt;p&gt;asteroids by moving your mouse.&lt;/p&gt;&lt;p&gt;Be sure not to crash!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
    </property>
   </widget>
  </widget>
