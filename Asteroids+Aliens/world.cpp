@@ -7,17 +7,32 @@
 
 #define PI 3.14159265
 
-World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
+World::World(bool hasAShip):hasShip(hasAShip)
 {
     for(int i = 0; i < 13; ++i){
         lanes[i] = true;
     }
 }
 
+World::~World()
+{
+    for(int i = 0; i < objects.size();){
+        delete objects.at(i);
+        objects.erase(objects.begin());
+    }
+    for(int i = 0; i < enemyProjectiles.size();){
+        delete enemyProjectiles.at(i);
+        enemyProjectiles.erase(enemyProjectiles.begin());
+    }
+    for(int i = 0; i < projectiles.size();){
+        delete projectiles.at(i);
+        projectiles.erase(projectiles.begin());
+    }
+}
+
 // Move positions of all the items in the world
 void World::move()
 {
-    playerShip->updateCoords();
     for(int i = 0; i < objects.size(); ++i){
         objects.at(i)->move(); // Move all the asteroids
     }
@@ -46,7 +61,7 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
-void World::checkUserShip()
+void World::checkUserShip(Ship * playerShip)
 {
     for(int cur = 0; cur < objects.size(); ++cur)
     {
@@ -83,13 +98,12 @@ void World::checkUserShip()
 
 void World::setUserShip(int new_x, int new_y, int width, int height)
 {
-
-    playerShip->setCoords(new_x, new_y, width, height);
+    //NULL METHOD?
 }
 
 Ship *World::getShip()
 {
-    return playerShip;
+    //NULL METHOD?
 }
 
 // Create an object in the model and return a pointer to it

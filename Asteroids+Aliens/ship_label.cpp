@@ -5,9 +5,8 @@
 #include<QDebug>
 #include<cstring>
 #include<QString>
-Ship_Label::Ship_Label(QWidget *parent, World *get_world): QLabel(parent), fire(true), window(parent), this_world(get_world)
+Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent), fire(true), window(parent), this_Universe(get_universe)
 {
-
     setGeometry(380, 540, 40, 40);
     setScaledContents(true);
     QPixmap img(":/images/Player_Ship.png");
@@ -19,19 +18,19 @@ Ship_Label::Ship_Label(QWidget *parent, World *get_world): QLabel(parent), fire(
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(shipToMouse()));
     //QObject::connect(this_world, SIGNAL(shipCrashed()), this, SLOT(crashed()));
     updateShip->start(10);
-    this_world->setUserShip(this->x(), this->y(), this->width(), this->height());
+    this_Universe->setUserShip(this->x(), this->y(), this->width(), this->height());
 }
 
 void Ship_Label::shipToMouse()
 {
     //this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 100, width(), height());
-    this_world->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
+    this_Universe->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
 
 }
 
 void Ship_Label::updateCoords()
 {
-    this->setGeometry(this_world->getShip()->getX(), this_world->getShip()->getY(), this->width(), this->height());
+    this->setGeometry(this_Universe->getShip()->getX(), this_Universe->getShip()->getY(), this->width(), this->height());
 }
 
 void Ship_Label::crashed()
