@@ -19,6 +19,8 @@ public:
     // Updates the timer's interval to be what it should be based on the current <level>
     void updateTimer(int level){timer->setInterval(sqrt(1000/level));}
 
+    void terminate();
+
 private slots:
     void updateModel(){theUniverse->move();theUniverse->incrementScore();}
 };

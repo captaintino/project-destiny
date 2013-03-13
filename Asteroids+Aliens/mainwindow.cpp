@@ -112,14 +112,16 @@ void MainWindow::levelEnd()
     universe->getWorld(0)->lameToWalk();
     updateTimer->start();
     qDebug("Current Level is:" + QString::number(level).toAscii());
+    levelTimer->start();
 }
 
 void MainWindow::userShipCrashed()
 {
-    updateTimer->disconnect();
     modelUpdater->terminate();
+    updateTimer->stop();
+    levelTimer->stop();
     user->crashed();
-    backgroundTimer->disconnect();
+    backgroundTimer->stop();
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
