@@ -89,7 +89,7 @@ void World::checkUserShip(Ship * playerShip)
                 ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
             {
 
-            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < 20))
+            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
             //{
                 playerShip->setHit(true);
                 shipCrashed();
