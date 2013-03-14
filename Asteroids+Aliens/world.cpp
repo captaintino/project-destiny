@@ -17,32 +17,43 @@ World::World(bool hasAShip):hasShip(hasAShip)
 
 World::~World()
 {
-    for(int i = 0; i < objects.size();){
-        delete objects.at(i);
-        objects.erase(objects.begin());
+    for(int i = 0; i < asteroids.size();++i){
+        delete asteroids.at(i);
     }
-    for(int i = 0; i < enemyProjectiles.size();){
+    asteroids.clear();
+    for(int i = 0; i < aliens.size(); ++i){
+        delete aliens.at(i);
+    }
+    aliens.clear();
+    for(int i = 0; i < enemyProjectiles.size();++i){
         delete enemyProjectiles.at(i);
-        enemyProjectiles.erase(enemyProjectiles.begin());
     }
-    for(int i = 0; i < projectiles.size();){
+    enemyProjectiles.clear();
+    for(int i = 0; i < projectiles.size();++i){
         delete projectiles.at(i);
-        projectiles.erase(projectiles.begin());
     }
+    projectiles.clear();
 }
 
 // Move positions of all the items in the world
 void World::move()
 {
-    for(int i = 0; i < objects.size(); ++i){
-        objects.at(i)->move(); // Move all the asteroids
+    for(int i = 0; i < asteroids.size(); ++i){
+        asteroids.at(i)->move(); // Move all the asteroids
+    }
+    for(int i = 0; i < aliens.size(); ++i){
+        aliens.at(i)->move(); // Move all the aliens
     }
 }
 
 // Set all objects in the world to moving
 void World::lameToWalk()
 {
-    for(Obstacle* obj:objects)
+    for(Obstacle* obj:asteroids)
+    {
+        obj->setSpeed(8);
+    }
+    for(Obstacle* obj:aliens)
     {
         obj->setSpeed(8);
     }
@@ -51,22 +62,64 @@ void World::lameToWalk()
 // Find <object_to_delete> in the world and delete it
 void World::deleteObject(Obstacle *object_to_delete)
 {
-    for(int i = 0; i < objects.size(); ++i)
+    for(int i = 0; i < asteroids.size(); ++i)
     {
-        if(objects.at(i) == object_to_delete)
+        if(asteroids.at(i) == object_to_delete)
         {
             delete object_to_delete;
-            objects.erase(objects.begin()+i);
-            break;
+            asteroids.erase(asteroids.begin()+i);
+            return;
+        }
+    }
+    for(int i = 0; i < aliens.size(); ++i)
+    {
+        if(aliens.at(i) == object_to_delete)
+        {
+            delete object_to_delete;
+            aliens.erase(aliens.begin()+i);
+            return;
         }
     }
 }
 
 void World::checkUserShip(Ship * playerShip)
 {
-    for(int cur = 0; cur < objects.size(); ++cur)
+    for(int cur = 0; cur < asteroids.size(); ++cur)
     {
-        Obstacle * obj = objects.at(cur);
+        Obstacle * obj = asteroids.at(cur);
+        double shipRad = playerShip->getW() / 2;
+        double shipX = playerShip->getX() + shipRad;
+        double shipY = playerShip->getY() + shipRad;
+
+        double objRad = obj->getW() / 2;
+        double objX = obj->getX() + objRad;
+        double objY = obj->getY() + objRad;
+
+        if(!(((objX - objRad) > (shipX + shipRad)) ||
+              ((shipX - shipRad) > (objX + objRad))) &&
+                !(((shipY + shipRad) < (objY - objRad)) ||
+                  ((objY + objRad) < (shipY - shipRad))))
+        {
+
+
+            //What follows is known as magic. It is what should never have to be done.
+            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+            {
+
+            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
+            //{
+                playerShip->setHit(true);
+                shipCrashed();
+            }
+        }
+    }
+    for(int cur = 0; cur < aliens.size(); ++cur)
+    {
+        Obstacle * obj = aliens.at(cur);
         double shipRad = playerShip->getW() / 2;
         double shipX = playerShip->getX() + shipRad;
         double shipY = playerShip->getY() + shipRad;
@@ -116,7 +169,7 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    return objectFactory(61.5 * objects.size(), -60 -(60*(rand()%27)), 0); // This code is designed to be called 13 times
+    return objectFactory(61.5 * asteroids.size(), -60 -(60*(rand()%10)), 0); // This code is designed to be called 13 times
 }
 
 // Open up lane for another item to be created in it
@@ -128,13 +181,20 @@ void World::resetLane(){
 // Randomly creates either an alien or an asteroid, places it in the proper vector and returns it
 Obstacle *World::objectFactory(int x, int y, int speed)
 {
-    switch(rand() % 2){
+    //if(level > 5){
+        int chooser = rand() % 2;
+    //}
+    //else{
+    //    int chooser = 0;
+    //}
+    switch(chooser){
     case 0:
-        objects.push_back(new Asteroid(x, y, speed));
+        asteroids.push_back(new Asteroid(x, y, speed));
+        return asteroids.at(asteroids.size() - 1);
         break;
     case 1:
-        objects.push_back(new Alien(x, y, speed));
+        aliens.push_back(new Alien(x, y, speed));
+        return aliens.at(aliens.size() - 1);
         break;
     }
-    return objects.at(objects.size() - 1);
 }

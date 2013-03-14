@@ -43,7 +43,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_btnStart_clicked()
 {
     the_Score = new QLabel(this);
-    the_Score->setGeometry(50,50,500,50); // Needs work *
+    the_Score->setGeometry(40,40,500,50); // Needs work *
+    the_Score->setStyleSheet("QLabel { color : yellow; font-size : 50px}");
     the_Score->show();
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
@@ -87,7 +88,12 @@ void MainWindow::update_positions()
     {
         objects.at(i)->update();
     }
-    the_Score->setText(QString::number(universe->getScore()));
+    QString num = QString::number(universe->getScore());
+    int numSize = num.size();
+    for(int i = 1; i < (numSize / 3.0); ++i){
+        num.insert(numSize - (i * 3), ',');
+    }
+    the_Score->setText(num);
 }
 
 void MainWindow::levelEnd()

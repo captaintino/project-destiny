@@ -13,7 +13,8 @@ class World: public QObject
 {
 private:
     Q_OBJECT;
-    vector<Obstacle *> objects;
+    vector<Obstacle *> asteroids;
+    vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
