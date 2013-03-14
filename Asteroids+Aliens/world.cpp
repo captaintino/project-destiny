@@ -1,5 +1,6 @@
 #include "world.h"
 #include<asteroid.h>
+#include<alien.h>
 #include<mainwindow.h>
 #include<QTimer>
 #include<cmath>
@@ -109,19 +110,31 @@ Obstacle* World::createObject(int level)
     lanes[lane] = false; // set lane to closed
     QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane())); // Fire off timer that will reopen the lane
     lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
-    objects.push_back(new Asteroid(61.5 * lane, -60)); // add item to world
-    return objects.at(objects.size() - 1); // send item back to label
+    return objectFactory(61.5 * lane, -60, 8); // add item to world and return it
 }
 
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(60*(rand()%27)), 0)); // This code is designed to be called 13 times
-    return objects.at(objects.size() - 1);
+    return objectFactory(61.5 * objects.size(), -60 -(60*(rand()%27)), 0); // This code is designed to be called 13 times
 }
 
 // Open up lane for another item to be created in it
 void World::resetLane(){
     lanes[lanesToReset.at(0)] = true; // Reopen the lane that has been closed the longest
     lanesToReset.erase(lanesToReset.begin()); // shift vector over
+}
+
+// Randomly creates either an alien or an asteroid, places it in the proper vector and returns it
+Obstacle *World::objectFactory(int x, int y, int speed)
+{
+    switch(rand() % 2){
+    case 0:
+        objects.push_back(new Asteroid(x, y, speed));
+        break;
+    case 1:
+        objects.push_back(new Alien(x, y, speed));
+        break;
+    }
+    return objects.at(objects.size() - 1);
 }

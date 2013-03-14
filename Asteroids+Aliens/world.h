@@ -19,6 +19,8 @@ private:
     vector<int> lanesToReset;
     bool hasShip;
     bool lanes[13];
+
+    Obstacle * objectFactory(int x, int y, int speed);
 public:
     World(bool hasAShip);
 
