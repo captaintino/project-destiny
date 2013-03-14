@@ -13,11 +13,12 @@ public:
 
     // Gets called when you call .start on the thread
     void run(){
+            this->setPriority(QThread::TimeCriticalPriority);
             timer->start();
         }
 
     // Updates the timer's interval to be what it should be based on the current <level>
-    void updateTimer(int level){timer->setInterval(sqrt(1000/level));}
+    void updateTimer(int level){timer->setInterval((2*(sqrt(100/level))) + 25);}
 
 private slots:
     void updateModel(){theUniverse->move();theUniverse->incrementScore();}

@@ -15,12 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setMouseTracking(true);
     backgroundTimer = new QTimer(this);
-    backgroundTimer->setInterval(33);
+    backgroundTimer->setInterval(60);
     background_counter = 1;
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
-    levelTimer->setInterval(10000);
+    levelTimer->setInterval(30000);
+
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
@@ -49,8 +50,8 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     ui->btnInstructions->setShown(false);
-    this->grabMouse(); // <-- we need to have an <Esc> option...
-    this->setCursor(Qt::BlankCursor);
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
     level = 1;
     universe = new Universe(level);

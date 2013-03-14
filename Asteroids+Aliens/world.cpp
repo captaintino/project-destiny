@@ -43,7 +43,7 @@ void World::lameToWalk()
 {
     for(Obstacle* obj:objects)
     {
-        obj->setSpeed(10);
+        obj->setSpeed(8);
     }
 }
 
@@ -74,7 +74,7 @@ void World::checkUserShip(Ship * playerShip)
         double objX = obj->getX() + objRad;
         double objY = obj->getY() + objRad;
 
-        if(!(((objX - objRad) > (shipX + shipRad)) ||
+        /*if(!(((objX - objRad) > (shipX + shipRad)) ||
               ((shipX - shipRad) > (objX + objRad))) &&
                 !(((shipY + shipRad) < (objY - objRad)) ||
                   ((objY + objRad) < (shipY - shipRad))))
@@ -87,14 +87,14 @@ void World::checkUserShip(Ship * playerShip)
                 ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
                 !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
                 ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
-            {
+            {*/
 
-            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
-            //{
+            if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
+            {
                 playerShip->setHit(true);
                 shipCrashed();
             }
-        }
+        //}
     }
 }
 

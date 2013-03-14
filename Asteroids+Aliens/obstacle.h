@@ -6,6 +6,7 @@ class Obstacle
 {
 protected:
     int x,y,h,w,speed;
+    bool isAlien;
     QString type;
 public:
     Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed);
