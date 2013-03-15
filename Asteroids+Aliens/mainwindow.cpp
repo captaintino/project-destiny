@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
-    levelTimer->setInterval(30000);
+    levelTimer->setInterval(10000);
 
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
@@ -63,6 +63,7 @@ void MainWindow::on_btnStart_clicked()
     for(int i = 0; i < 13; ++i)
     {
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     universe->getWorld(0)->lameToWalk();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
@@ -78,6 +79,7 @@ void MainWindow::rotateBackground()
     if(background_counter > 39)
         background_counter = 1;
     ui->label->setPixmap(":/images/background/" + QString::number(background_counter)+ ".jpg");
+    ui->label->setMouseTracking(false);
     ++background_counter;
 }
 
@@ -98,11 +100,16 @@ void MainWindow::update_positions()
 
 void MainWindow::levelEnd()
 {
-    updateTimer->stop();
-    for(int i = 0; i < objects.size();){
-        objects.at(i)->deleteLater();
-        objects.erase(objects.begin());
+    levelTimer->stop();
+    for(int i = 0; i < objects.size(); ++i){
+        objects.at(i)->setLevelOver();
     }
+    qDebug("level Ended");
+}
+
+void MainWindow::levelFinished()
+{
+    updateTimer->stop();
 
     modelUpdater->terminate(); // Not sure if this is the right method
 
@@ -110,9 +117,11 @@ void MainWindow::levelEnd()
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
+    objects.clear();
     for(int i = 0; i < 13; ++i)
     {
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     modelUpdater->updateTimer(level);
     modelUpdater->start();
@@ -121,6 +130,7 @@ void MainWindow::levelEnd()
     qDebug("Current Level is:" + QString::number(level).toAscii());
     levelTimer->start();
 }
+
 
 void MainWindow::userShipCrashed()
 {
@@ -132,6 +142,21 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+}
+
+void MainWindow::deleteLabel()
+{
+    for(int i = 0; i < objects.size(); ++i){
+        if(objects.at(i) == sender()){
+            sender()->deleteLater();
+            objects.erase(objects.begin() + i);
+            qDebug("deleted label: " + QString::number(i).toAscii());
+            break;
+        }
+    }
+    if(objects.size()<1){
+        QTimer::singleShot(500, this, SLOT(levelFinished()));
+    }
 }
 
 

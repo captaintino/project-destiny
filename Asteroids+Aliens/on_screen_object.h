@@ -13,13 +13,15 @@ private:
     Obstacle *game_object;
     World *this_world;
     int level;
+    bool levelOver;
 public:
     explicit on_screen_object(QWidget *parent, World *get_world, int initlevel);
     
     void update();
 
+    void setLevelOver();
 signals:
-    
+    void deleteMe();
 public slots:
     
 };

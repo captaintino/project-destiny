@@ -30,8 +30,10 @@ private slots:
     void levelEnd();
     void userShipCrashed();
 
-    void on_btnInstructions_clicked();
+    void deleteLabel();
+    void levelFinished();
 
+    void on_btnInstructions_clicked();
     void on_btnHighScores_clicked();
 
 private:
