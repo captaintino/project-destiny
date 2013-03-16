@@ -9,6 +9,7 @@
 #include<on_screen_object.h>
 #include<universethread.h>
 #include <instructionwindow.h>
+#include<highscorewindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -29,7 +30,11 @@ private slots:
     void levelEnd();
     void userShipCrashed();
 
+    void deleteLabel();
+    void levelFinished();
+
     void on_btnInstructions_clicked();
+    void on_btnHighScores_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -41,7 +46,9 @@ private:
     vector<on_screen_object *> objects;
     QThread * itemSpawn;
     InstructionWindow instructionWindow;
+    HighScoreWindow highScoreWindow;
     QLabel * the_Score;
+
 };
 
 #endif // MAINWINDOW_H

@@ -15,12 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setMouseTracking(true);
     backgroundTimer = new QTimer(this);
-    backgroundTimer->setInterval(33);
+    backgroundTimer->setInterval(60);
     background_counter = 1;
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
     levelTimer->setInterval(10000);
+
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
@@ -42,15 +43,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_btnStart_clicked()
 {
     the_Score = new QLabel(this);
-    the_Score->setGeometry(50,50,500,50); // Needs work *
+    the_Score->setGeometry(40,40,500,50); // Needs work *
+    the_Score->setStyleSheet("QLabel { color : yellow; font-size : 50px}");
     the_Score->show();
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     ui->btnInstructions->setShown(false);
-    this->grabMouse(); // <-- we need to have an <Esc> option...
-    this->setCursor(Qt::BlankCursor);
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(0,0);
     level = 1;
     universe = new Universe(level);
@@ -61,6 +63,7 @@ void MainWindow::on_btnStart_clicked()
     for(int i = 0; i < 13; ++i)
     {
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     universe->getWorld(0)->lameToWalk();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
@@ -76,6 +79,7 @@ void MainWindow::rotateBackground()
     if(background_counter > 39)
         background_counter = 1;
     ui->label->setPixmap(":/images/background/" + QString::number(background_counter)+ ".jpg");
+    ui->label->setMouseTracking(false);
     ++background_counter;
 }
 
@@ -86,16 +90,26 @@ void MainWindow::update_positions()
     {
         objects.at(i)->update();
     }
-    the_Score->setText(QString::number(universe->getScore()));
+    QString num = QString::number(universe->getScore());
+    int numSize = num.size();
+    for(int i = 1; i < (numSize / 3.0); ++i){
+        num.insert(numSize - (i * 3), ',');
+    }
+    the_Score->setText(num);
 }
 
 void MainWindow::levelEnd()
 {
-    updateTimer->stop();
-    for(int i = 0; i < objects.size();){
-        objects.at(i)->deleteLater();
-        objects.erase(objects.begin());
+    levelTimer->stop();
+    for(int i = 0; i < objects.size(); ++i){
+        objects.at(i)->setLevelOver();
     }
+    qDebug("level Ended");
+}
+
+void MainWindow::levelFinished()
+{
+    updateTimer->stop();
 
     modelUpdater->terminate(); // Not sure if this is the right method
 
@@ -103,26 +117,46 @@ void MainWindow::levelEnd()
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
+    objects.clear();
     for(int i = 0; i < 13; ++i)
     {
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     modelUpdater->updateTimer(level);
     modelUpdater->start();
     universe->getWorld(0)->lameToWalk();
     updateTimer->start();
     qDebug("Current Level is:" + QString::number(level).toAscii());
+    levelTimer->start();
 }
+
 
 void MainWindow::userShipCrashed()
 {
-    updateTimer->disconnect();
     modelUpdater->terminate();
+    updateTimer->stop();
+    levelTimer->stop();
     user->crashed();
-    backgroundTimer->disconnect();
+    backgroundTimer->stop();
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+}
+
+void MainWindow::deleteLabel()
+{
+    for(int i = 0; i < objects.size(); ++i){
+        if(objects.at(i) == sender()){
+            sender()->deleteLater();
+            objects.erase(objects.begin() + i);
+            qDebug("deleted label: " + QString::number(i).toAscii());
+            break;
+        }
+    }
+    if(objects.size()<1){
+        QTimer::singleShot(500, this, SLOT(levelFinished()));
+    }
 }
 
 
@@ -132,4 +166,11 @@ void MainWindow::on_btnInstructions_clicked()
     instructionWindow.show();
     instructionWindow.raise();
     instructionWindow.activateWindow();
+}
+
+void MainWindow::on_btnHighScores_clicked()
+{
+    highScoreWindow.show();
+    highScoreWindow.raise();
+    highScoreWindow.activateWindow();
 }

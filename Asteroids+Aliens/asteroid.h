@@ -5,7 +5,7 @@
 class Asteroid : public Obstacle
 {
 public:
-    Asteroid(int initx, int inity, int initspeed = 10);
+    Asteroid(int initx, int inity, int initspeed = 8);
 
     // Move the item down the screen
     void move();

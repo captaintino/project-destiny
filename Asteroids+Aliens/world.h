@@ -13,12 +13,15 @@ class World: public QObject
 {
 private:
     Q_OBJECT;
-    vector<Obstacle *> objects;
+    vector<Obstacle *> asteroids;
+    vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
     bool hasShip;
     bool lanes[13];
+
+    Obstacle * objectFactory(int x, int y, int speed);
 public:
     World(bool hasAShip);
 
