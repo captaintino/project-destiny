@@ -5,7 +5,7 @@
 #include<QDebug>
 #include<cstring>
 #include<QString>
-Ship_Label::Ship_Label(QWidget *parent): QLabel(parent), fire(true), window(parent)
+Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent), fire(true), window(parent), this_Universe(get_universe)
 {
     setGeometry(380, 540, 40, 40);
     setScaledContents(true);
@@ -16,21 +16,50 @@ Ship_Label::Ship_Label(QWidget *parent): QLabel(parent), fire(true), window(pare
     updateShip = new QTimer(this);
     fireShot = new QTimer(this);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(shipToMouse()));
+    //QObject::connect(this_world, SIGNAL(shipCrashed()), this, SLOT(crashed()));
     updateShip->start(10);
+    this_Universe->setUserShip(this->x(), this->y(), this->width(), this->height());
 }
 
 void Ship_Label::shipToMouse()
 {
     if ((window->cursor().pos().x() - 90) > 765) {
-        this->setGeometry(765, window->cursor().pos().y() - 90,width(),height());
+        this_Universe->setUserShip(765, window->cursor().pos().y() - 90,width(),height());
     } else if ((window->cursor().pos().x() - 90) < 0) {
-        this->setGeometry(0, window->cursor().pos().y() - 90, width(), height());
+        this_Universe->setUserShip(0, window->cursor().pos().y() - 90, width(), height());
     } else if ((window->cursor().pos().y() - 90) > 560){
-        //this->setGeometry(window->cursor().pos().x() - 90, 560, width(), height());
+        //this_Universe->setUserShip(window->cursor().pos().x() - 90, 560, width(), height());
     } else {
-        this->setGeometry(window->cursor().pos().x() - 90,
+        this_Universe->setUserShip(window->cursor().pos().x() - 90,
             window->cursor().pos().y() - 90,width(),height());
     }
+    //this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 100, width(), height());
+    //this_Universe->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
+
+}
+
+void Ship_Label::updateCoords()
+{
+    this->setGeometry(this_Universe->getShip()->getX(), this_Universe->getShip()->getY(), this->width(), this->height());
+}
+
+void Ship_Label::crashed()
+{
+    updateShip->disconnect();
+    updateShip->setInterval(30);
+    QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
+    qDebug("Ship Crashed!");
+}
+
+void Ship_Label::expAnimate()
+{
+    if(ship_frame > 39)
+        ship_frame = 1;
+    this->setPixmap(":/images/explosion/shipExp" + QString::number(ship_frame) + ".png");
+    setGeometry(this->x(), this->y(), 80, 80);
+
+    ++ship_frame;
+
 }
 
 

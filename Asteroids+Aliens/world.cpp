@@ -5,10 +5,28 @@
 #include<cmath>
 #include<QString>
 
-World::World(bool hasAShip, Ship *player):hasShip(hasAShip), playerShip(player)
+#define PI 3.14159265
+
+World::World(bool hasAShip):hasShip(hasAShip)
 {
     for(int i = 0; i < 13; ++i){
         lanes[i] = true;
+    }
+}
+
+World::~World()
+{
+    for(int i = 0; i < objects.size();){
+        delete objects.at(i);
+        objects.erase(objects.begin());
+    }
+    for(int i = 0; i < enemyProjectiles.size();){
+        delete enemyProjectiles.at(i);
+        enemyProjectiles.erase(enemyProjectiles.begin());
+    }
+    for(int i = 0; i < projectiles.size();){
+        delete projectiles.at(i);
+        projectiles.erase(projectiles.begin());
     }
 }
 
@@ -43,6 +61,43 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
+void World::checkUserShip(Ship * playerShip)
+{
+    for(int cur = 0; cur < objects.size(); ++cur)
+    {
+        Obstacle * obj = objects.at(cur);
+        double shipRad = playerShip->getW() / 2 - 5;
+        double shipX = playerShip->getX() + shipRad;
+        double shipY = playerShip->getY() + shipRad;
+
+        double objRad = obj->getW() / 2 - 5;
+        double objX = obj->getX() + objRad;
+        double objY = obj->getY() + objRad;
+
+        if(!(((objX - objRad) > (shipX + shipRad)) ||
+              ((shipX - shipRad) > (objX + objRad))) &&
+                !(((shipY + shipRad) < (objY - objRad)) ||
+                  ((objY + objRad) < (shipY - shipRad))))
+        {
+
+
+            //What follows is known as magic. It is what should never have to be done.
+            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+            {
+
+            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < 20))
+            //{
+                playerShip->setHit(true);
+                shipCrashed();
+            }
+        }
+    }
+}
+
 // Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {
@@ -61,7 +116,7 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(20*(rand()%27)), 0)); // This code is designed to be called 13 times
+    objects.push_back(new Asteroid(61.5 * objects.size(), -60 -(60*(rand()%27)), 0)); // This code is designed to be called 13 times
     return objects.at(objects.size() - 1);
 }
 

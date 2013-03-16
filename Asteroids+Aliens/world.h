@@ -14,15 +14,15 @@ class World: public QObject
 private:
     Q_OBJECT;
     vector<Obstacle *> objects;
-    vector<Obstacle *> aliens;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
     bool hasShip;
-    Ship * playerShip;
     bool lanes[13];
 public:
-    World(bool hasAShip, Ship *player);
+    World(bool hasAShip);
+
+    ~World();
 
     Obstacle* createObject(int level);
 
@@ -36,6 +36,8 @@ public:
 
     void deleteObject(Obstacle * object_to_delete);
 
+    void checkUserShip(Ship *playerShip);
+
     // Saves the world state
     string save();
 
@@ -43,6 +45,9 @@ public:
     void load();
 private slots:
     void resetLane();
+
+signals:
+    void shipCrashed();
 };
 
 #endif // WORLD_H

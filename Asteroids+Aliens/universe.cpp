@@ -4,22 +4,28 @@
 
 Universe::Universe(int lvl): level(lvl)
 {
-    Ship * playerShip = new Ship();
-    dimensions.push_back(new World(true, playerShip));
-    dimensions.at(0);
-    worldMove.start(sqrt(1000/lvl));
-    QObject::connect(&worldMove, SIGNAL(timeout()), this, SLOT(update_worlds()));
+    score = 0;
+    player = new Ship();
+    dimensions.push_back(new World(true));
+    connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
+    current_dimension = 0;
+}
+
+Universe::~Universe()
+{
+    for(int i = 0; i<dimensions.size();){
+        delete dimensions.at(i);
+        dimensions.erase(dimensions.begin());
+    }
+    delete player;
 }
 
 void Universe::move()
 {
-    dimensions.at(0)->move();
-}
-
-void Universe::update_worlds()
-{
+    player->updateCoords();
     for(int i=0; i<dimensions.size(); ++i)
     {
+        dimensions.at(i)->checkUserShip(player);
         dimensions.at(i)->move();
     }
 }
@@ -34,4 +40,32 @@ void Universe::load(string filename)
 void Universe::save()
 {
 
+}
+
+void Universe::clearWorlds()
+{
+    for(int i = 0; i < dimensions.size();){
+        delete dimensions.at(i);
+        dimensions.erase(dimensions.begin());
+    }
+}
+
+void Universe::createWorlds()
+{
+    dimensions.push_back(new World(true));
+    connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
+}
+
+void Universe::setUserShip(int new_x, int new_y, int width, int height)
+{
+    player->setCoords(new_x, new_y, width, height);
+}
+
+Ship *Universe::getShip()
+{
+    return player;
+}
+
+void Universe::shipCrashedSignal(){
+    shipCrashed();
 }
