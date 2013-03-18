@@ -15,6 +15,7 @@ namespace Ui {
 class MainWindow;
 }
 
+
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -36,6 +37,8 @@ private slots:
     void on_btnInstructions_clicked();
     void on_btnHighScores_clicked();
 
+    void on_btnCheat_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;
@@ -48,7 +51,7 @@ private:
     InstructionWindow instructionWindow;
     HighScoreWindow highScoreWindow;
     QLabel * the_Score;
-
+    bool cheat;
 };
 
 #endif // MAINWINDOW_H

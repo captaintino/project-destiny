@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 class Universe: public QObject
 {    
 private:
@@ -16,8 +17,9 @@ private:
     unsigned short level;
     Ship * player;
     Ship * playerShip;
+    bool cheat;
 public:
-    Universe(int lvl);
+    Universe(int lvl, bool b);
 
     ~Universe();
 
