@@ -2,18 +2,25 @@
 #define HIGHSCOREWINDOW_H
 
 #include <QWidget>
+#include <highscores.h>
 
 namespace Ui {
 class HighScoreWindow;
 }
 
-class HighScoreWindow : public QWidget
+class HighScoresObserver
+{
+    virtual void updateInstructions()=0;
+};
+
+class HighScoreWindow : public QWidget,public HighScoresObserver
 {
     Q_OBJECT
     
 public:
     explicit HighScoreWindow(QWidget *parent = 0);
     ~HighScoreWindow();
+    void updateInstructions(){}
     
 private slots:
     void on_btnBackToMainMenu_clicked();
@@ -21,5 +28,8 @@ private slots:
 private:
     Ui::HighScoreWindow *ui;
 };
+
+
+
 
 #endif // HIGHSCOREWINDOW_H

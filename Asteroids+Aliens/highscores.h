@@ -1,10 +1,13 @@
 #ifndef HIGHSCORES_H
 #define HIGHSCORES_H
-
 #include <vector>
 #include <string>
+#include <highscorewindow.h>
 
 using namespace std;
+
+
+
 
 class HighScores
 {

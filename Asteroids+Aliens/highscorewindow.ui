@@ -6,52 +6,86 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>434</height>
+    <width>416</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>High Score</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color:rgb(214, 68, 20);</string>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
-  <widget class="QPushButton" name="btnBackToMainMenu">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>390</y>
-     <width>191</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>FreeMono</family>
-     <pointsize>16</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Back to Menu</string>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblHighScoreContent">
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>271</width>
-     <height>341</height>
+     <width>421</width>
+     <height>471</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="autoFillBackground">
+    <bool>false</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/images/Main_Menu.jpg)</string>
+   </property>
+   <widget class="QPushButton" name="btnBackToMainMenu">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>430</y>
+      <width>173</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Back to Menu</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblHighScoreContent">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>271</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>High Score Goes Here</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

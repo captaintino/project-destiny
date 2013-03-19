@@ -45,8 +45,8 @@ private:
     UniverseThread * modelUpdater;
     vector<on_screen_object *> objects;
     QThread * itemSpawn;
-    InstructionWindow instructionWindow;
     HighScoreWindow highScoreWindow;
+    InstructionWindow instructionWindow;
     QLabel * the_Score;
 
 };
