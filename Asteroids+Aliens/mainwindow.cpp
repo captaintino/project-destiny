@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     levelTimer = new QTimer(this);
     levelTimer->setInterval(10000);
     cheat = false;
+    ui->lblLevel->setShown(false);
+    ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
@@ -51,11 +53,16 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     ui->btnInstructions->setShown(false);
+    ui->spinCheat->setShown(false);
+    ui->lblLevel->setShown(false);
     //this->grabMouse(); // <-- we need to have an <Esc> option...
     //this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(340,520);
-
-    level = 1;
+    if (cheat) {
+        level = ui->spinCheat->value();
+    } else {
+        level = 1;
+    }
     universe = new Universe(level, cheat);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
@@ -186,9 +193,13 @@ void MainWindow::on_btnCheat_clicked()
     if (ui->btnCheat->text() == "Cheat Mode: OFF") {
         ui->btnCheat->setText("Cheat Mode: ON");
         cheat = true;
+        ui->lblLevel->setShown(true);
+        ui->spinCheat->setShown(true);
     } else {
         ui->btnCheat->setText("Cheat Mode: OFF");
         cheat = false;
+        ui->lblLevel->setShown(false);
+        ui->spinCheat->setShown(false);
     }
 
 }
