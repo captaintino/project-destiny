@@ -53,7 +53,8 @@ void MainWindow::on_btnStart_clicked()
     ui->btnInstructions->setShown(false);
     //this->grabMouse(); // <-- we need to have an <Esc> option...
     //this->setCursor(Qt::BlankCursor);
-    //QApplication::desktop()->cursor().setPos(0,0);
+    QApplication::desktop()->cursor().setPos(340,520);
+
     level = 1;
     universe = new Universe(level, cheat);
     modelUpdater = new UniverseThread(universe, level);
@@ -104,7 +105,6 @@ void MainWindow::levelEnd()
     for(int i = 0; i < objects.size(); ++i){
         objects.at(i)->setLevelOver();
     }
-    qDebug("level Ended");
 }
 
 void MainWindow::levelFinished()
@@ -114,6 +114,7 @@ void MainWindow::levelFinished()
     modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
+    // bakground speedup
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
@@ -131,6 +132,12 @@ void MainWindow::levelFinished()
     levelTimer->start();
 }
 
+void MainWindow::accelerateBackground()
+{
+    if(level % 2 == 0){
+        backgroundTimer->setInterval(backgroundTimer->interval() - 1);
+    }
+}
 
 void MainWindow::userShipCrashed()
 {
@@ -150,7 +157,6 @@ void MainWindow::deleteLabel()
         if(objects.at(i) == sender()){
             sender()->deleteLater();
             objects.erase(objects.begin() + i);
-            qDebug("deleted label: " + QString::number(i).toAscii());
             break;
         }
     }
