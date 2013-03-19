@@ -169,7 +169,7 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect()
 {
-    return objectFactory(61.5 * asteroids.size(), -60 -(60*(rand()%10)), 0); // This code is designed to be called 13 times
+    return objectFactory(61.5 * (asteroids.size() + aliens.size()), -60 -(60*(rand()%10)), 0); // This code is designed to be called 13 times
 }
 
 // Open up lane for another item to be created in it

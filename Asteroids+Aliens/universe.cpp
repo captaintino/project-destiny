@@ -2,7 +2,7 @@
 #include<cmath>
 #include<mainwindow.h>
 
-Universe::Universe(int lvl): level(lvl)
+Universe::Universe(int lvl, bool b): level(lvl), cheat(b)
 {
     score = 0;
     player = new Ship();
@@ -25,7 +25,9 @@ void Universe::move()
     player->updateCoords();
     for(int i=0; i<dimensions.size(); ++i)
     {
-        dimensions.at(i)->checkUserShip(player);
+        if (!cheat) {
+            dimensions.at(i)->checkUserShip(player);
+        }
         dimensions.at(i)->move();
     }
 }

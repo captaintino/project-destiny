@@ -23,8 +23,18 @@ Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent),
 
 void Ship_Label::shipToMouse()
 {
+    if ((window->cursor().pos().x() - 90) > 765) {
+        this_Universe->setUserShip(765, window->cursor().pos().y() - 90,width(),height());
+    } else if ((window->cursor().pos().x() - 90) < 0) {
+        this_Universe->setUserShip(0, window->cursor().pos().y() - 90, width(), height());
+    } else if ((window->cursor().pos().y() - 90) > 560){
+        //this_Universe->setUserShip(window->cursor().pos().x() - 90, 560, width(), height());
+    } else {
+        this_Universe->setUserShip(window->cursor().pos().x() - 90,
+            window->cursor().pos().y() - 90,width(),height());
+    }
     //this->setGeometry(window->cursor().pos().x() - 90, window->cursor().pos().y() - 100, width(), height());
-    this_Universe->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
+    //this_Universe->setUserShip(window->cursor().pos().x() - 90, window->cursor().pos().y() - 90, this->width(), this->height());
 
 }
 

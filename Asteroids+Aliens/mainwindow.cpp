@@ -21,7 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
     levelTimer->setInterval(10000);
-
+    cheat = false;
+    ui->lblLevel->setShown(false);
+    ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
 }
 
@@ -51,11 +53,17 @@ void MainWindow::on_btnStart_clicked()
     ui->btnHighScores->setShown(false);
     ui->btnLoad->setShown(false);
     ui->btnInstructions->setShown(false);
+    ui->spinCheat->setShown(false);
+    ui->lblLevel->setShown(false);
     //this->grabMouse(); // <-- we need to have an <Esc> option...
     //this->setCursor(Qt::BlankCursor);
-    QApplication::desktop()->cursor().setPos(0,0);
-    level = 1;
-    universe = new Universe(level);
+    QApplication::desktop()->cursor().setPos(340,520);
+    if (cheat) {
+        level = ui->spinCheat->value();
+    } else {
+        level = 1;
+    }
+    universe = new Universe(level, cheat);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
@@ -104,7 +112,6 @@ void MainWindow::levelEnd()
     for(int i = 0; i < objects.size(); ++i){
         objects.at(i)->setLevelOver();
     }
-    qDebug("level Ended");
 }
 
 void MainWindow::levelFinished()
@@ -114,6 +121,7 @@ void MainWindow::levelFinished()
     modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
+    // bakground speedup
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
@@ -131,6 +139,12 @@ void MainWindow::levelFinished()
     levelTimer->start();
 }
 
+void MainWindow::accelerateBackground()
+{
+    if(level % 2 == 0){
+        backgroundTimer->setInterval(backgroundTimer->interval() - 1);
+    }
+}
 
 void MainWindow::userShipCrashed()
 {
@@ -150,7 +164,6 @@ void MainWindow::deleteLabel()
         if(objects.at(i) == sender()){
             sender()->deleteLater();
             objects.erase(objects.begin() + i);
-            qDebug("deleted label: " + QString::number(i).toAscii());
             break;
         }
     }
@@ -173,4 +186,20 @@ void MainWindow::on_btnHighScores_clicked()
     highScoreWindow.show();
     highScoreWindow.raise();
     highScoreWindow.activateWindow();
+}
+
+void MainWindow::on_btnCheat_clicked()
+{
+    if (ui->btnCheat->text() == "Cheat Mode: OFF") {
+        ui->btnCheat->setText("Cheat Mode: ON");
+        cheat = true;
+        ui->lblLevel->setShown(true);
+        ui->spinCheat->setShown(true);
+    } else {
+        ui->btnCheat->setText("Cheat Mode: OFF");
+        cheat = false;
+        ui->lblLevel->setShown(false);
+        ui->spinCheat->setShown(false);
+    }
+
 }
