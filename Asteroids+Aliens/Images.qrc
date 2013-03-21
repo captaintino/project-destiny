@@ -76,5 +76,6 @@
         <file>images/explosion/shipExp29.png</file>
         <file>images/alien.png</file>
         <file>images/projectile.png</file>
+        <file>images/transparent.png</file>
     </qresource>
 </RCC>

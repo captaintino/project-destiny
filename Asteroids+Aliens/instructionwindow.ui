@@ -33,11 +33,12 @@
      <x>0</x>
      <y>0</y>
      <width>421</width>
-     <height>471</height>
+     <height>481</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url(:/images/Main_Menu.jpg)</string>
+    <string notr="true">background-image:url(:/images/Main_Menu.jpg);
+background-position: bottom right;</string>
    </property>
    <widget class="QLabel" name="lblInstructionContent">
     <property name="enabled">
@@ -45,9 +46,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>311</width>
+      <x>20</x>
+      <y>30</y>
+      <width>361</width>
       <height>341</height>
      </rect>
     </property>
@@ -59,8 +60,14 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);</string>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Instructions:&lt;/p&gt;&lt;p&gt;Maneuver through the field of&lt;/p&gt;&lt;p&gt;asteroids by moving your mouse.&lt;/p&gt;&lt;p&gt;Be sure not to crash!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Instructions:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Maneuver through the field of&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;asteroids by moving your mouse.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Be sure not to crash!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -85,6 +92,9 @@
       <weight>75</weight>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
