@@ -77,5 +77,6 @@
         <file>images/alien.png</file>
         <file>images/projectile.png</file>
         <file>images/transparent.png</file>
+        <file>highscores.txt</file>
     </qresource>
 </RCC>

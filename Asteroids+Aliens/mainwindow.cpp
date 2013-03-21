@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
     connect(levelTimer,SIGNAL(timeout()), this, SLOT(on_levelTimer_finished()));
+    highscores = new HighScores(&highScoreWindow);
+
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +69,7 @@ void MainWindow::on_btnStart_clicked()
         level = 1;
     }
     universe = new Universe(level, cheat);
+    highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
