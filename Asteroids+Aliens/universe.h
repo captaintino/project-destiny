@@ -55,9 +55,11 @@ public:
 
 signals:
     void shipCrashed();
+    void projectileCreated();
 
 private slots:
     void shipCrashedSignal();
+    void projectileCreatedSignal();
 };
 
 #endif // UNIVERSE_Hl

@@ -31,6 +31,7 @@ private slots:
     void update_positions();
     void levelEnd();
     void userShipCrashed();
+    void makeProjectile();
 
     void deleteLabel();
     void levelFinished();
@@ -47,7 +48,7 @@ private:
     Ship_Label * user;
     int background_counter, level;
     UniverseThread * modelUpdater;
-    vector<on_screen_object *> objects;
+    vector<on_screen_object *> objects, projectiles;
     QThread * itemSpawn;
     HighScoreWindow highScoreWindow;
     InstructionWindow instructionWindow;

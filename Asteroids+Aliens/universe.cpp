@@ -8,6 +8,7 @@ Universe::Universe(int lvl, bool b): level(lvl), cheat(b)
     player = new Ship();
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
+    connect(dimensions.at(0), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
     current_dimension = 0;
 }
 
@@ -56,6 +57,7 @@ void Universe::createWorlds()
 {
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
+    connect(dimensions.at(0), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
 }
 
 void Universe::setUserShip(int new_x, int new_y, int width, int height)
@@ -70,4 +72,9 @@ Ship *Universe::getShip()
 
 void Universe::shipCrashedSignal(){
     shipCrashed();
+}
+
+void Universe::projectileCreatedSignal()
+{
+    projectileCreated();
 }

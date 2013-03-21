@@ -5,10 +5,11 @@
 #include<QTimer>
 #include<cmath>
 #include<QString>
+#include "projectile.h"
 
 #define PI 3.14159265
 
-World::World(bool hasAShip):hasShip(hasAShip)
+World::World(bool hasAShip):hasShip(hasAShip), projectileCountdown(40)
 {
     for(int i = 0; i < 13; ++i){
         lanes[i] = true;
@@ -44,6 +45,10 @@ void World::move()
     for(int i = 0; i < aliens.size(); ++i){
         aliens.at(i)->move(); // Move all the aliens
     }
+    for(int i = 0; i < enemyProjectiles.size(); ++i){
+        enemyProjectiles.at(i)->move(); // Move all the projectiles
+    }
+    projectileGenerator();
 }
 
 // Set all objects in the world to moving
@@ -150,6 +155,28 @@ void World::checkUserShip(Ship * playerShip)
             }
         }
     }
+}
+//=======================================================================================
+//Generates projectiles based on a random number countdown between 20 and 40.
+void World::projectileGenerator()
+{
+    --projectileCountdown;
+    if(projectileCountdown < 1)
+    {
+        projectileCountdown = (20 + (rand() % 21));
+        if(aliens.size())
+        {
+            Obstacle * shootingAlien = aliens.at(rand() % aliens.size());
+            enemyProjectiles.push_back(new Projectile(shootingAlien->getX() + (shootingAlien->getW() / 2), (shootingAlien->getY() + shootingAlien->getH())));
+            projectileCreated();
+        }
+    }
+}
+//=======================================================================================
+//Returns a pointer to the most recently created projectile
+Obstacle * World::getLastProjectile()
+{
+    return enemyProjectiles.at(enemyProjectiles.size() - 1);
 }
 
 // Create an object in the model and return a pointer to it

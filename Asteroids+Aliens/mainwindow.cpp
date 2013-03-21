@@ -80,6 +80,7 @@ void MainWindow::on_btnStart_clicked()
     levelTimer->start();
     modelUpdater->start();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
+    QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
 }
 
 
@@ -98,6 +99,10 @@ void MainWindow::update_positions()
     for(int i=0; i<objects.size(); ++i)
     {
         objects.at(i)->update();
+    }
+    for(int i=0; i<projectiles.size(); ++i)
+    {
+        projectiles.at(i)->update();
     }
     QString num = QString::number(universe->getScore());
     int numSize = num.size();
@@ -127,6 +132,10 @@ void MainWindow::levelFinished()
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
+    for(int i = 0; i < projectiles.size(); ++i){
+        projectiles.at(i)->deleteLater();
+    }
+    projectiles.clear();
     objects.clear();
     for(int i = 0; i < 13; ++i)
     {
@@ -158,6 +167,12 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+}
+
+void MainWindow::makeProjectile()
+{
+    projectiles.push_back(new on_screen_object(this,universe->getWorld(0),level, universe->getWorld(0)->getLastProjectile()));
+    connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
 void MainWindow::deleteLabel()
