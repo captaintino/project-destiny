@@ -46,7 +46,8 @@ void MainWindow::on_btnStart_clicked()
 {
     the_Score = new QLabel(this);
     the_Score->setGeometry(40,40,500,50); // Needs work *
-    the_Score->setStyleSheet("QLabel { color : yellow; font-size : 50px}");
+    the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
+    the_Score->raise();
     the_Score->show();
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
@@ -103,6 +104,7 @@ void MainWindow::update_positions()
     for(int i = 1; i < (numSize / 3.0); ++i){
         num.insert(numSize - (i * 3), ',');
     }
+    the_Score->raise();
     the_Score->setText(num);
 }
 
