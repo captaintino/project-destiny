@@ -40,6 +40,8 @@ private slots:
 
     void on_btnCheat_clicked();
 
+    void on_btnMultiplayer_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;

@@ -131,6 +131,24 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="btnMultiplayer">
+      <property name="font">
+       <font>
+        <family>FreeMono</family>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Multiplayer</string>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="btnLoad">
       <property name="font">
        <font>

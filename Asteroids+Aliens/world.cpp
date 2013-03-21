@@ -5,6 +5,7 @@
 #include<QTimer>
 #include<cmath>
 #include<QString>
+#include<sstream>
 
 #define PI 3.14159265
 
@@ -150,6 +151,24 @@ void World::checkUserShip(Ship * playerShip)
             }
         }
     }
+}
+
+string World::save()
+{
+    string output;
+    output = to_string(asteroids.size()) + " ";
+    for (int i = 0; i < asteroids.size(); ++i) {
+        Asteroid *a = dynamic_cast<Asteroid *>(asteroids.at(i));
+        output += a->save() + " ";
+    }
+
+    output += to_string(aliens.size()) + " ";
+    for (int i = 0; i < aliens.size(); ++i) {
+        Alien *a = dynamic_cast<Alien *>(aliens.at(i));
+        output += a->save() + " ";
+    }
+
+    return output;
 }
 
 // Create an object in the model and return a pointer to it

@@ -1,6 +1,8 @@
 #include "universe.h"
 #include<cmath>
 #include<mainwindow.h>
+#include<fstream>
+#include<sstream>
 
 Universe::Universe(int lvl, bool b): level(lvl), cheat(b)
 {
@@ -41,6 +43,24 @@ void Universe::load(string filename)
 // Saves game state to file
 void Universe::save()
 {
+    ofstream outfile("save.txt");
+
+    if (!outfile)
+    {
+        exit(1);
+    }
+
+    string output;
+
+    output = to_string(level) + " ";
+    output += to_string(score) + " ";
+    output += to_string(player->getX()) + " ";
+    output += to_string(player->getY()) + " ";
+
+    for (int i = 0; i < dimensions.size(); ++i) {
+        World *w = dimensions.at(i);
+        output += w->save();
+    }
 
 }
 

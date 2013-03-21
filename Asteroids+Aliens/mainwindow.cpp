@@ -55,6 +55,7 @@ void MainWindow::on_btnStart_clicked()
     ui->btnInstructions->setShown(false);
     ui->spinCheat->setShown(false);
     ui->lblLevel->setShown(false);
+    ui->btnMultiplayer->setShown(false);
     //this->grabMouse(); // <-- we need to have an <Esc> option...
     //this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(340,520);
@@ -201,5 +202,10 @@ void MainWindow::on_btnCheat_clicked()
         ui->lblLevel->setShown(false);
         ui->spinCheat->setShown(false);
     }
+
+}
+
+void MainWindow::on_btnMultiplayer_clicked()
+{
 
 }
