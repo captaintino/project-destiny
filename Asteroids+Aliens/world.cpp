@@ -56,11 +56,11 @@ void World::lameToWalk()
 {
     for(Obstacle* obj:asteroids)
     {
-        obj->setSpeed(8);
+        obj->setSpeed(10);
     }
     for(Obstacle* obj:aliens)
     {
-        obj->setSpeed(8);
+        obj->setSpeed(10);
     }
 }
 
