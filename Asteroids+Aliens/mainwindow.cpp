@@ -46,7 +46,8 @@ void MainWindow::on_btnStart_clicked()
 {
     the_Score = new QLabel(this);
     the_Score->setGeometry(40,40,500,50); // Needs work *
-    the_Score->setStyleSheet("QLabel { color : yellow; font-size : 50px}");
+    the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
+    the_Score->raise();
     the_Score->show();
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
@@ -80,6 +81,7 @@ void MainWindow::on_btnStart_clicked()
     levelTimer->start();
     modelUpdater->start();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
+    QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
 }
 
 
@@ -99,11 +101,16 @@ void MainWindow::update_positions()
     {
         objects.at(i)->update();
     }
+    for(int i=0; i<projectiles.size(); ++i)
+    {
+        projectiles.at(i)->update();
+    }
     QString num = QString::number(universe->getScore());
     int numSize = num.size();
     for(int i = 1; i < (numSize / 3.0); ++i){
         num.insert(numSize - (i * 3), ',');
     }
+    the_Score->raise();
     the_Score->setText(num);
 }
 
@@ -126,6 +133,10 @@ void MainWindow::levelFinished()
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
+    for(int i = 0; i < projectiles.size(); ++i){
+        projectiles.at(i)->deleteLater();
+    }
+    projectiles.clear();
     objects.clear();
     for(int i = 0; i < 13; ++i)
     {
@@ -157,6 +168,12 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+}
+
+void MainWindow::makeProjectile()
+{
+    projectiles.push_back(new on_screen_object(this,universe->getWorld(0),level, universe->getWorld(0)->getLastProjectile()));
+    connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
 void MainWindow::deleteLabel()

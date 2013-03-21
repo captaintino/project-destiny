@@ -5,11 +5,11 @@
 #include<QTimer>
 #include<cmath>
 #include<QString>
-#include<sstream>
+#include "projectile.h"
 
 #define PI 3.14159265
 
-World::World(bool hasAShip):hasShip(hasAShip)
+World::World(bool hasAShip):hasShip(hasAShip), projectileCountdown(40)
 {
     for(int i = 0; i < 13; ++i){
         lanes[i] = true;
@@ -45,6 +45,10 @@ void World::move()
     for(int i = 0; i < aliens.size(); ++i){
         aliens.at(i)->move(); // Move all the aliens
     }
+    for(int i = 0; i < enemyProjectiles.size(); ++i){
+        enemyProjectiles.at(i)->move(); // Move all the projectiles
+    }
+    projectileGenerator();
 }
 
 // Set all objects in the world to moving
@@ -52,11 +56,11 @@ void World::lameToWalk()
 {
     for(Obstacle* obj:asteroids)
     {
-        obj->setSpeed(8);
+        obj->setSpeed(10);
     }
     for(Obstacle* obj:aliens)
     {
-        obj->setSpeed(8);
+        obj->setSpeed(10);
     }
 }
 
@@ -85,12 +89,14 @@ void World::deleteObject(Obstacle *object_to_delete)
 
 void World::checkUserShip(Ship * playerShip)
 {
+
     for(int cur = 0; cur < asteroids.size(); ++cur)
     {
-        Obstacle * obj = asteroids.at(cur);
         double shipRad = playerShip->getW() / 2;
         double shipX = playerShip->getX() + shipRad;
         double shipY = playerShip->getY() + shipRad;
+
+        Obstacle * obj = asteroids.at(cur);
 
         double objRad = obj->getW() / 2;
         double objX = obj->getX() + objRad;
@@ -101,8 +107,6 @@ void World::checkUserShip(Ship * playerShip)
                 !(((shipY + shipRad) < (objY - objRad)) ||
                   ((objY + objRad) < (shipY - shipRad))))
         {
-
-
             //What follows is known as magic. It is what should never have to be done.
             //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
             if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
@@ -110,9 +114,6 @@ void World::checkUserShip(Ship * playerShip)
                 !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
                 ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
             {
-
-            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
-            //{
                 playerShip->setHit(true);
                 shipCrashed();
             }
@@ -120,10 +121,11 @@ void World::checkUserShip(Ship * playerShip)
     }
     for(int cur = 0; cur < aliens.size(); ++cur)
     {
-        Obstacle * obj = aliens.at(cur);
         double shipRad = playerShip->getW() / 2;
         double shipX = playerShip->getX() + shipRad;
         double shipY = playerShip->getY() + shipRad;
+
+        Obstacle * obj = aliens.at(cur);        
 
         double objRad = obj->getW() / 2;
         double objX = obj->getX() + objRad;
@@ -134,8 +136,6 @@ void World::checkUserShip(Ship * playerShip)
                 !(((shipY + shipRad) < (objY - objRad)) ||
                   ((objY + objRad) < (shipY - shipRad))))
         {
-
-
             //What follows is known as magic. It is what should never have to be done.
             //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
             if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
@@ -143,14 +143,56 @@ void World::checkUserShip(Ship * playerShip)
                 !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
                 ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
             {
-
-            //if(sqrt(((shipX - objX)*(shipX - objX)) + ((shipY - objY)*(shipY - objY)) < (shipRad + objRad)))
-            //{
                 playerShip->setHit(true);
                 shipCrashed();
             }
         }
     }
+    for(int cur = 0; cur < enemyProjectiles.size(); ++cur)
+    {
+
+        double shipRad = playerShip->getW() / 2;
+        double shipX = playerShip->getX() + shipRad;
+        double shipY = playerShip->getY() + shipRad;
+
+        Obstacle * obj = enemyProjectiles.at(cur);
+
+        double objW = obj->getW() / 2;
+        double objH = obj->getH() / 2;
+        double objX = obj->getX() + objW;
+        double objY = obj->getY() + objH;
+
+        if(!(((objX - objW) > (shipX + shipRad)) ||
+              ((shipX - shipRad) > (objX + objW))) &&
+                !(((shipY + shipRad) < (objY - objH)) ||
+                  ((objY + objH) < (shipY - shipRad))))
+        {
+            playerShip->setHit(true);
+            shipCrashed();
+        }
+    }
+}
+//=======================================================================================
+//Generates projectiles based on a random number countdown between 20 and 40.
+void World::projectileGenerator()
+{
+    --projectileCountdown;
+    if(projectileCountdown < 1)
+    {
+        projectileCountdown = (20 + (rand() % 21));
+        if(aliens.size())
+        {
+            Obstacle * shootingAlien = aliens.at(rand() % aliens.size());
+            enemyProjectiles.push_back(new Projectile(shootingAlien->getX() + (shootingAlien->getW() / 2), (shootingAlien->getY() + shootingAlien->getH())));
+            projectileCreated();
+        }
+    }
+}
+//=======================================================================================
+//Returns a pointer to the most recently created projectile
+Obstacle * World::getLastProjectile()
+{
+    return enemyProjectiles.at(enemyProjectiles.size() - 1);
 }
 
 string World::save()

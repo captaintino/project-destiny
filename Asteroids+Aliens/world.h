@@ -22,6 +22,7 @@ private:
     vector<int> lanesToReset;
     bool hasShip;
     bool lanes[13];
+    int projectileCountdown;
 
     Obstacle * objectFactory(int x, int y, int speed);
 public:
@@ -33,6 +34,8 @@ public:
 
     Obstacle* createLameOjbect();
 
+    Obstacle* getLastProjectile();
+
     void collision();
 
     void move();
@@ -42,6 +45,8 @@ public:
     void deleteObject(Obstacle * object_to_delete);
 
     void checkUserShip(Ship *playerShip);
+
+    void projectileGenerator();
 
     // Saves the world state
     string save();
@@ -53,6 +58,7 @@ private slots:
 
 signals:
     void shipCrashed();
+    void projectileCreated();
 };
 
 #endif // WORLD_H

@@ -32,7 +32,8 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url(:/images/Main_Menu.jpg)</string>
+    <string notr="true">background-image:url(:/images/Main_Menu.jpg);
+background-position: bottom right;</string>
    </property>
    <widget class="QPushButton" name="btnBackToMainMenu">
     <property name="geometry">
@@ -50,6 +51,9 @@
       <weight>75</weight>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/transparent.png);</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
@@ -80,7 +84,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">background-image: url(:/images/transparent.png);</string>
     </property>
     <property name="text">
      <string>High Score Goes Here</string>

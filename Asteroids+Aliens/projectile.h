@@ -8,6 +8,8 @@ public:
     Projectile(int initx, int inity);
 
     void move();
+
+    std::string save() {}
 };
 
 #endif // PROJECTILE_H
