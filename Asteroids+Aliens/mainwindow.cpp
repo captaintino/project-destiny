@@ -189,6 +189,7 @@ void MainWindow::deleteLabel()
     }
     if(objects.size()<1){
         QTimer::singleShot(500, this, SLOT(levelFinished()));
+        //put UPDATE username score alive level
     }
 }
 
