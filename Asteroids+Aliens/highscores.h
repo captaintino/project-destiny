@@ -2,20 +2,25 @@
 #define HIGHSCORES_H
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 #include <highscorewindow.h>
+#include <universe.h>
+
+#include <QString>
 
 using namespace std;
 
 
-
+class HighScoresObserver;
 
 class HighScores
 {
-//std::vector<string> usernames;
-//std::vector<int> scores;
-vector<HighScores> scoreList;
-string username;
-string score;
+vector<string>usernames;
+vector<int> scores;
+Universe* universe;
+HighScoresObserver* observer;
 
 public:
     HighScores();
@@ -30,7 +35,8 @@ public:
     void display();
 
     //parses data from highscores.txt
-    void parseData(string dataString);
+    void evaluate();
 };
 
 #endif // HIGHSCORES_H
+

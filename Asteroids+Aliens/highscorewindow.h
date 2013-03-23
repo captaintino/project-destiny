@@ -1,8 +1,11 @@
 #ifndef HIGHSCOREWINDOW_H
 #define HIGHSCOREWINDOW_H
 
+#include <vector>
 #include <QWidget>
 #include <highscores.h>
+
+using namespace std;
 
 namespace Ui {
 class HighScoreWindow;
@@ -10,7 +13,8 @@ class HighScoreWindow;
 
 class HighScoresObserver
 {
-    virtual void updateInstructions()=0;
+  public:
+    virtual void updateHighScore(vector<string>&usernames,vector<int>&scores)=0;
 };
 
 class HighScoreWindow : public QWidget,public HighScoresObserver
@@ -20,7 +24,7 @@ class HighScoreWindow : public QWidget,public HighScoresObserver
 public:
     explicit HighScoreWindow(QWidget *parent = 0);
     ~HighScoreWindow();
-    void updateInstructions(){}
+    void updateHighScore(vector<string>&usernames,vector<int>&scores);
     
 private slots:
     void on_btnBackToMainMenu_clicked();

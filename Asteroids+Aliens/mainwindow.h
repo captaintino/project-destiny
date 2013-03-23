@@ -10,6 +10,7 @@
 #include<universethread.h>
 #include <instructionwindow.h>
 #include<highscorewindow.h>
+#include<highscores.h>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,10 @@ private slots:
 
     void on_btnMultiplayer_clicked();
 
+    void on_btnLoad_clicked();
+
+    void on_levelTimer_finished();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;
@@ -55,6 +60,7 @@ private:
     HighScoreWindow highScoreWindow;
     InstructionWindow instructionWindow;
     QLabel * the_Score;
+    HighScores * highscores;
     bool cheat;
 };
 

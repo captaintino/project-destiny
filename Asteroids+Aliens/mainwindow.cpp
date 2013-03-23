@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lblLevel->setShown(false);
     ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
+    connect(levelTimer,SIGNAL(timeout()), this, SLOT(on_levelTimer_finished()));
 }
 
 MainWindow::~MainWindow()
@@ -168,6 +169,7 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+    highscores->save();
 }
 
 void MainWindow::makeProjectile()
@@ -200,7 +202,8 @@ void MainWindow::on_btnInstructions_clicked()
 }
 
 void MainWindow::on_btnHighScores_clicked()
-{
+{    
+    highscores->display();
     highScoreWindow.show();
     highScoreWindow.raise();
     highScoreWindow.activateWindow();
@@ -225,4 +228,14 @@ void MainWindow::on_btnCheat_clicked()
 void MainWindow::on_btnMultiplayer_clicked()
 {
 
+}
+
+void MainWindow::on_btnLoad_clicked()
+{
+    highscores->load();
+}
+
+void MainWindow::on_levelTimer_finished()
+{
+    highscores->save();
 }
