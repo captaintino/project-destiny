@@ -22,9 +22,9 @@ vector<int> scores;
 Universe* universe;
 HighScoresObserver* observer;
 
-public:
-    HighScores();
 
+public:
+    HighScores(HighScoresObserver *win);
     //saves the high scores to a file
     void save();
 
@@ -36,6 +36,8 @@ public:
 
     //parses data from highscores.txt
     void evaluate();
+
+    void setUniverse(Universe *uni);
 };
 
 #endif // HIGHSCORES_H

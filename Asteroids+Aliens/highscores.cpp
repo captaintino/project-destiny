@@ -1,10 +1,11 @@
 #include <QDebug>
+#include<QFile>
 
 #include <highscores.h>
 
 using namespace std;
 
-HighScores::HighScores()
+HighScores::HighScores(HighScoresObserver * win):observer(win)
 {
 
 }
@@ -31,19 +32,26 @@ void HighScores::save()
 
 void HighScores::load()
 {
-    ifstream infile("highscores.txt");
+    QFile infile(":/highscores.txt");
     stringstream buffer;
+    QTextStream in(&infile);
+    QString line;
+    infile.open(QIODevice::ReadOnly);
 
-    if (infile)
+    while (!in.atEnd())
     {
-        buffer << infile.rdbuf();
-        infile.close();
+        line = in.readLine();
+        buffer << line.toStdString();
     }
-
-    for(int i=0; i<scores.size(); i++)
+    infile.close();
+    string user;
+    int score;
+    for(int i=0; i<5; i++)
     {
-        buffer>>scores.at(i);
-        buffer>>usernames.at(i);
+        buffer>>user;
+        buffer>>score;
+        usernames.push_back(user);
+        scores.push_back(score);
     }
 }
 
@@ -95,4 +103,9 @@ void HighScores::evaluate()
         scores.erase(scores.begin()+5);
         usernames.erase(usernames.begin()+5);
     }
+}
+
+void HighScores::setUniverse(Universe * uni)
+{
+    universe = uni;
 }
