@@ -25,9 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lblLevel->setShown(false);
     ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
-    connect(levelTimer,SIGNAL(timeout()), this, SLOT(on_levelTimer_finished()));
     highscores = new HighScores(&highScoreWindow);
-
+    highscores->load();
 }
 
 MainWindow::~MainWindow()
@@ -231,22 +230,12 @@ void MainWindow::on_btnCheat_clicked()
 
 void MainWindow::on_btnMultiplayer_clicked()
 {
-
+    clientWindow.show();
+    clientWindow.raise();
+    clientWindow.activateWindow();
 }
 
 void MainWindow::on_btnLoad_clicked()
 {
     highscores->load();
-}
-
-void MainWindow::on_levelTimer_finished()
-{
-    highscores->save();
-}
-
-void MainWindow::on_btnConnect_clicked()
-{
-    clientWindow->show();
-    clientWindow->raise();
-    clientWindow->activateWindow();
 }

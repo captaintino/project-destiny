@@ -15,11 +15,6 @@ ClientWindow::~ClientWindow()
 
 void ClientWindow::on_btnClientWinConnect_clicked()
 {
-    /*QString hostname = ui->lineChatServer->text();
-    if (hostname.size() == 0) {
-        QMessageBox::critical(this, "Uh oh", "Please specify name of chat server.");
-        return;
-    }*/
     QString hostname = "localhost";
     QString username = "bob";
     QString score = QString::number(universe->getScore());
@@ -59,40 +54,9 @@ void ClientWindow::on_btnClientWinConnect_clicked()
         QMessageBox::warning(this, "Uh oh", "Server disconnected.");
         socket->deleteLater();
         return;
-    }
+    }    
 
-
-    /*data = socket->readLine().trimmed();
-
-    if (data != "+OK") {
-        QMessageBox::warning(this, "Uh oh", "Username not valid.");
-        socket->deleteLater();
-        return;
-    }
-
-    data = QString("*PASS ") + ui->linePassword->text() + "\n";
-    qDebug() << "Sending " << data;
-    socket->write(data.toStdString().c_str());
-
-    // wait for response from server
-    while (!socket->canReadLine() && socket->state() == QAbstractSocket::ConnectedState) {
-        socket->waitForReadyRead();
-    }
-
-    if (socket->state() != QAbstractSocket::ConnectedState) {
-        QMessageBox::warning(this, "Uh oh", "Server disconnected.");
-        socket->deleteLater();
-        return;
-    }
-
-    data = socket->readLine().trimmed();
-    if (data != "+OK") {
-        QMessageBox::warning(this, "Uh oh", "Password not valid.");
-        socket->deleteLater();
-        return;
-    }
-
-    ui->statusBar->showMessage("Connected.");
+    /*ui->statusBar->showMessage("Connected.");
     ui->btnConnect->setEnabled(false);
     ui->btnSend->setEnabled(true);
     ui->txtMessage->setFocus();*/
@@ -100,6 +64,11 @@ void ClientWindow::on_btnClientWinConnect_clicked()
     connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived(QTcpSocket * socket)));
     connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
     socket->write("REFRESH");
+    for (int i; i<labelList.size();i++)
+    {
+        labelList.at(i)->setShown(false);
+        labelList.at(i)->deleteLater();
+    }
 }
 
 void ClientWindow::dataReceived(QTcpSocket * socket) {
@@ -184,11 +153,7 @@ void ClientWindow::serverDisconnected(QTcpSocket *socket)
      //ui->statusBar->showMessage("Disconnected.");
      //ui->btnConnect->setEnabled(true);
      //ui->btnSend->setEnabled(false);
-     socket->deleteLater();
-     for (int i; i<labelList.size();i++)
-     {
-         delete labelList.at(i);
-     }
+     socket->deleteLater();     
 }
 
 /*void ClientWindow::on_btnSend_clicked()

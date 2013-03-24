@@ -47,10 +47,6 @@ private slots:
 
     void on_btnLoad_clicked();
 
-    void on_levelTimer_finished();
-
-    void on_btnConnect_clicked();
-
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;
@@ -65,7 +61,7 @@ private:
     QLabel * the_Score;
     HighScores * highscores;
     bool cheat;
-    ClientWindow * clientWindow;
+    ClientWindow clientWindow;
 };
 
 #endif // MAINWINDOW_H
