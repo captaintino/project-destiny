@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     ship.cpp \
     instructionwindow.cpp \
     highscorewindow.cpp\
-    universethread.cpp
+    universethread.cpp \
+    clientwindow.cpp
 QMAKE_CXXFLAGS += -std=c++0x
 
 HEADERS  += mainwindow.h \
@@ -41,10 +42,12 @@ HEADERS  += mainwindow.h \
     instructionwindow.h\
     highscorewindow.h\
     universethread.h\
-    instructionwindow.h
+    instructionwindow.h \
+    clientwindow.h
 FORMS    += mainwindow.ui \
     instructionwindow.ui \
-    highscorewindow.ui
+    highscorewindow.ui \
+    clientwindow.ui
 
 RESOURCES += \
     Images.qrc

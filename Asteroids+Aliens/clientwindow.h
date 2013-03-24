@@ -1,0 +1,45 @@
+#ifndef CLIENTWINDOW_H
+#define CLIENTWINDOW_H
+
+#include <ui_clientwindow.h>
+#include <universe.h>
+
+#include <QMessageBox>
+#include <QDebug>
+#include <QWidget>
+#include <QString>
+#include <QTcpSocket>
+#include <QLabel>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+namespace Ui {
+class ClientWindow;
+}
+
+class ClientWindow : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit ClientWindow(QWidget *parent = 0);
+    ~ClientWindow();
+
+private slots:
+    void on_btnClientWinConnect_clicked();
+    void dataReceived(QTcpSocket *socket);
+    void serverDisconnected(QTcpSocket * socket);
+    //void on_btnSend_clicked();
+
+private:
+    Ui::ClientWindow *ui;
+    Universe *universe;
+    vector<QLabel*>labelList;
+};
+
+#endif // CLIENTWINDOW_H
+

@@ -243,3 +243,10 @@ void MainWindow::on_levelTimer_finished()
 {
     highscores->save();
 }
+
+void MainWindow::on_btnConnect_clicked()
+{
+    clientWindow->show();
+    clientWindow->raise();
+    clientWindow->activateWindow();
+}

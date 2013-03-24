@@ -11,6 +11,7 @@
 #include <instructionwindow.h>
 #include<highscorewindow.h>
 #include<highscores.h>
+#include <clientwindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -48,6 +49,8 @@ private slots:
 
     void on_levelTimer_finished();
 
+    void on_btnConnect_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;
@@ -62,6 +65,7 @@ private:
     QLabel * the_Score;
     HighScores * highscores;
     bool cheat;
+    ClientWindow * clientWindow;
 };
 
 #endif // MAINWINDOW_H
