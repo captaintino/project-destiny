@@ -201,16 +201,21 @@ string World::save()
     output = to_string(asteroids.size()) + " ";
     for (int i = 0; i < asteroids.size(); ++i) {
         Asteroid *a = dynamic_cast<Asteroid *>(asteroids.at(i));
-        output += a->save() + " ";
+        output += to_string(a->getX()) + " " + to_string(a->getY()) + " ";
     }
 
     output += to_string(aliens.size()) + " ";
     for (int i = 0; i < aliens.size(); ++i) {
         Alien *a = dynamic_cast<Alien *>(aliens.at(i));
-        output += a->save() + " ";
+        output += to_string(a->getX()) + " " + to_string(a->getY()) + " ";
     }
+    output += "\n";
 
     return output;
+}
+
+void World::load()
+{
 }
 
 // Create an object in the model and return a pointer to it
@@ -224,13 +229,17 @@ Obstacle* World::createObject(int level)
     lanes[lane] = false; // set lane to closed
     QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane())); // Fire off timer that will reopen the lane
     lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
-    return objectFactory(61.5 * lane, -60, 8); // add item to world and return it
+    return objectFactory(61.5 * lane, -60, 8, 0); // add item to world and return it
 }
 
 // Create a non-moving object
-Obstacle *World::createLameOjbect()
+Obstacle *World::createLameOjbect(int type, int x, int y)
 {
-    return objectFactory(61.5 * (asteroids.size() + aliens.size()), -60 -(60*(rand()%10)), 0); // This code is designed to be called 13 times
+    if (type == 0) {
+        return objectFactory(61.5 * (asteroids.size() + aliens.size()), -60 -(60*(rand()%10)), 0, type); // This code is designed to be called 13 times
+    } else {
+        return objectFactory(x, y, 0, type);
+    }
 }
 
 // Open up lane for another item to be created in it
@@ -240,10 +249,15 @@ void World::resetLane(){
 }
 
 // Randomly creates either an alien or an asteroid, places it in the proper vector and returns it
-Obstacle *World::objectFactory(int x, int y, int speed)
+Obstacle *World::objectFactory(int x, int y, int speed, int type)
 {
-    //if(level > 5){
-        int chooser = rand() % 2;
+    int chooser;
+    if (type == 0) {
+        //if(level > 5){
+        chooser = rand() % 2;
+    } else {
+        chooser = type - 1;
+    }
     //}
     //else{
     //    int chooser = 0;
@@ -258,4 +272,5 @@ Obstacle *World::objectFactory(int x, int y, int speed)
         return aliens.at(aliens.size() - 1);
         break;
     }
+
 }

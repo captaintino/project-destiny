@@ -10,6 +10,7 @@
 #include<universethread.h>
 #include <instructionwindow.h>
 #include<highscorewindow.h>
+#include <QKeyEvent>
 
 namespace Ui {
 class MainWindow;
@@ -42,6 +43,10 @@ private slots:
     void on_btnCheat_clicked();
 
     void on_btnMultiplayer_clicked();
+
+    void on_btnLoad_clicked();
+
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     Ui::MainWindow *ui;

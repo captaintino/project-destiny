@@ -19,7 +19,7 @@ private:
     Ship * playerShip;
     bool cheat;
 public:
-    Universe(int lvl, bool b);
+    Universe(int lvl, int i, bool b);
 
     ~Universe();
 
