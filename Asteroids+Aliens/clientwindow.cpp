@@ -15,9 +15,7 @@ ClientWindow::~ClientWindow()
 
 void ClientWindow::on_btnClientWinConnect_clicked()
 {
-    //serverUpdate();
-    //clientRefresh(); COMMENTED OUT FOR TESTING WITHOUT SERVER
-    this->dataReceived();
+    serverUpdate();
 }
 
 void ClientWindow::dataReceived()
@@ -123,20 +121,11 @@ void ClientWindow::serverUpdate()
         return;
     }
 
-    QString data = QString("UPDATE ") + username + " " + score;
+    QString data = QString("UPDATE ") + username + " " + score + " alive" + " 1";
     qDebug() << "Sending " << data;
     socket->write(data.toStdString().c_str());
 
-    // wait for response from server
-    while (!socket->canReadLine() && socket->state() == QAbstractSocket::ConnectedState) {
-        socket->waitForReadyRead();
-    }
-
-    if (socket->state() != QAbstractSocket::ConnectedState) {
-        QMessageBox::warning(this, "Uh oh", "Server disconnected.");
-        socket->deleteLater();
-        return;
-    }
+    clientRefresh();
 }
 
 //Refreshes client with current information
@@ -147,9 +136,14 @@ void ClientWindow::clientRefresh()
     ui->btnSend->setEnabled(true);
     ui->txtMessage->setFocus();*/
 
+    if(socket==NULL||socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        return;
+    }
     connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
     socket->write("REFRESH");    
+
 }
 
 /*void ClientWindow::on_btnSend_clicked()               //CHAT STUFF
@@ -171,6 +165,5 @@ void ClientWindow::clientRefresh()
 
 void ClientWindow::on_btnRefresh_clicked()
 {
-    //clientRefresh(); COMMENTED OUT FOR TESTING
-    this->dataReceived();
+    clientRefresh();
 }
