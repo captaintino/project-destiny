@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
     highscores = new HighScores(&highScoreWindow);
     highscores->load();
+    multiplayer = false;
 }
 
 MainWindow::~MainWindow()
@@ -59,8 +60,8 @@ void MainWindow::on_btnStart_clicked()
     ui->spinCheat->setShown(false);
     ui->lblLevel->setShown(false);
     ui->btnMultiplayer->setShown(false);
-    //this->grabMouse(); // <-- we need to have an <Esc> option...
-    //this->setCursor(Qt::BlankCursor);
+    this->grabMouse(); // <-- we need to have an <Esc> option...
+    this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(340,520);
     if (cheat) {
         level = ui->spinCheat->value();
@@ -132,7 +133,7 @@ void MainWindow::levelFinished()
     modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
-    // bakground speedup
+    // background speedup
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
@@ -150,6 +151,11 @@ void MainWindow::levelFinished()
     modelUpdater->start();
     universe->getWorld(0)->lameToWalk();
     updateTimer->start();
+
+    //put UPDATE username score alive level
+    if(multiplayer)
+        clientWindow.serverUpdate();
+
     qDebug("Current Level is:" + QString::number(level).toAscii());
     levelTimer->start();
 }
@@ -191,8 +197,6 @@ void MainWindow::deleteLabel()
     }
     if(objects.size()<1){
         QTimer::singleShot(500, this, SLOT(levelFinished()));
-        //put UPDATE username score alive level
-        clientWindow.serverUpdate();
     }
 }
 
