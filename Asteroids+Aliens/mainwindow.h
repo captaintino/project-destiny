@@ -11,6 +11,8 @@
 #include <instructionwindow.h>
 #include<highscorewindow.h>
 #include <QKeyEvent>
+#include<highscores.h>
+#include <clientwindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -60,7 +62,9 @@ private:
     HighScoreWindow highScoreWindow;
     InstructionWindow instructionWindow;
     QLabel * the_Score;
+    HighScores * highscores;
     bool cheat;
+    ClientWindow clientWindow;
 };
 
 #endif // MAINWINDOW_H

@@ -1,68 +1,116 @@
-#include "highscores.h"
-#include <fstream>
-#include <iostream>
-#include <string>
 #include <QDebug>
+#include<QFile>
+
+#include <highscores.h>
 
 using namespace std;
 
-HighScores::HighScores()
+HighScores::HighScores(HighScoresObserver * win):observer(win)
 {
 
 }
 
 void HighScores::save()
 {
-    ofstream outfile("highscores.txt");
+    this->evaluate();
+
+    ofstream outfile;
+    outfile.open("highscores.txt");
 
     if (!outfile)
     {
-        cout<<"Unable to open file.";
-        exit(1);
+        ofstream outfile("highscores.txt");
     }
 
-    for (int i = 0; i < scoreList.size(); i++)
-    {
-        outfile << scoreList.at(i).username << ":" << scoreList.at(i).score << endl;
+    for (int i = 0; i < scores.size(); i++)
+        {
+        outfile << /*usernames.at(i)*/ "modifiedScore" << " " << scores.at(i) << endl;
+        }
 
-    }
+    outfile.close();
 }
 
 void HighScores::load()
 {
     ifstream infile("highscores.txt");
+    stringstream buffer;
 
     if (!infile)
     {
-        cout << "Unable to open file.";
-        exit(1);
-    }
+        ofstream outfile("highscores.txt");
+        for (int i = 0; i < 5; i++)
+                {
+                outfile << "player" << " " << "0" << endl;
+                }
 
-    string line;
-    while (infile)
+            outfile.close();
+            infile.open("highscores.txt");
+    }
+    buffer << infile.rdbuf();
+    infile.close();
+
+    int score = 0;
+    string username = "";
+
+    for(int i=0; i < 5; i++)
     {
-        getline(infile, line);
+        buffer>>username>>score;
+        scores.push_back(score);
+        usernames.push_back(username);
     }
 }
 
 void HighScores::display()
 {
-
+    observer->updateHighScore(usernames,scores);
 }
 
-void HighScores::parseData(string dataString)
+void HighScores::evaluate()
 {
-    string data;
-    vector<string>dataList;
-        int pos = 0;
-        while (dataString.find(':') != -1)
-        {
-        pos = dataString.find(':');
-        data = dataString.substr(0,pos);
-        dataList.push_back(data);
-        dataString = dataString.substr(pos+1);
-        }
-    data = dataString;
-    dataList.push_back(data);
+    bool erase = true;
+    int score = universe->getScore();
+    string username;
 
+    if(score>scores.at(0))
+    {
+        scores.insert(scores.begin(),score);
+        usernames.insert(usernames.begin(),username);
+    }
+    else if(score <scores.at(0) && score >scores.at(1))
+    {
+        scores.insert(scores.begin() + 1,score);
+        usernames.insert(usernames.begin() + 1,username);
+    }
+    else if(score <scores.at(0) && score <scores.at(1) && score >scores.at(2))
+    {
+        scores.insert(scores.begin() + 2,score);
+        usernames.insert(usernames.begin() + 2,username);
+    }
+    else if(score <scores.at(0) && score <scores.at(1) && score <scores.at(2) &&
+             score >scores.at(3))
+    {
+        scores.insert(scores.begin() + 3,score);
+        usernames.insert(usernames.begin() + 3,username);
+    }
+    else if(score <scores.at(0) && score <scores.at(1) && score <scores.at(2) &&
+            score <scores.at(3) && score >scores.at(4))
+    {
+        scores.insert(scores.begin() + 4,score);
+        usernames.insert(usernames.begin() + 4,username);
+    }
+    else
+    {
+        erase = false;
+    }
+
+    if(erase=true)
+    {
+        scores.erase(scores.begin()+5);
+        usernames.erase(usernames.begin()+5);
+    }
+}
+
+void HighScores::setUniverse(Universe * uni)
+{
+    universe = uni;
 }

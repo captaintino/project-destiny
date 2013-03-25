@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lblLevel->setShown(false);
     ui->spinCheat->setShown(false);
     connect(levelTimer, SIGNAL(timeout()), this, SLOT(levelEnd()));
+    highscores = new HighScores(&highScoreWindow);
+    highscores->load();
 }
 
 MainWindow::~MainWindow()
@@ -70,6 +72,7 @@ void MainWindow::on_btnStart_clicked()
         level = 1;
     }
     universe = new Universe(level, 0, cheat);
+    highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
@@ -174,6 +177,7 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
+    highscores->save();
 }
 
 void MainWindow::makeProjectile()
@@ -193,6 +197,8 @@ void MainWindow::deleteLabel()
     }
     if(objects.size()<1){
         QTimer::singleShot(500, this, SLOT(levelFinished()));
+        //put UPDATE username score alive level
+        clientWindow.serverUpdate();
     }
 }
 
@@ -206,7 +212,8 @@ void MainWindow::on_btnInstructions_clicked()
 }
 
 void MainWindow::on_btnHighScores_clicked()
-{
+{    
+    highscores->display();
     highScoreWindow.show();
     highScoreWindow.raise();
     highScoreWindow.activateWindow();
@@ -230,7 +237,9 @@ void MainWindow::on_btnCheat_clicked()
 
 void MainWindow::on_btnMultiplayer_clicked()
 {
-
+    clientWindow.show();
+    clientWindow.raise();
+    clientWindow.activateWindow();
 }
 
 void MainWindow::on_btnLoad_clicked()
