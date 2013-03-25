@@ -75,7 +75,6 @@ void ClientWindow::dataReceived()
         y+=30;
 
     }
-
                                                             //CHAT STUFF
 
         /*QString username = "unknown";

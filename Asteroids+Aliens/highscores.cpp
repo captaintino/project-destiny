@@ -32,26 +32,19 @@ void HighScores::save()
 
 void HighScores::load()
 {
-    QFile infile(":/highscores.txt");
+    ifstream infile("highscores.txt");
     stringstream buffer;
-    QTextStream in(&infile);
-    QString line;
-    infile.open(QIODevice::ReadOnly);
 
-    while (!in.atEnd())
+    if (infile)
     {
-        line = in.readLine();
-        buffer << line.toStdString();
+        buffer << infile.rdbuf();
+        infile.close();
     }
-    infile.close();
-    string user;
-    int score;
-    for(int i=0; i<5; i++)
+
+    for(int i=0; i<scores.size(); i++)
     {
-        buffer>>user;
-        buffer>>score;
-        usernames.push_back(user);
-        scores.push_back(score);
+        buffer>>scores.at(i);
+        buffer>>usernames.at(i);
     }
 }
 
