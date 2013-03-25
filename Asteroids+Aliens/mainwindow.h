@@ -63,7 +63,7 @@ private:
     InstructionWindow instructionWindow;
     QLabel * the_Score;
     HighScores * highscores;
-    bool cheat;
+    bool cheat, multiplayer;
     ClientWindow clientWindow;
 };
 
