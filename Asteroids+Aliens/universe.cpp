@@ -4,9 +4,8 @@
 #include<fstream>
 #include<sstream>
 
-Universe::Universe(int lvl, bool b): level(lvl), cheat(b)
+Universe::Universe(int lvl, int i, bool b): level(lvl), score(i), cheat(b)
 {
-    score = 0;
     player = new Ship();
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
@@ -57,11 +56,14 @@ void Universe::save()
     output += to_string(score) + " ";
     output += to_string(player->getX()) + " ";
     output += to_string(player->getY()) + " ";
+    output += to_string(dimensions.size()) + " ";
 
     for (int i = 0; i < dimensions.size(); ++i) {
         World *w = dimensions.at(i);
         output += w->save();
     }
+
+    outfile << output;
 
 }
 

@@ -6,6 +6,10 @@
 #include<cmath>
 #include <QCursor>
 #include <QDesktopWidget>
+#include <fstream>
+#include <sstream>
+#include <QKeyEvent>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -68,7 +72,7 @@ void MainWindow::on_btnStart_clicked()
     } else {
         level = 1;
     }
-    universe = new Universe(level, cheat);
+    universe = new Universe(level, 0, cheat);
     highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
@@ -76,7 +80,7 @@ void MainWindow::on_btnStart_clicked()
     backgroundTimer->start();
     for(int i = 0; i < 13; ++i)
     {
-        objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
         connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     universe->getWorld(0)->lameToWalk();
@@ -86,6 +90,8 @@ void MainWindow::on_btnStart_clicked()
     modelUpdater->start();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+
+    universe->save();
 }
 
 
@@ -144,7 +150,7 @@ void MainWindow::levelFinished()
     objects.clear();
     for(int i = 0; i < 13; ++i)
     {
-        objects.push_back(new on_screen_object(this,universe->getWorld(0),level));
+        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
         connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     modelUpdater->updateTimer(level);
@@ -242,5 +248,109 @@ void MainWindow::on_btnMultiplayer_clicked()
 
 void MainWindow::on_btnLoad_clicked()
 {
-    //highscores->load();
+    ifstream infile("save.txt");
+
+    if (!infile)
+    {
+        exit(1);
+    }
+
+    string str;
+    getline(infile, str);
+    stringstream line(str);
+    line >> str;
+    level = stoi(str);
+    line >> str;
+    int score = stoi(str);
+    line >> str;
+    int shipx = stoi(str);
+    line >> str;
+    int shipy = stoi(str);
+    line >> str;
+    int worldcount = stoi(str);
+    line >> str;
+    int asteroidcount = stoi(str);
+
+
+    the_Score = new QLabel(this);
+    the_Score->setGeometry(40,40,500,50); // Needs work *
+    the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
+    the_Score->raise();
+    the_Score->show();
+    ui->btnStart->setShown(false);
+    ui->btnCheat->setShown(false);
+    ui->btnHighScores->setShown(false);
+    ui->btnLoad->setShown(false);
+    ui->btnInstructions->setShown(false);
+    ui->spinCheat->setShown(false);
+    ui->lblLevel->setShown(false);
+    ui->btnMultiplayer->setShown(false);
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->setCursor(Qt::BlankCursor);
+    QApplication::desktop()->cursor().setPos(shipx,shipy);
+    universe = new Universe(level, score, cheat);
+    modelUpdater = new UniverseThread(universe, level);
+    user = new Ship_Label(this, universe);
+    QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
+    backgroundTimer->start();
+    for(int i = 0; i < asteroidcount; ++i)
+    {
+        line >> str;
+        int x = stoi(str);
+        line >> str;
+        int y = stoi(str);
+        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 1, x, y));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+    }
+    line >> str;
+    int aliencount = stoi(str);
+    for(int i = 0; i < aliencount; ++i)
+    {
+        line >> str;
+        int x = stoi(str);
+        line >> str;
+        int y = stoi(str);
+        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 2, x, y));
+        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+    }
+    QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
+    modelUpdater->updateTimer(level);
+    modelUpdater->start();
+    updateTimer->start();
+    qDebug("Current Level is:" + QString::number(level).toAscii());
+    levelTimer->start();
+    universe->getWorld(0)->lameToWalk();
+    QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
+    QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Escape) {
+        universe->save();
+        modelUpdater->terminate();
+        updateTimer->stop();
+        levelTimer->stop();
+        backgroundTimer->stop();
+        this->releaseMouse();
+        this->setCursor(Qt::ArrowCursor);
+        for (int i = 0; i < objects.size(); ++i) {
+            objects.at(i)->deleteLater();
+        }
+        for(int i = 0; i < projectiles.size(); ++i){
+            projectiles.at(i)->deleteLater();
+        }
+        projectiles.clear();
+        objects.clear();
+        the_Score->setShown(false);
+        user->setShown(false);
+        ui->label->setPixmap(QPixmap(":images/Main_Menu.jpg"));
+        ui->btnStart->setShown(true);
+        ui->btnCheat->setShown(true);
+        ui->btnHighScores->setShown(true);
+        ui->btnLoad->setShown(true);
+        ui->btnInstructions->setShown(true);
+        ui->btnMultiplayer->setShown(true);
+    }
 }

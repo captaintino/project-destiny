@@ -10,6 +10,7 @@
 #include<universethread.h>
 #include <instructionwindow.h>
 #include<highscorewindow.h>
+#include <QKeyEvent>
 #include<highscores.h>
 #include <clientwindow.h>
 
@@ -46,6 +47,8 @@ private slots:
     void on_btnMultiplayer_clicked();
 
     void on_btnLoad_clicked();
+
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     Ui::MainWindow *ui;

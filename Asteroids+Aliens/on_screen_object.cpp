@@ -1,8 +1,9 @@
 #include "on_screen_object.h"
 
-on_screen_object::on_screen_object(QWidget *parent, World *get_world, int initlevel):QLabel(parent), this_world(get_world), level(initlevel), levelOver(false)
+on_screen_object::on_screen_object(QWidget *parent, World *get_world, int initlevel, int type, int x, int y):QLabel(parent), this_world(get_world), level(initlevel), levelOver(false)
 {
-    game_object = this_world->createLameOjbect();
+
+    game_object = this_world->createLameOjbect(type, x, y);
     this->setGeometry(game_object->getX(), game_object->getY(), game_object->getW(), game_object->getH());
     setScaledContents(true);
     this->setPixmap(QPixmap(game_object->getType()));

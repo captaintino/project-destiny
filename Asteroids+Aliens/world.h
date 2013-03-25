@@ -24,7 +24,7 @@ private:
     bool lanes[13];
     int projectileCountdown;
 
-    Obstacle * objectFactory(int x, int y, int speed);
+    Obstacle * objectFactory(int x, int y, int speed, int type);
 public:
     World(bool hasAShip);
 
@@ -32,7 +32,7 @@ public:
 
     Obstacle* createObject(int level);
 
-    Obstacle* createLameOjbect();
+    Obstacle* createLameOjbect(int type, int x, int y);
 
     Obstacle* getLastProjectile();
 
