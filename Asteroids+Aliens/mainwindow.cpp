@@ -238,5 +238,5 @@ void MainWindow::on_btnMultiplayer_clicked()
 
 void MainWindow::on_btnLoad_clicked()
 {
-    highscores->load();
+    //highscores->load();
 }

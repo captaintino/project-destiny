@@ -22,6 +22,13 @@ void ClientWindow::on_btnClientWinConnect_clicked()
 
 void ClientWindow::dataReceived()
 {
+    for (int i = 0; i<labelList.size();i++)
+    {
+        labelList.at(i)->setShown(false);
+        labelList.at(i)->deleteLater();
+    }
+    labelList.clear();
+
     QString data;
     stringstream buffer;
     int numUsers = 0;
@@ -40,7 +47,7 @@ void ClientWindow::dataReceived()
     buffer>>numUsers;
     int y = 90;
 
-    for (int i;i<numUsers+1;i++)
+    for (int i = 0;i<numUsers;i++)
     {
         buffer>>username>>score>>state>>level;
 
@@ -135,33 +142,14 @@ void ClientWindow::serverUpdate()
 //Refreshes client with current information
 void ClientWindow::clientRefresh()
 {
-    QString data = QString("REFRESH ");
-    qDebug()<<"Sending"<<data;
-    socket->write(data.toStdString().c_str());
-
-    while (!socket->canReadLine() && socket->state() == QAbstractSocket::ConnectedState) {
-        socket->waitForReadyRead();
-    }
-
-    if (socket->state() != QAbstractSocket::ConnectedState) {
-        QMessageBox::warning(this, "Uh oh", "Server disconnected.");
-        socket->deleteLater();
-        return;
-    }
-
     /*ui->statusBar->showMessage("Connected.");         //CHAT STUFF
     ui->btnConnect->setEnabled(false);
     ui->btnSend->setEnabled(true);
     ui->txtMessage->setFocus();*/
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived(QTcpSocket * socket)));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
-    socket->write("REFRESH");
-    for (int i; i<labelList.size();i++)
-    {
-        labelList.at(i)->setShown(false);
-        labelList.at(i)->deleteLater();
-    }
+    socket->write("REFRESH");    
 }
 
 /*void ClientWindow::on_btnSend_clicked()               //CHAT STUFF

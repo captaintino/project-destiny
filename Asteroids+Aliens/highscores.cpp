@@ -24,7 +24,7 @@ void HighScores::save()
 
     for (int i = 0; i < scores.size(); i++)
         {
-            outfile << usernames.at(i) << " " << scores.at(i) << endl;
+        outfile << /*usernames.at(i)*/ "modifiedScore" << " " << scores.at(i) << endl;
         }
 
     outfile.close();
@@ -35,16 +35,28 @@ void HighScores::load()
     ifstream infile("highscores.txt");
     stringstream buffer;
 
-    if (infile)
+    if (!infile)
     {
-        buffer << infile.rdbuf();
-        infile.close();
-    }
+        ofstream outfile("highscores.txt");
+        for (int i = 0; i < 5; i++)
+                {
+                outfile << "player" << " " << "0" << endl;
+                }
 
-    for(int i=0; i<scores.size(); i++)
+            outfile.close();
+            infile.open("highscores.txt");
+    }
+    buffer << infile.rdbuf();
+    infile.close();
+
+    int score = 0;
+    string username = "";
+
+    for(int i=0; i < 5; i++)
     {
-        buffer>>scores.at(i);
-        buffer>>usernames.at(i);
+        buffer>>username>>score;
+        scores.push_back(score);
+        usernames.push_back(username);
     }
 }
 
