@@ -277,6 +277,8 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
+    this->grabMouse(); // <-- we need to have an <Esc> option...
+    this->setCursor(Qt::BlankCursor);
     ui->btnStart->setShown(false);
     ui->btnCheat->setShown(false);
     ui->btnHighScores->setShown(false);
