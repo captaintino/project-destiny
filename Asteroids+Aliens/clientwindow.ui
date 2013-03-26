@@ -31,7 +31,7 @@ background-position: bottom right;</string>
    </property>
    <widget class="QPushButton" name="btnClientWinConnect">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>

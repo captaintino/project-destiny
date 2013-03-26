@@ -115,7 +115,7 @@ void ClientWindow::serverUpdate()
 
     socket = new QTcpSocket(this);
 
-    socket->connectToHost(hostname, 1010);
+    socket->connectToHost(hostname, 5000);
     if (!socket->waitForConnected())  {
         QMessageBox::critical(this, "Uh oh", "Unable to connect to server.");
         return;
