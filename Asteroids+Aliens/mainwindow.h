@@ -27,6 +27,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void mainMenuSetShow(bool m);
     void accelerateBackground();
 private slots:
     void on_btnStart_clicked();
@@ -38,7 +39,7 @@ private slots:
 
     void deleteLabel();
     void levelFinished();
-
+    void resumeLevel();
     void on_btnInstructions_clicked();
     void on_btnHighScores_clicked();
 

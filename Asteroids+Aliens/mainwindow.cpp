@@ -49,6 +49,18 @@ MainWindow::~MainWindow()
     }
 }
 
+void MainWindow::mainMenuSetShow(bool m)
+{
+    ui->btnStart->setShown(m);
+    ui->btnCheat->setShown(m);
+    ui->btnHighScores->setShown(m);
+    ui->btnLoad->setShown(m);
+    ui->btnInstructions->setShown(m);
+    ui->lblLevel->setShown(m);
+    ui->btnMultiplayer->setShown(m);
+    ui->spinCheat->setShown(false);
+}
+
 void MainWindow::on_btnStart_clicked()
 {
     the_Score = new QLabel(this);
@@ -56,14 +68,7 @@ void MainWindow::on_btnStart_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
-    ui->btnStart->setShown(false);
-    ui->btnCheat->setShown(false);
-    ui->btnHighScores->setShown(false);
-    ui->btnLoad->setShown(false);
-    ui->btnInstructions->setShown(false);
-    ui->spinCheat->setShown(false);
-    ui->lblLevel->setShown(false);
-    ui->btnMultiplayer->setShown(false);
+    mainMenuSetShow(false);
     this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(340,520);
@@ -90,7 +95,6 @@ void MainWindow::on_btnStart_clicked()
     modelUpdater->start();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
-
     universe->save();
 }
 
@@ -279,18 +283,10 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->show();
     this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
-    ui->btnStart->setShown(false);
-    ui->btnCheat->setShown(false);
-    ui->btnHighScores->setShown(false);
-    ui->btnLoad->setShown(false);
-    ui->btnInstructions->setShown(false);
-    ui->spinCheat->setShown(false);
-    ui->lblLevel->setShown(false);
-    ui->btnMultiplayer->setShown(false);
-    //this->grabMouse(); // <-- we need to have an <Esc> option...
-    //this->setCursor(Qt::BlankCursor);
+    mainMenuSetShow(false);
     QApplication::desktop()->cursor().setPos(shipx,shipy);
     universe = new Universe(level, score, cheat);
+    highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
@@ -316,15 +312,18 @@ void MainWindow::on_btnLoad_clicked()
         connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
-    modelUpdater->updateTimer(level);
-    modelUpdater->start();
-    updateTimer->start();
-    qDebug("Current Level is:" + QString::number(level).toAscii());
-    levelTimer->start();
     universe->getWorld(0)->lameToWalk();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+    updateTimer->start();
+    modelUpdater->updateTimer(level);
+    QTimer::singleShot(1000, this, SLOT(resumeLevel()));
+    qDebug("Current Level is:" + QString::number(level).toAscii());
+}
 
+void MainWindow::resumeLevel(){
+    modelUpdater->start();
+    levelTimer->start();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
@@ -348,11 +347,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         the_Score->setShown(false);
         user->setShown(false);
         ui->label->setPixmap(QPixmap(":images/Main_Menu.jpg"));
-        ui->btnStart->setShown(true);
-        ui->btnCheat->setShown(true);
-        ui->btnHighScores->setShown(true);
-        ui->btnLoad->setShown(true);
-        ui->btnInstructions->setShown(true);
-        ui->btnMultiplayer->setShown(true);
+        mainMenuSetShow(true);
+        ui->btnCheat->setText("Cheat Mode: OFF");
+        cheat = false;
     }
 }
