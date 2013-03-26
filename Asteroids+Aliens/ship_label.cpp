@@ -5,6 +5,9 @@
 #include<QDebug>
 #include<cstring>
 #include<QString>
+#include <QSound>
+
+
 Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent), fire(true), window(parent), this_Universe(get_universe)
 {
     setGeometry(380, 540, 40, 40);
@@ -45,10 +48,12 @@ void Ship_Label::updateCoords()
 
 void Ship_Label::crashed()
 {
+    this->raise();
     updateShip->disconnect();
     updateShip->setInterval(30);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
     qDebug("Ship Crashed!");
+    //QSound::play("./sounds/explosion.wav");
 }
 
 void Ship_Label::expAnimate()
