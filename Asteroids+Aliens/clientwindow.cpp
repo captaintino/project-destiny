@@ -6,6 +6,7 @@ ClientWindow::ClientWindow(QWidget *parent) :
     ui(new Ui::ClientWindow)
 {
     ui->setupUi(this);
+    userName = "Player";
 }
 
 ClientWindow::~ClientWindow()
@@ -110,7 +111,6 @@ void ClientWindow::serverDisconnected()
 void ClientWindow::serverUpdate()
 {
     QString hostname = "localhost";
-    QString username = "bob";
     QString score = QString::number(universe->getScore());
 
     socket = new QTcpSocket(this);
@@ -121,8 +121,8 @@ void ClientWindow::serverUpdate()
         return;
     }
 
-    QString data = QString("UPDATE ") + username + " " + score + " alive" + " 1";
-    qDebug() << "Sending " << data;
+    QString data = QString("UPDATE ") + userName + " " + score + " alive" + " 1" + '\n';
+    qDebug() << "Sending " << data.toStdString().c_str();
     socket->write(data.toStdString().c_str());
 
     clientRefresh();
@@ -142,7 +142,7 @@ void ClientWindow::clientRefresh()
     }
     connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
-    socket->write("REFRESH");    
+    socket->write("REFRESH" + '\n');
 
 }
 

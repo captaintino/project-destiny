@@ -90,23 +90,17 @@ background-position: bottom right;</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="lblUserName">
+   <widget class="QLineEdit" name="lnUserName">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>20</y>
-      <width>101</width>
-      <height>41</height>
+      <x>150</x>
+      <y>26</y>
+      <width>113</width>
+      <height>27</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:rgb(217, 217, 217)</string>
-    </property>
-    <property name="text">
-     <string>Username</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <string notr="true"/>
     </property>
    </widget>
   </widget>

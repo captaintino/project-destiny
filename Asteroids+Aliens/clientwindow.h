@@ -30,6 +30,7 @@ public:
     ~ClientWindow();
     void serverUpdate();
     void clientRefresh();
+    void updateUsername(QString user){userName = user; ui->lnUserName->setText(userName);}
 
 private slots:
     void on_btnClientWinConnect_clicked();
@@ -45,6 +46,7 @@ private:
     Universe *universe;
     vector<QLabel*>labelList;
     QTcpSocket * socket;
+    QString userName;
 };
 
 #endif // CLIENTWINDOW_H

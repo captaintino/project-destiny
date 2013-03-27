@@ -51,6 +51,8 @@ private slots:
 
     void keyPressEvent(QKeyEvent *e);
 
+    void on_lnUsername_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;
@@ -66,6 +68,7 @@ private:
     HighScores * highscores;
     bool cheat, multiplayer;
     ClientWindow clientWindow;
+    QString userName;
 };
 
 #endif // MAINWINDOW_H

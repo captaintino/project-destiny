@@ -224,10 +224,24 @@
     <string>Level:</string>
    </property>
   </widget>
+  <widget class="QLineEdit" name="lnUsername">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>180</y>
+     <width>113</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Player</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>lblLevel</zorder>
   <zorder>spinCheat</zorder>
+  <zorder>lnUsername</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

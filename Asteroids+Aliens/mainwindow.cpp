@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     highscores = new HighScores(&highScoreWindow);
     highscores->load();
     multiplayer = false;
+    userName="Player";
 }
 
 MainWindow::~MainWindow()
@@ -58,6 +59,7 @@ void MainWindow::mainMenuSetShow(bool m)
     ui->btnInstructions->setShown(m);
     ui->lblLevel->setShown(m);
     ui->btnMultiplayer->setShown(m);
+    ui->lblLevel->setShown(false);
     ui->spinCheat->setShown(false);
 }
 
@@ -143,7 +145,7 @@ void MainWindow::levelFinished()
     modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
-    // background speedup
+    accelerateBackground();
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
@@ -173,7 +175,7 @@ void MainWindow::levelFinished()
 void MainWindow::accelerateBackground()
 {
     if(level % 2 == 0){
-        backgroundTimer->setInterval(backgroundTimer->interval() - 1);
+        backgroundTimer->setInterval(60 - (level / 2));
     }
 }
 
@@ -351,4 +353,10 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         ui->btnCheat->setText("Cheat Mode: OFF");
         cheat = false;
     }
+}
+
+void MainWindow::on_lnUsername_editingFinished()
+{
+    userName = ui->lnUsername->text();
+    clientWindow.updateUsername(userName);
 }
