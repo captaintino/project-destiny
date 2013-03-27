@@ -31,9 +31,9 @@ void ClientWindow::dataReceived()
     stringstream buffer;
     int numUsers = 0;
     string username;
-    int score;
+    int score = 0;
     string state;
-    int level;    
+    int level = 0;
     QLabel * label;
 
 //  while (socket->canReadLine())  COMMENTED OUT FOR TESTING
@@ -107,12 +107,15 @@ void ClientWindow::serverDisconnected()
 }
 
 //Updates server with current information
-void ClientWindow::serverUpdate()
+void ClientWindow::serverUpdate(int Gscore = -1)
 {
     QString hostname = "localhost";
     QString username = "bob";
-    QString score = QString::number(universe->getScore());
-
+    QString score;
+    if(Gscore > -1){score = QString::number(universe->getScore());
+    }else{
+        score = "0";
+    }
     socket = new QTcpSocket(this);
 
     socket->connectToHost(hostname, 5000);
@@ -120,9 +123,11 @@ void ClientWindow::serverUpdate()
         QMessageBox::critical(this, "Uh oh", "Unable to connect to server.");
         return;
     }
+    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
 
     QString data = QString("UPDATE ") + username + " " + score + " alive" + " 1";
-    qDebug() << "Sending " << data;
+    qDebug() << "Sending " << data.toStdString().c_str();
     socket->write(data.toStdString().c_str());
 
     clientRefresh();
@@ -140,9 +145,7 @@ void ClientWindow::clientRefresh()
     {
         return;
     }
-    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
-    socket->write("REFRESH");    
+    socket->write("REFRESH");
 
 }
 

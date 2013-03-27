@@ -28,7 +28,7 @@ class ClientWindow : public QWidget
 public:
     explicit ClientWindow(QWidget *parent = 0);
     ~ClientWindow();
-    void serverUpdate();
+    void serverUpdate(int Gscore = -1);
     void clientRefresh();
 
 private slots:
