@@ -53,7 +53,7 @@ void Ship_Label::crashed()
     updateShip->setInterval(30);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(expAnimate()));
     qDebug("Ship Crashed!");
-    //QSound::play("./sounds/explosion.wav");
+    //QSound::play("explosion.wav"); //non-functional and very frustrating.
 }
 
 void Ship_Label::expAnimate()

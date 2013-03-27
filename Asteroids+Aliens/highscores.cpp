@@ -75,8 +75,8 @@ void HighScores::evaluate()
     {
         if(score>scores.at(i))
         {
-            scores.insert(scores.begin(),score);
-            usernames.insert(usernames.begin(),username);
+            scores.insert(scores.begin() + i,score);
+            usernames.insert(usernames.begin() + i,username);
             erase = true;
             break;
         }

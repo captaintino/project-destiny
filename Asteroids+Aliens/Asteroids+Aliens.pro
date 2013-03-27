@@ -53,4 +53,8 @@ RESOURCES += \
     Images.qrc
 
 OTHER_FILES += \
-    highscores.txt
+    highscores.txt \
+    sounds/explosion.wav
+
+soundFiles.sources = sounds\*.wav
+DEPLOYMENT += soundFiles
