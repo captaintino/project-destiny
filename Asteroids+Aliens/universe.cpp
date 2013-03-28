@@ -30,6 +30,7 @@ void Universe::move()
         if (!cheat) {
             dimensions.at(i)->checkUserShip(player);
         }
+        dimensions.at(i)->checkProjectile();
         dimensions.at(i)->move();
     }
 }

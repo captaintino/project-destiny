@@ -1,6 +1,6 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed): x(initx), y(inity), h(inith), w(initw), type(inittype), speed(initspeed){}
+Obstacle::Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed): x(initx), y(inity), h(inith), w(initw), type(inittype), speed(initspeed){ isAlive = true;}
 int Obstacle::getX(){ return x;}
 int Obstacle::getY(){ return y;}
 int Obstacle::getH(){ return h;}

@@ -8,8 +8,7 @@
 class Ship_Label : public QLabel
 {
     Q_OBJECT
-    QTimer * fireShot, * updateShip;
-    bool fire;
+    QTimer * updateShip;
     QWidget * window;
     Universe * this_Universe;
     int ship_frame;
@@ -17,7 +16,7 @@ class Ship_Label : public QLabel
 public:
     Ship_Label(QWidget * parent, Universe * get_universe);
 
-    void mousePressEvent(QMouseEvent *ev);
+
     void crashed();
     void updateCoords();
 
@@ -26,7 +25,7 @@ public:
     std::string save();
 
 private slots:
-    void canFire();
+
     void shipToMouse();
     void expAnimate();
 

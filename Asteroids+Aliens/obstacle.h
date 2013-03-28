@@ -7,8 +7,10 @@ class Obstacle
 protected:
     int x,y,h,w,speed;
     bool isAlien;
+
     QString type;
 public:
+    bool isAlive;
     Obstacle(int initx, int inity, int inith, int initw, QString inittype, int initspeed);
 
     //Getter methods

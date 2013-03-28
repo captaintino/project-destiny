@@ -8,6 +8,7 @@ public:
     Projectile(int initx, int inity);
 
     void move();
+    void explode(){ isAlive = false; }
 
     std::string save() {}
 };
