@@ -3,6 +3,7 @@
 #include <QTcpSocket>
 #include <QDebug>
 #include <sstream>
+#include<algorithm>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -18,6 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::critical(this, "Uh oh", "Cannot start socket.");
         exit(1);
     }
+}
+
+bool MainWindow::sortUserByScore(User * a, User * b){return (a->getScore() > b->getScore());}
+
+void MainWindow::sortUsers()
+{
+    //std::sort(users.begin(), users.end(), sortUserByScore);
 }
 
 MainWindow::~MainWindow()
@@ -37,8 +45,7 @@ void MainWindow::clientConnected()
     QTcpSocket *sock = server.nextPendingConnection();
     connect(sock, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
     connect(sock, SIGNAL(readyRead()), this, SLOT(dataReceived()));
-    sockets.push_back(sock);
-    users.push_back(new User());
+    users.push_back(new User(sock));
     ++connectCount;
     ui->lblConnected->setText(QString::number(connectCount));
     addToLog("Client connected.");
@@ -46,20 +53,11 @@ void MainWindow::clientConnected()
 
 void MainWindow::dataReceived()
 {
-    /*
-    MySocket *sock;
-    for (int i = 0; i < sockets.size(); ++i) {
-        if (sockets.at(i) == sender()) {
-            sock = sockets.at(i);
-            break;
-        }
-    }
-*/
     int loc = 0;
     QTcpSocket *sock = dynamic_cast<QTcpSocket *>(sender());
 
-    for(int i = 0; i < sockets.size(); ++i){
-        if(sockets.at(i) == sock){
+    for(int i = 0; i < users.size(); ++i){
+        if(users.at(i)->getSocket() == sock){
             loc = i;
             break;
         }
@@ -122,6 +120,7 @@ void MainWindow::dataReceived()
                 output += " D\n";
             }
             addToLog(output);
+            sortUsers(); // THIS METHOD IS NOT WORKING YET, THE USERS ARE UNSORTED
         }
 
         }
@@ -130,8 +129,14 @@ void MainWindow::dataReceived()
 
 void MainWindow::clientDisconnected()
 {
-    QTcpSocket *sock = dynamic_cast<QTcpSocket*>(sender());
-    sock->deleteLater();
+    QTcpSocket *sock = dynamic_cast<QTcpSocket *>(sender());
+    for (int i = 0; i < users.size(); ++i) {
+        if(users.at(i)->getSocket() == sock){
+            delete users.at(i);
+            users.erase(users.begin() + i);
+            break;
+        }
+    }
     --connectCount;
     ui->lblConnected->setText(QString::number(connectCount));
     addToLog("Client disconnected.");

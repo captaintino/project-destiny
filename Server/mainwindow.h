@@ -14,13 +14,18 @@ class User {
     QString username;
     int level, score;
     bool alive;
+    QTcpSocket *socket;
 
 public:
-    User() {
+    User(QTcpSocket * sock) : socket(sock) {
         username = "User";
         level = 1;
         score = 0;
         alive = true;
+    }
+
+    ~User() {
+        socket->deleteLater();
     }
 
     void setUsername(QString newUser) { username = newUser; }
@@ -32,6 +37,7 @@ public:
     int getLevel() { return level; }
     int getScore() { return score; }
     bool getAlive() { return alive; }
+    QTcpSocket * getSocket() { return socket; }
 
 };
 
@@ -43,6 +49,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void addToLog(QString msg);
+    bool sortUserByScore(User * a, User * b);
+    void sortUsers();
 
 private slots:
     void clientConnected();
@@ -56,7 +64,6 @@ private:
     int connectCount;
 
     std::vector<User *> users;
-    std::vector<QTcpSocket *> sockets;
 };
 
 #endif // MAINWINDOW_H
