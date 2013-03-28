@@ -63,6 +63,7 @@ private slots:
 signals:
     void shipCrashed();
     void alienKilled();
+    void userShot();
     void projectileCreated();
 };
 

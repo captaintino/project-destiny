@@ -48,6 +48,9 @@ void World::move()
     for(int i = 0; i < enemyProjectiles.size(); ++i){
         enemyProjectiles.at(i)->move(); // Move all the projectiles
     }
+    for(int i = 0; i < projectiles.size(); ++i){
+        projectiles.at(i)->move(); // move user projectiles
+    }
     projectileGenerator();
 }
 
@@ -222,9 +225,11 @@ void World::userFires(Ship * playerShip)
 {
     Projectile * proj = new Projectile(playerShip->getX() + (playerShip->getW() / 2),
                                        playerShip->getY() + (playerShip->getH() / 2));
+    proj->setSpeed(-15);
     projectiles.push_back(proj);
 
     //emit signal about projectile creation
+    userShot();
 }
 //=======================================================================================
 //Generates projectiles based on a random number countdown between 20 and 40.
