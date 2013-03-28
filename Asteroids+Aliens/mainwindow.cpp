@@ -284,7 +284,7 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
-    this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     mainMenuSetShow(false);
     ui->lnUsername->setShown(false);

@@ -86,7 +86,8 @@ void World::deleteObject(Obstacle *object_to_delete)
         }
     }
 }
-
+//=======================================================================
+// checks every user projectile against all enemies in the world.
 void World::checkProjectile()
 {
     for(int cur = 0; cur < projectiles.size(); ++cur)
@@ -116,7 +117,7 @@ void World::checkProjectile()
     }
 }
 
-
+//======================================================================
 
 void World::checkUserShip(Ship * playerShip)
 {
@@ -210,6 +211,8 @@ void World::userFires(Ship * playerShip)
     Projectile * proj = new Projectile(playerShip->getX() + (playerShip->getW() / 2),
                                        playerShip->getY() + (playerShip->getH() / 2));
     projectiles.push_back(proj);
+
+    //emit signal about projectile creation
 }
 //=======================================================================================
 //Generates projectiles based on a random number countdown between 20 and 40.

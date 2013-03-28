@@ -5,9 +5,11 @@
 class Projectile:public Obstacle
 {
 public:
+    bool isAlive;
     Projectile(int initx, int inity);
 
     void move();
+    void explode(){ isAlive = false; }
 
     std::string save() {}
 };
