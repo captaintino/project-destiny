@@ -49,7 +49,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void addToLog(QString msg);
-    bool sortUserByScore(User * a, User * b);
+    static bool sortUserByScore(User * a, User * b);
     void sortUsers();
 
 private slots:

@@ -3,7 +3,7 @@
 #include <QTcpSocket>
 #include <QDebug>
 #include <sstream>
-#include<algorithm>
+#include <algorithm>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -25,7 +25,7 @@ bool MainWindow::sortUserByScore(User * a, User * b){return (a->getScore() > b->
 
 void MainWindow::sortUsers()
 {
-    //std::sort(users.begin(), users.end(), sortUserByScore);
+    std::sort(users.begin(), users.end(), sortUserByScore);
 }
 
 MainWindow::~MainWindow()
