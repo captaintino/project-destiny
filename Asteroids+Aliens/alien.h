@@ -5,10 +5,12 @@
 class Alien : public Obstacle
 {
 public:
+    bool isAlive;
     Alien(int initx, int inity, int initspeed = 10);
 
     // Move the item down the screen
     void move();
+    void Kill() { isAlive = false; }
 
     // Saves the item state
     std::string save();

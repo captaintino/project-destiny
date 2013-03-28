@@ -44,7 +44,11 @@ public:
 
     void deleteObject(Obstacle * object_to_delete);
 
+    void checkProjectile();
+
     void checkUserShip(Ship *playerShip);
+
+    void userFires(Ship *playerShip);
 
     void projectileGenerator();
 
@@ -58,6 +62,7 @@ private slots:
 
 signals:
     void shipCrashed();
+    void alienKilled();
     void projectileCreated();
 };
 
