@@ -16,7 +16,7 @@ ClientWindow::~ClientWindow()
 
 void ClientWindow::on_btnClientWinConnect_clicked()
 {
-    serverUpdate();
+    serverUpdate(-1);
 }
 
 void ClientWindow::dataReceived()
@@ -32,16 +32,15 @@ void ClientWindow::dataReceived()
     stringstream buffer;
     int numUsers = 0;
     string username;
-    int score;
+    int score = 0;
     string state;
-    int level;    
+    int level = 0;
     QLabel * label;
 
-//  while (socket->canReadLine())  COMMENTED OUT FOR TESTING
-//  data += socket->readLine();
-//  buffer << data;
+    while (socket->canReadLine()){
+    data += socket->readLine();
 
-    buffer << "3 user1 100 Alive 2 user2 200 Dead 3 user3 50000 Alive 100"; //data.toStdString();
+    buffer << data.toStdString();
 
     buffer>>numUsers;
     int y = 90;
@@ -96,6 +95,7 @@ void ClientWindow::dataReceived()
         }
         ui->txtChat->insertHtml("<b>" + username + "</b>: " + msg + "<br><br>");
     }*/
+    }
 }
 
 void ClientWindow::serverDisconnected()
@@ -108,11 +108,14 @@ void ClientWindow::serverDisconnected()
 }
 
 //Updates server with current information
-void ClientWindow::serverUpdate()
+void ClientWindow::serverUpdate(int Gscore)
 {
     QString hostname = "localhost";
-    QString score = QString::number(universe->getScore());
-
+    QString score;
+    if(Gscore > -1){score = QString::number(universe->getScore());
+    }else{
+        score = "0";
+    }
     socket = new QTcpSocket(this);
 
     socket->connectToHost(hostname, 5000);
@@ -120,6 +123,8 @@ void ClientWindow::serverUpdate()
         QMessageBox::critical(this, "Uh oh", "Unable to connect to server.");
         return;
     }
+    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
 
     QString data = QString("UPDATE ") + userName + " " + score + " alive" + " 1" + '\n';
     qDebug() << "Sending " << data.toStdString().c_str();
@@ -140,9 +145,7 @@ void ClientWindow::clientRefresh()
     {
         return;
     }
-    connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
-    socket->write("REFRESH" + '\n');
+    socket->write("REFRESH\n");
 
 }
 

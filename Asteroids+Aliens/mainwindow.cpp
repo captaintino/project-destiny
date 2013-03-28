@@ -166,7 +166,7 @@ void MainWindow::levelFinished()
 
     //put UPDATE username score alive level
     if(multiplayer)
-        clientWindow.serverUpdate();
+        clientWindow.serverUpdate(0);
 
     qDebug("Current Level is:" + QString::number(level).toAscii());
     levelTimer->start();
