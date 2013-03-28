@@ -44,6 +44,8 @@ public:
 
     void deleteObject(Obstacle * object_to_delete);
 
+    void checkProjectile();
+
     void checkUserShip(Ship *playerShip);
 
     void projectileGenerator();

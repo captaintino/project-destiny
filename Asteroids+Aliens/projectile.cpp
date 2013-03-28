@@ -8,5 +8,4 @@ void Projectile::move()
 {
     y+=speed;
         // delete this guy and make a new guy show up
-
 }

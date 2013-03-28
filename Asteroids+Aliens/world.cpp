@@ -87,6 +87,36 @@ void World::deleteObject(Obstacle *object_to_delete)
     }
 }
 
+void World::checkProjectile()
+{
+    for(int cur = 0; cur < projectiles.size(); ++cur)
+    {
+        Projectile * proj = projectiles.at(cur);
+        double projW = proj->getW() / 2;
+        double projH = proj->getH() / 2;
+        double projX = proj->getX() + projW;
+        double projY = proj->getY() + projH;
+
+        for(Obstacle * alien :aliens)
+        {
+            double alienRad = alien->getW() / 2;
+            double alienX = alien->getX() + alienRad;
+            double alienY = alien->getY() + alienRad;
+
+            if(!(((projX - projW) > (alienX + alienRad)) ||
+               ((alienX - alienRad) > (projX + projW))) &&
+               !(((alienY + alienRad) < (projY - projH)) ||
+               ((projY + projH) < (alienY - alienRad))))
+            {
+                Alien * dead = dynamic_cast<Alien*>(alien);
+                dead->Kill();
+            }
+        }
+    }
+}
+
+
+
 void World::checkUserShip(Ship * playerShip)
 {
 
