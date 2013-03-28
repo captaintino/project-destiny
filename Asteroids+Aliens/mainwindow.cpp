@@ -71,6 +71,7 @@ void MainWindow::on_btnStart_clicked()
     the_Score->raise();
     the_Score->show();
     mainMenuSetShow(false);
+    ui->lnUsername->setShown(false);
     this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     QApplication::desktop()->cursor().setPos(340,520);
@@ -286,6 +287,7 @@ void MainWindow::on_btnLoad_clicked()
     this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     mainMenuSetShow(false);
+    ui->lnUsername->setShown(false);
     QApplication::desktop()->cursor().setPos(shipx,shipy);
     universe = new Universe(level, score, cheat);
     highscores->setUniverse(universe);
@@ -349,6 +351,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         the_Score->setShown(false);
         user->setShown(false);
         ui->label->setPixmap(QPixmap(":images/Main_Menu.jpg"));
+        ui->lnUsername->setShown(true);
         mainMenuSetShow(true);
         ui->btnCheat->setText("Cheat Mode: OFF");
         cheat = false;
