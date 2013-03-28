@@ -80,8 +80,8 @@ void MainWindow::dataReceived()
             sock->setUsername(qstr);
         } else */ if (qstr.startsWith("REFR")) {
             QString output;
-            for (int i = 0; i < sockets.size(); ++i) {
-                User * user = users.at(loc);
+            for (int i = 0; i < users.size(); ++i) {
+                User * user = users.at(i);
                 output += user->getUsername() + " ";
                 output += QString::number(user->getScore()) + " ";
                 if (user->getAlive()) {
@@ -114,8 +114,8 @@ void MainWindow::dataReceived()
             user->setLevel(qstr.toInt());
             QString output;
             output = user->getUsername();
-            output += " Level:" + user->getLevel();
-            output += " Score:" + user->getScore();
+            output += " Level:" + QString::number(user->getLevel());
+            output += " Score:" + QString::number(user->getScore());
             if (user->getAlive()) {
                 output += " A";
             } else {

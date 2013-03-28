@@ -61,7 +61,7 @@ background-position: bottom right;</string>
    </widget>
    <widget class="QPushButton" name="btnRefresh">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
