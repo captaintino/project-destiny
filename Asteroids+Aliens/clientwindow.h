@@ -28,9 +28,11 @@ class ClientWindow : public QWidget
 public:
     explicit ClientWindow(QWidget *parent = 0);
     ~ClientWindow();
-    void serverUpdate(int Gscore);
+    void serverUpdate();
     void clientRefresh();
     void updateUsername(QString user){userName = user; ui->lnUserName->setText(userName);}
+    void sendUpdate(bool aliveOrDead);
+    void updateUniverse(Universe * uni){universe = uni;}
 
 private slots:
     void on_btnClientWinConnect_clicked();
@@ -40,6 +42,9 @@ private slots:
     //void on_btnSend_clicked();
 
     void on_btnRefresh_clicked();
+signals:
+    void connected();
+    void disconnected();
 
 private:
     Ui::ClientWindow *ui;

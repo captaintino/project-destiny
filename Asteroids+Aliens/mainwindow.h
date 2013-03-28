@@ -53,6 +53,9 @@ private slots:
 
     void on_lnUsername_editingFinished();
 
+    void connectedMultiplayer();
+    void disconnectedMultiplayer();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer;

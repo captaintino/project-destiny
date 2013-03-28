@@ -16,7 +16,7 @@ ClientWindow::~ClientWindow()
 
 void ClientWindow::on_btnClientWinConnect_clicked()
 {
-    serverUpdate(-1);
+    serverUpdate();
 }
 
 void ClientWindow::dataReceived()
@@ -105,17 +105,16 @@ void ClientWindow::serverDisconnected()
      //ui->btnConnect->setEnabled(true);
      //ui->btnSend->setEnabled(false);
      socket->deleteLater();
+     emit disconnected();
+     ui->btnClientWinConnect->setEnabled(true);
+     ui->btnRefresh->setEnabled(false);
 }
 
 //Updates server with current information
-void ClientWindow::serverUpdate(int Gscore)
+void ClientWindow::serverUpdate()
 {
     QString hostname = "localhost";
-    QString score;
-    if(Gscore > -1){score = QString::number(universe->getScore());
-    }else{
-        score = "0";
-    }
+    QString score = "0";
     socket = new QTcpSocket(this);
 
     socket->connectToHost(hostname, 5000);
@@ -125,8 +124,11 @@ void ClientWindow::serverUpdate(int Gscore)
     }
     connect(socket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
+    emit connected();
+    ui->btnClientWinConnect->setEnabled(false);
+    ui->btnRefresh->setEnabled(true);
 
-    QString data = QString("UPDATE ") + userName + " " + score + " alive" + " 1" + '\n';
+    QString data = QString("UPDATE ") + userName + " " + score + " alive 1\n";
     qDebug() << "Sending " << data.toStdString().c_str();
     socket->write(data.toStdString().c_str());
 
@@ -147,6 +149,20 @@ void ClientWindow::clientRefresh()
     }
     socket->write("REFRESH\n");
 
+}
+
+void ClientWindow::sendUpdate(bool aliveOrDead)
+{
+    QString aOrD;
+    if(aliveOrDead){
+        aOrD = " alive";
+    }else{
+        aOrD = " dead";
+    }
+    QString score = QString::number(universe->getScore());
+    QString data = QString("UPDATE ") + userName + " " + score + aOrD + " " + QString::number(universe->getLevel()) + '\n';
+    qDebug() << "Sending " << data.toStdString().c_str();
+    socket->write(data.toStdString().c_str());
 }
 
 /*void ClientWindow::on_btnSend_clicked()               //CHAT STUFF

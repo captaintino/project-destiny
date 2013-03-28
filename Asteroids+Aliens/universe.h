@@ -52,6 +52,7 @@ public:
     // Getter Methods:
     Ship* getShip();
     int getScore(){return score;}
+    int getLevel(){return level;}
 
 signals:
     void shipCrashed();

@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     highscores->load();
     multiplayer = false;
     userName="Player";
+    connect(&clientWindow, SIGNAL(connected()), this, SLOT(connectedMultiplayer()));
+    connect(&clientWindow, SIGNAL(disconnected()), this, SLOT(disconnectedMultiplayer()));
 }
 
 MainWindow::~MainWindow()
@@ -81,6 +83,7 @@ void MainWindow::on_btnStart_clicked()
         level = 1;
     }
     universe = new Universe(level, 0, cheat);
+    clientWindow.updateUniverse(universe);
     highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
@@ -167,7 +170,7 @@ void MainWindow::levelFinished()
 
     //put UPDATE username score alive level
     if(multiplayer)
-        clientWindow.serverUpdate(0);
+        clientWindow.sendUpdate(true);
 
     qDebug("Current Level is:" + QString::number(level).toAscii());
     levelTimer->start();
@@ -191,6 +194,8 @@ void MainWindow::userShipCrashed()
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
     highscores->save();
+    if(multiplayer)
+        clientWindow.sendUpdate(false);
 }
 
 void MainWindow::makeProjectile()
@@ -290,6 +295,7 @@ void MainWindow::on_btnLoad_clicked()
     ui->lnUsername->setShown(false);
     QApplication::desktop()->cursor().setPos(shipx,shipy);
     universe = new Universe(level, score, cheat);
+    clientWindow.updateUniverse(universe);
     highscores->setUniverse(universe);
     modelUpdater = new UniverseThread(universe, level);
     user = new Ship_Label(this, universe);
@@ -362,4 +368,14 @@ void MainWindow::on_lnUsername_editingFinished()
 {
     userName = ui->lnUsername->text();
     clientWindow.updateUsername(userName);
+}
+
+void MainWindow::connectedMultiplayer()
+{
+    multiplayer = true;
+}
+
+void MainWindow::disconnectedMultiplayer()
+{
+    multiplayer = false;
 }
