@@ -93,25 +93,31 @@ void World::checkProjectile()
     for(int cur = 0; cur < projectiles.size(); ++cur)
     {
         Projectile * proj = projectiles.at(cur);
-        double projW = proj->getW() / 2;
-        double projH = proj->getH() / 2;
-        double projX = proj->getX() + projW;
-        double projY = proj->getY() + projH;
-
-        for(Obstacle * alien :aliens)
+        if(proj->isAlive)
         {
-            double alienRad = alien->getW() / 2;
-            double alienX = alien->getX() + alienRad;
-            double alienY = alien->getY() + alienRad;
+            double projW = proj->getW() / 2;
+            double projH = proj->getH() / 2;
+            double projX = proj->getX() + projW;
+            double projY = proj->getY() + projH;
 
-            if(!(((projX - projW) > (alienX + alienRad)) ||
-                 ((alienX - alienRad) > (projX + projW))) &&
-                    !(((alienY + alienRad) < (projY - projH)) ||
-                      ((projY + projH) < (alienY - alienRad))))
+            for(Obstacle * alien :aliens)
             {
-                Alien * dead = dynamic_cast<Alien*>(alien);
-                dead->Kill();
-                alienKilled();
+                if(alien->isAlive)
+                {
+                    double alienRad = alien->getW() / 2;
+                    double alienX = alien->getX() + alienRad;
+                    double alienY = alien->getY() + alienRad;
+
+                    if(!(((projX - projW) > (alienX + alienRad)) ||
+                         ((alienX - alienRad) > (projX + projW))) &&
+                            !(((alienY + alienRad) < (projY - projH)) ||
+                              ((projY + projH) < (alienY - alienRad))))
+                    {
+                        Alien * dead = dynamic_cast<Alien*>(alien);
+                        dead->Kill();
+                        alienKilled();
+                    }
+                }
             }
         }
     }
@@ -129,25 +135,27 @@ void World::checkUserShip(Ship * playerShip)
         double shipY = playerShip->getY() + shipRad;
 
         Obstacle * obj = asteroids.at(cur);
-
-        double objRad = obj->getW() / 2;
-        double objX = obj->getX() + objRad;
-        double objY = obj->getY() + objRad;
-
-        if(!(((objX - objRad) > (shipX + shipRad)) ||
-             ((shipX - shipRad) > (objX + objRad))) &&
-                !(((shipY + shipRad) < (objY - objRad)) ||
-                  ((objY + objRad) < (shipY - shipRad))))
+        if(obj->isAlive)
         {
-            //What follows is known as magic. It is what should never have to be done.
-            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
-            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
-                 ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
-                    !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
-                      ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+            double objRad = obj->getW() / 2;
+            double objX = obj->getX() + objRad;
+            double objY = obj->getY() + objRad;
+
+            if(!(((objX - objRad) > (shipX + shipRad)) ||
+                 ((shipX - shipRad) > (objX + objRad))) &&
+                    !(((shipY + shipRad) < (objY - objRad)) ||
+                      ((objY + objRad) < (shipY - shipRad))))
             {
-                playerShip->setHit(true);
-                shipCrashed();
+                //What follows is known as magic. It is what should never have to be done.
+                //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+                if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                     ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                        !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                          ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+                {
+                    playerShip->setHit(true);
+                    shipCrashed();
+                }
             }
         }
     }
@@ -158,25 +166,27 @@ void World::checkUserShip(Ship * playerShip)
         double shipY = playerShip->getY() + shipRad;
 
         Obstacle * obj = aliens.at(cur);
-
-        double objRad = obj->getW() / 2;
-        double objX = obj->getX() + objRad;
-        double objY = obj->getY() + objRad;
-
-        if(!(((objX - objRad) > (shipX + shipRad)) ||
-             ((shipX - shipRad) > (objX + objRad))) &&
-                !(((shipY + shipRad) < (objY - objRad)) ||
-                  ((objY + objRad) < (shipY - shipRad))))
+        if(obj->isAlive)
         {
-            //What follows is known as magic. It is what should never have to be done.
-            //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
-            if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
-                 ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
-                    !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
-                      ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+            double objRad = obj->getW() / 2;
+            double objX = obj->getX() + objRad;
+            double objY = obj->getY() + objRad;
+
+            if(!(((objX - objRad) > (shipX + shipRad)) ||
+                 ((shipX - shipRad) > (objX + objRad))) &&
+                    !(((shipY + shipRad) < (objY - objRad)) ||
+                      ((objY + objRad) < (shipY - shipRad))))
             {
-                playerShip->setHit(true);
-                shipCrashed();
+                //What follows is known as magic. It is what should never have to be done.
+                //We'll call it "Simplified Circular Collision Detection" -- it checks octagons.
+                if(!(((shipX + (sin(225*PI/180)*shipRad)) > (objX + (sin(135*PI/180) * objRad))) ||
+                     ((objX + (sin(225 * PI/180)*objRad)) > (shipX + (sin(135*PI/180)*shipRad)))) &&
+                        !(((shipY + (cos(225*PI/180)*shipRad)) > (objY + (cos(315*PI/180) * objRad))) ||
+                          ((objY + (sin(225 * PI/180)*objRad)) > (shipY + (cos(315*PI/180) * shipRad)))))
+                {
+                    playerShip->setHit(true);
+                    shipCrashed();
+                }
             }
         }
     }
@@ -188,19 +198,21 @@ void World::checkUserShip(Ship * playerShip)
         double shipY = playerShip->getY() + shipRad;
 
         Obstacle * obj = enemyProjectiles.at(cur);
-
-        double objW = obj->getW() / 2;
-        double objH = obj->getH() / 2;
-        double objX = obj->getX() + objW;
-        double objY = obj->getY() + objH;
-
-        if(!(((objX - objW) > (shipX + shipRad)) ||
-             ((shipX - shipRad) > (objX + objW))) &&
-                !(((shipY + shipRad) < (objY - objH)) ||
-                  ((objY + objH) < (shipY - shipRad))))
+        if(obj->isAlive)
         {
-            playerShip->setHit(true);
-            shipCrashed();
+            double objW = obj->getW() / 2;
+            double objH = obj->getH() / 2;
+            double objX = obj->getX() + objW;
+            double objY = obj->getY() + objH;
+
+            if(!(((objX - objW) > (shipX + shipRad)) ||
+                 ((shipX - shipRad) > (objX + objW))) &&
+                    !(((shipY + shipRad) < (objY - objH)) ||
+                      ((objY + objH) < (shipY - shipRad))))
+            {
+                playerShip->setHit(true);
+                shipCrashed();
+            }
         }
     }
 }

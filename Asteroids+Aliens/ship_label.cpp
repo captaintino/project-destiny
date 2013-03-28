@@ -8,7 +8,7 @@
 #include <QSound>
 
 
-Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent), fire(true), window(parent), this_Universe(get_universe)
+Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent), window(parent), this_Universe(get_universe)
 {
     setGeometry(380, 540, 40, 40);
     setScaledContents(true);
@@ -17,7 +17,6 @@ Ship_Label::Ship_Label(QWidget *parent, Universe *get_universe): QLabel(parent),
     show();
     setMouseTracking(true);
     updateShip = new QTimer(this);
-    fireShot = new QTimer(this);
     QObject::connect(updateShip, SIGNAL(timeout()), this, SLOT(shipToMouse()));
     //QObject::connect(this_world, SIGNAL(shipCrashed()), this, SLOT(crashed()));
     updateShip->start(10);
@@ -65,21 +64,4 @@ void Ship_Label::expAnimate()
 
     ++ship_frame;
 
-}
-
-
-void Ship_Label::mousePressEvent(QMouseEvent *ev)
-{
-    if(fire){
-        // Shoot a projectile
-        qDebug("fire");
-        fire = false;
-        QTimer::singleShot(1000, this, SLOT(canFire()));
-    }
-}
-
-void Ship_Label::canFire()
-{
-    qDebug("signal Fired");
-    fire = true;
 }

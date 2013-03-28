@@ -27,6 +27,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void mousePressEvent(QMouseEvent *ev);
     void mainMenuSetShow(bool m);
     void accelerateBackground();
 private slots:
@@ -56,9 +57,11 @@ private slots:
     void connectedMultiplayer();
     void disconnectedMultiplayer();
 
+    void canFire();
+
 private:
     Ui::MainWindow *ui;
-    QTimer * backgroundTimer, *updateTimer, *levelTimer;
+    QTimer * backgroundTimer, *updateTimer, *levelTimer, *fireShot;
     Universe * universe;
     Ship_Label * user;
     int background_counter, level;
@@ -69,7 +72,7 @@ private:
     InstructionWindow instructionWindow;
     QLabel * the_Score;
     HighScores * highscores;
-    bool cheat, multiplayer;
+    bool cheat, multiplayer, fire;
     ClientWindow clientWindow;
     QString userName;
 };

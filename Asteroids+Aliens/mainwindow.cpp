@@ -52,6 +52,16 @@ MainWindow::~MainWindow()
     }
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *ev)
+{
+    if(fire){
+        // Shoot a projectile
+        qDebug("fire");
+        fire = false;
+        QTimer::singleShot(1000, this, SLOT(canFire()));
+    }
+}
+
 void MainWindow::mainMenuSetShow(bool m)
 {
     ui->btnStart->setShown(m);
@@ -76,6 +86,7 @@ void MainWindow::on_btnStart_clicked()
     ui->lnUsername->setShown(false);
     this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
+    fire = true;
     QApplication::desktop()->cursor().setPos(340,520);
     if (cheat) {
         level = ui->spinCheat->value();
@@ -99,6 +110,7 @@ void MainWindow::on_btnStart_clicked()
     updateTimer->start();
     levelTimer->start();
     modelUpdater->start();
+    fireShot = new QTimer(this);
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
     universe->save();
@@ -289,7 +301,8 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
-    //this->grabMouse(); // <-- we need to have an <Esc> option...
+    fire = true;
+    this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     mainMenuSetShow(false);
     ui->lnUsername->setShown(false);
@@ -379,3 +392,10 @@ void MainWindow::disconnectedMultiplayer()
 {
     multiplayer = false;
 }
+
+void MainWindow::canFire()
+{
+    qDebug("signal Fired");
+    fire = true;
+}
+
