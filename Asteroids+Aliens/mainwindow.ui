@@ -85,6 +85,9 @@
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
+      </property>
       <property name="text">
        <string>Start Game</string>
       </property>
@@ -104,6 +107,9 @@
         <bold>true</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
+      </property>
       <property name="text">
        <string>Instructions</string>
       </property>
@@ -121,6 +127,9 @@
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
       </property>
       <property name="text">
        <string>High Scores</string>
@@ -140,6 +149,9 @@
         <bold>true</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
+      </property>
       <property name="text">
        <string>Multiplayer</string>
       </property>
@@ -158,6 +170,9 @@
         <bold>true</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
+      </property>
       <property name="text">
        <string>Load Game</string>
       </property>
@@ -175,6 +190,9 @@
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(217, 217, 217)</string>
       </property>
       <property name="text">
        <string>Cheat Mode: OFF</string>
@@ -219,6 +237,9 @@
      <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(217, 217, 217)</string>
    </property>
    <property name="text">
     <string>Level:</string>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
+    <width>649</width>
     <height>468</height>
    </rect>
   </property>
@@ -30,56 +30,22 @@
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>421</width>
+     <x>-30</x>
+     <y>-10</y>
+     <width>721</width>
      <height>481</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url(:/images/Main_Menu.jpg);
-background-position: bottom right;</string>
+    <string notr="true">background-color:rgb(0, 0, 0)</string>
    </property>
-   <widget class="QLabel" name="lblInstructionContent">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>361</width>
-      <height>341</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>FreeMono</family>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image:url(:/images/transparent.png);</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Instructions:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Maneuver through the field of&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;asteroids by moving your mouse.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Be sure not to crash!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnCloseInstructions">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>270</x>
       <y>430</y>
       <width>173</width>
       <height>33</height>
@@ -94,13 +60,48 @@ background-position: bottom right;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image:url(:/images/transparent.png);</string>
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
     </property>
     <property name="flat">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblInstructionContent">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>651</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;Instructions:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;Select &amp;quot;Start Game&amp;quot; to begin a new game. You will be launched into a&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;world with astroids, aliens, and projectiles trying to destroy your ship&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;and your score will be based on the length of time you are in the game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;without crashing. Be careful! The enemy will become faster as the game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;progresses.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;During game play, press the escape key to exit and save your game. You&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;can select &amp;quot;Load Game&amp;quot; to start the game where you saved it.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;If you want to know who to beat, select &amp;quot;High Scores&amp;quot;. To join &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;fellow space travelers in the fight, select &amp;quot;Multiplayer&amp;quot; then select&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;quot;Connect&amp;quot; on the Multiplayer window to connect to other players or&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;quot;Refresh&amp;quot; to view their updated game status&lt;/span&gt;&lt;span style=&quot; color:#d9d9d9;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;Set Cheat Mode to &amp;quot;On&amp;quot; and select a level to skip to that level in game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;play.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
   </widget>

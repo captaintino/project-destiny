@@ -81,7 +81,7 @@ background-position: bottom right;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:rgb(217, 217, 217)</string>
+     <string notr="true">color:rgb(216, 216, 216)</string>
     </property>
     <property name="text">
      <string>Refresh</string>

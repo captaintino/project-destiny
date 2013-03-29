@@ -53,7 +53,8 @@ background-position: bottom right;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/images/transparent.png);</string>
+     <string notr="true">background-image: url(:/images/transparent.png);
+color:rgb(217, 217, 217)</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
@@ -70,6 +71,13 @@ background-position: bottom right;</string>
       <width>66</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -119,9 +127,20 @@ background-position: bottom right;</string>
      <rect>
       <x>110</x>
       <y>100</y>
-      <width>66</width>
-      <height>17</height>
+      <width>80</width>
+      <height>30</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
