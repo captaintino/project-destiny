@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>416</width>
-    <height>468</height>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,9 +23,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-20</y>
      <width>421</width>
-     <height>471</height>
+     <height>491</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -33,7 +33,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-image:url(:/images/Main_Menu.jpg);
-background-position: bottom right;</string>
+background-position: top right;
+</string>
    </property>
    <widget class="QPushButton" name="btnBackToMainMenu">
     <property name="geometry">
@@ -53,7 +54,8 @@ background-position: bottom right;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/images/transparent.png);</string>
+     <string notr="true">background-image: url(:/images/transparent.png);
+color:rgb(217, 217, 217)</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
@@ -63,135 +65,324 @@ background-position: bottom right;</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblUsername2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>150</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblUsername3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>200</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblUsername4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>250</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblUsername5">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>300</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblUsername1">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>100</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblScore1">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>100</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblScore2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>150</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblScore3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>200</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblScore4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>250</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblScore5">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>300</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>251</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:url();
+background-color:rgba(0,0,0,128)</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+   </widget>
+   <zorder>frame</zorder>
+   <zorder>btnBackToMainMenu</zorder>
+   <zorder>lblUsername2</zorder>
+   <zorder>lblUsername3</zorder>
+   <zorder>lblUsername4</zorder>
+   <zorder>lblUsername5</zorder>
+   <zorder>lblUsername1</zorder>
+   <zorder>lblScore1</zorder>
+   <zorder>lblScore2</zorder>
+   <zorder>lblScore3</zorder>
+   <zorder>lblScore4</zorder>
+   <zorder>lblScore5</zorder>
   </widget>
  </widget>
  <resources/>

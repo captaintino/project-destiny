@@ -31,8 +31,6 @@ void HighScoreWindow::updateHighScore(vector<string> &usernames, vector<int> &sc
 
 }
 
-
-
 void HighScoreWindow::on_btnBackToMainMenu_clicked()
 {
     this->close();
