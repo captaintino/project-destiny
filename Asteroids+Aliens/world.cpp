@@ -227,7 +227,7 @@ void World::userFires(Ship * playerShip)
                                        playerShip->getY() + (playerShip->getH() / 2));
     proj->setSpeed(-15);
     projectiles.push_back(proj);
-
+    qDebug("projectile created!");
     //emit signal about projectile creation
     userShot();
 }

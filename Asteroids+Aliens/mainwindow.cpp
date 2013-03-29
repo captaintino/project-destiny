@@ -55,6 +55,7 @@ MainWindow::~MainWindow()
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
     if(fire){
+        universe->getWorld(0)->userFires(universe->getShip());
         // Shoot a projectile
         qDebug("fire");
         fire = false;
@@ -357,6 +358,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         updateTimer->stop();
         levelTimer->stop();
         backgroundTimer->stop();
+        QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
         for (int i = 0; i < objects.size(); ++i) {
