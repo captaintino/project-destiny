@@ -116,6 +116,7 @@ void MainWindow::on_btnStart_clicked()
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
     universe->save();
+    highscores->setUserName(userName);
 }
 
 

@@ -1,6 +1,6 @@
 #include <QDebug>
 #include<QFile>
-
+#include<ui_highscorewindow.h>
 #include <highscores.h>
 
 using namespace std;
@@ -8,6 +8,12 @@ using namespace std;
 HighScores::HighScores(HighScoresObserver * win):observer(win)
 {
 
+}
+
+void HighScores::setUserName(const QString &username)
+{
+    this->username = username;
+    qDebug()<<this->username<<"HighScore 17";
 }
 
 void HighScores::save()
@@ -69,14 +75,13 @@ void HighScores::evaluate()
 {
     bool erase = false;
     int score = universe->getScore();
-    observer->updateHighScoreUsername(username);
 
     for(int i = 0; i < scores.size(); ++i)
     {
         if(score>scores.at(i))
         {
             scores.insert(scores.begin() + i,score);
-            usernames.insert(usernames.begin() + i,username.toStdString());
+            usernames.insert(usernames.begin() + i,this->username.toStdString());
             erase = true;
             break;
         }
