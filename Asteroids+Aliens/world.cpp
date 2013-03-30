@@ -130,6 +130,23 @@ void World::checkProjectile()
                     }
                 }
             }
+            for(Obstacle * aster :asteroids)
+            {
+                if(aster->isAlive)
+                {
+                    double asterRad = aster->getW() / 2;
+                    double asterX = aster->getX() + asterRad;
+                    double asterY = aster->getY() + asterRad;
+
+                    if(!(((projX - projW) > (asterX + asterRad)) ||
+                         ((asterX - asterRad) > (projX + projW))) &&
+                            !(((asterY + asterRad) < (projY - projH)) ||
+                              ((projY + projH) < (asterY - asterRad))))
+                    {
+                        qDebug("Asteroid hit...");
+                    }
+                }
+            }
         }
     }
 }

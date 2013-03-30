@@ -113,7 +113,12 @@ void ClientWindow::serverDisconnected()
 //Updates server with current information
 void ClientWindow::serverUpdate()
 {
-    QString hostname = "localhost";
+    QString hostname;
+    userName = ui->lnUserName->text();
+    if(ui->lnHostName->text() != "")
+        hostname = ui->lnHostName->text();
+    else
+        hostname = "localhost";
     QString score = "0";
     socket = new QTcpSocket(this);
 
