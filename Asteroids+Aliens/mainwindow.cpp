@@ -320,12 +320,15 @@ void MainWindow::on_btnLoad_clicked()
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
+    int offScreenCount;
     for(int i = 0; i < asteroidcount; ++i)
     {
         line >> str;
         int x = stoi(str);
         line >> str;
         int y = stoi(str);
+        if(y > 600 || y <= 0)
+            offScreenCount++;
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 1, x, y));
         connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
@@ -337,16 +340,22 @@ void MainWindow::on_btnLoad_clicked()
         int x = stoi(str);
         line >> str;
         int y = stoi(str);
+        if(y > 600 || y <= 0)
+            offScreenCount++;
         objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 2, x, y));
         connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
     }
+
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
     universe->getWorld(0)->lameToWalk();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
     updateTimer->start();
     modelUpdater->updateTimer(level);
+    if(offScreenCount > 9)
+        levelFinished();
     QTimer::singleShot(1000, this, SLOT(resumeLevel()));
+    //resumeLevel();
     qDebug("Current Level is:" + QString::number(level).toAscii());
 }
 
@@ -364,6 +373,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         levelTimer->stop();
         backgroundTimer->stop();
         QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
+        QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
         for (int i = 0; i < objects.size(); ++i) {

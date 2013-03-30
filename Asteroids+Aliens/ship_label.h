@@ -24,7 +24,7 @@ public:
     // Saves the item state
     std::string save();
 
-private slots:
+public slots:
 
     void shipToMouse();
     void expAnimate();
