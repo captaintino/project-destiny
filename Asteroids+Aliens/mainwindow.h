@@ -75,7 +75,7 @@ private:
     InstructionWindow instructionWindow;
     QLabel * the_Score;
     HighScores * highscores;
-    bool cheat, multiplayer, fire;
+    bool cheat, multiplayer, fire, networked;
     ClientWindow clientWindow;
     QString userName;
 };

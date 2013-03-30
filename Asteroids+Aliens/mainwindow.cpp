@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     highscores = new HighScores(&highScoreWindow);
     highscores->load();
     multiplayer = false;
+    networked = false;
     userName="Player";
     connect(&clientWindow, SIGNAL(connected()), this, SLOT(connectedMultiplayer()));
     connect(&clientWindow, SIGNAL(disconnected()), this, SLOT(disconnectedMultiplayer()));
@@ -359,7 +360,8 @@ void MainWindow::resumeLevel(){
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape) {
-        universe->save();
+        if (!universe->getShip()->isDead() || !networked)
+            universe->save();
         modelUpdater->terminate();
         updateTimer->stop();
         levelTimer->stop();
@@ -394,11 +396,15 @@ void MainWindow::on_lnUsername_editingFinished()
 void MainWindow::connectedMultiplayer()
 {
     multiplayer = true;
+    networked = true;
+    ui->btnLoad->setEnabled(false);
 }
 
 void MainWindow::disconnectedMultiplayer()
 {
     multiplayer = false;
+    networked = false;
+    ui->btnLoad->setEnabled(true);
 }
 
 void MainWindow::canFire()
