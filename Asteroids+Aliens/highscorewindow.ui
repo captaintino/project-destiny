@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>416</width>
-    <height>468</height>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,9 +23,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-20</y>
      <width>421</width>
-     <height>471</height>
+     <height>491</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -33,7 +33,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-image:url(:/images/Main_Menu.jpg);
-background-position: bottom right;</string>
+background-position: top right;
+</string>
    </property>
    <widget class="QPushButton" name="btnBackToMainMenu">
     <property name="geometry">
@@ -66,18 +67,24 @@ color:rgb(217, 217, 217)</string>
    <widget class="QLabel" name="lblUsername2">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>150</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
       <weight>75</weight>
-      <italic>true</italic>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -86,11 +93,24 @@ color:rgb(217, 217, 217)</string>
    <widget class="QLabel" name="lblUsername3">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>200</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -99,11 +119,23 @@ color:rgb(217, 217, 217)</string>
    <widget class="QLabel" name="lblUsername4">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>250</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -112,11 +144,24 @@ color:rgb(217, 217, 217)</string>
    <widget class="QLabel" name="lblUsername5">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>300</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -125,15 +170,16 @@ color:rgb(217, 217, 217)</string>
    <widget class="QLabel" name="lblUsername1">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>100</x>
       <y>100</y>
-      <width>80</width>
-      <height>30</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>FreeMono</family>
+      <pointsize>13</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -151,9 +197,21 @@ color:rgb(217, 217, 217);</string>
      <rect>
       <x>220</x>
       <y>100</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -164,9 +222,21 @@ color:rgb(217, 217, 217);</string>
      <rect>
       <x>220</x>
       <y>150</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -177,9 +247,22 @@ color:rgb(217, 217, 217);</string>
      <rect>
       <x>220</x>
       <y>200</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -190,9 +273,21 @@ color:rgb(217, 217, 217);</string>
      <rect>
       <x>220</x>
       <y>250</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -203,9 +298,21 @@ color:rgb(217, 217, 217);</string>
      <rect>
       <x>220</x>
       <y>300</y>
-      <width>66</width>
-      <height>17</height>
+      <width>101</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/images/transparent.png);
+color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
