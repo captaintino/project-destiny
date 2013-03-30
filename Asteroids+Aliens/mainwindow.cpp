@@ -212,7 +212,8 @@ void MainWindow::userShipCrashed()
     this->releaseMouse();
     this->setCursor(Qt::ArrowCursor);
     qDebug("Exiting update... user has crashed.");
-    highscores->save();
+    if(!cheat)
+        highscores->save();
     if(multiplayer)
         clientWindow.sendUpdate(false);
 }
