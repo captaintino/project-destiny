@@ -21,6 +21,7 @@ vector<string>usernames;
 vector<int> scores;
 Universe* universe;
 HighScoresObserver* observer;
+QString username;
 
 
 public:

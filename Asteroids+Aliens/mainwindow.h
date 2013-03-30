@@ -31,7 +31,7 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void mainMenuSetShow(bool m);
     void accelerateBackground();
-    QString updateHighScoreUsername(QString username);
+    void updateHighScoreUsername(QString& username);
     void updateHighScore(vector<string>&usernames,vector<int>&scores){}
 private slots:
     void on_btnStart_clicked();

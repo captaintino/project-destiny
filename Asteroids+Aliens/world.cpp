@@ -50,6 +50,11 @@ void World::move()
     }
     for(int i = 0; i < projectiles.size(); ++i){
         projectiles.at(i)->move(); // move user projectiles
+        if(projectiles.at(i)->getY() < 0)
+        {
+            delete projectiles.at(i);
+            projectiles.erase(projectiles.begin() + i);
+        }
     }
     projectileGenerator();
 }
@@ -88,6 +93,7 @@ void World::deleteObject(Obstacle *object_to_delete)
             return;
         }
     }
+
 }
 //=======================================================================
 // checks every user projectile against all enemies in the world.
@@ -98,6 +104,7 @@ void World::checkProjectile()
         Projectile * proj = projectiles.at(cur);
         if(proj->isAlive)
         {
+            qDebug("checking living projectile" + cur);
             double projW = proj->getW() / 2;
             double projH = proj->getH() / 2;
             double projX = proj->getX() + projW;
@@ -118,6 +125,7 @@ void World::checkProjectile()
                     {
                         Alien * dead = dynamic_cast<Alien*>(alien);
                         dead->Kill();
+                        qDebug("Alien killed...");
                         alienKilled();
                     }
                 }

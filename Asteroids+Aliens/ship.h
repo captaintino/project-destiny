@@ -15,6 +15,7 @@ public:
     int getY(){return y;}
     int getW(){return w;}
     int getH(){return h;}
+    bool isDead(){return hit;}
 
     //Setter methods...
     void setCoords(int new_x, int new_y, int new_w, int new_h);

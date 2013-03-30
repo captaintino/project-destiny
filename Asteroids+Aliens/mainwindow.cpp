@@ -196,10 +196,9 @@ void MainWindow::accelerateBackground()
     }
 }
 
-QString MainWindow::updateHighScoreUsername(QString username)
+void MainWindow::updateHighScoreUsername(QString &username)
 {
     username = userName;
-    return username;
 }
 
 void MainWindow::userShipCrashed()

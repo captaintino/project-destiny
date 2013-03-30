@@ -24,7 +24,7 @@ void HighScores::save()
 
     for (int i = 0; i < scores.size(); i++)
         {
-        outfile << /*usernames.at(i)*/ "modifiedScore" << " " << scores.at(i) << endl;
+        outfile << usernames.at(i) /*"modifiedScore"*/ << " " << scores.at(i) << endl;
         }
 
     outfile.close();
@@ -69,14 +69,14 @@ void HighScores::evaluate()
 {
     bool erase = false;
     int score = universe->getScore();
-    string username;
+    observer->updateHighScoreUsername(username);
 
     for(int i = 0; i < scores.size(); ++i)
     {
         if(score>scores.at(i))
         {
             scores.insert(scores.begin() + i,score);
-            usernames.insert(usernames.begin() + i,username);
+            usernames.insert(usernames.begin() + i,username.toStdString());
             erase = true;
             break;
         }
