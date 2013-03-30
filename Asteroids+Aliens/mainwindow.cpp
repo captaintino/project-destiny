@@ -55,6 +55,7 @@ MainWindow::~MainWindow()
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
     if(fire){
+        universe->getWorld(0)->userFires(universe->getShip());
         // Shoot a projectile
         qDebug("fire");
         fire = false;
@@ -193,6 +194,12 @@ void MainWindow::accelerateBackground()
     if(level % 2 == 0){
         backgroundTimer->setInterval(60 - (level / 2));
     }
+}
+
+QString MainWindow::updateHighScoreUsername(QString username)
+{
+    username = userName;
+    return username;
 }
 
 void MainWindow::userShipCrashed()
@@ -357,6 +364,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         updateTimer->stop();
         levelTimer->stop();
         backgroundTimer->stop();
+        QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
         for (int i = 0; i < objects.size(); ++i) {

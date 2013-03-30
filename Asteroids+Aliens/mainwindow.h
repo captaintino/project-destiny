@@ -18,8 +18,9 @@ namespace Ui {
 class MainWindow;
 }
 
+class HighScoresObserver;
 
-class MainWindow : public QWidget
+class MainWindow : public QWidget, public HighScoresObserver
 {
     Q_OBJECT
     
@@ -30,6 +31,8 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void mainMenuSetShow(bool m);
     void accelerateBackground();
+    QString updateHighScoreUsername(QString username);
+    void updateHighScore(vector<string>&usernames,vector<int>&scores){}
 private slots:
     void on_btnStart_clicked();
     void rotateBackground();

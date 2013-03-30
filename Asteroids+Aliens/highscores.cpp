@@ -82,38 +82,6 @@ void HighScores::evaluate()
         }
     }
 
-/*
-    if(score>scores.at(0))
-    {
-        scores.insert(scores.begin(),score);
-        usernames.insert(usernames.begin(),username);
-        erase = true;
-    }
-    else if(score >scores.at(1))
-    {
-        scores.insert(scores.begin() + 1,score);
-        usernames.insert(usernames.begin() + 1,username);
-        erase = true;
-    }
-    else if(score >scores.at(2))
-    {
-        scores.insert(scores.begin() + 2,score);
-        usernames.insert(usernames.begin() + 2,username);
-        erase = true;
-    }
-    else if(score >scores.at(3))
-    {
-        scores.insert(scores.begin() + 3,score);
-        usernames.insert(usernames.begin() + 3,username);
-        erase = true;
-    }
-    else if(score >scores.at(4))
-    {
-        scores.insert(scores.begin() + 4,score);
-        usernames.insert(usernames.begin() + 4,username);
-        erase = true;
-    }*/
-
     if(erase==true)
     {
         scores.erase(scores.begin()+5);
