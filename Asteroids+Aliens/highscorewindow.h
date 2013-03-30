@@ -15,7 +15,7 @@ class HighScoresObserver
 {
   public:
     virtual void updateHighScore(vector<string>&usernames,vector<int>&scores)=0;
-    virtual QString updateHighScoreUsername(QString username)=0;
+    virtual void updateHighScoreUsername(QString &username)=0;
 };
 
 class HighScoreWindow : public QWidget,public HighScoresObserver
@@ -26,7 +26,7 @@ public:
     explicit HighScoreWindow(QWidget *parent = 0);
     ~HighScoreWindow();
     void updateHighScore(vector<string>&usernames,vector<int>&scores);
-    QString updateHighScoreUsername(QString username){}
+    void updateHighScoreUsername(QString &username){}
     
 private slots:
     void on_btnBackToMainMenu_clicked();
