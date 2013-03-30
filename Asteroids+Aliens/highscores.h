@@ -27,6 +27,7 @@ QString username;
 public:
     HighScores(HighScoresObserver *win);
     //saves the high scores to a file
+    void setUserName(const QString & username);
     void save();
 
     //loads the high scores from a file
