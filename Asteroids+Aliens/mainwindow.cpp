@@ -167,6 +167,9 @@ void MainWindow::levelFinished()
     universe->setLevel(level);
     universe->clearWorlds();
     universe->createWorlds();
+    for(int i = 0; i < objects.size(); ++i){
+        objects.at(i)->deleteLater();
+    }
     for(int i = 0; i < projectiles.size(); ++i){
         projectiles.at(i)->deleteLater();
     }
@@ -322,7 +325,7 @@ void MainWindow::on_btnLoad_clicked()
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
-    int offScreenCount;
+    int offScreenCount = 0;
     for(int i = 0; i < asteroidcount; ++i)
     {
         line >> str;
@@ -354,8 +357,11 @@ void MainWindow::on_btnLoad_clicked()
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
     updateTimer->start();
     modelUpdater->updateTimer(level);
-    if(offScreenCount > 9)
-        levelFinished();
+
+    //if(offScreenCount > 9)
+        //levelEnd();
+        //levelFinished();
+
     QTimer::singleShot(1000, this, SLOT(resumeLevel()));
     //resumeLevel();
     qDebug("Current Level is:" + QString::number(level).toAscii());
@@ -369,19 +375,23 @@ void MainWindow::resumeLevel(){
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape) {
-        if (!universe->getShip()->isDead() || !networked)
+        if (!(universe->getShip()->isDead()) && !networked)
             universe->save();
         modelUpdater->terminate();
         updateTimer->stop();
+        QObject::disconnect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
         levelTimer->stop();
         backgroundTimer->stop();
         QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
-        QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+        //QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
+
+
         for (int i = 0; i < objects.size(); ++i) {
             objects.at(i)->deleteLater();
         }
+
         for(int i = 0; i < projectiles.size(); ++i){
             projectiles.at(i)->deleteLater();
         }
