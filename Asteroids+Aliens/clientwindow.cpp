@@ -186,3 +186,8 @@ void ClientWindow::on_btnRefresh_clicked()
 {
     clientRefresh();
 }
+
+void ClientWindow::on_btnBackToMenu_clicked()
+{
+    this->close();
+}

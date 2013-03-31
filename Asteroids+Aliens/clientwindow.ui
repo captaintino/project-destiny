@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Multiplayer</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-image:</string>
@@ -20,9 +20,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-10</y>
+     <y>0</y>
      <width>431</width>
-     <height>471</height>
+     <height>481</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -101,6 +101,34 @@ background-position: bottom right;</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnBackToMenu">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>410</y>
+      <width>241</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/transparent.png);
+color:rgb(217, 217, 217)</string>
+    </property>
+    <property name="text">
+     <string>Back to Menu</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

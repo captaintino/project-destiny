@@ -48,7 +48,7 @@
       <x>270</x>
       <y>430</y>
       <width>173</width>
-      <height>33</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -60,14 +60,14 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image:url(:/images/transparent.png);
+     <string notr="true">
 color:rgb(217, 217, 217);</string>
     </property>
     <property name="text">
      <string>Back to Menu</string>
     </property>
     <property name="flat">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="lblInstructionContent">
@@ -79,7 +79,7 @@ color:rgb(217, 217, 217);</string>
       <x>40</x>
       <y>10</y>
       <width>651</width>
-      <height>431</height>
+      <height>411</height>
      </rect>
     </property>
     <property name="font">
@@ -98,7 +98,7 @@ color:rgb(217, 217, 217);</string>
 </string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;Instructions:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;Select &amp;quot;Start Game&amp;quot; to begin a new game. You will be launched into a&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;world with astroids, aliens, and projectiles trying to destroy your ship&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;and your score will be based on the length of time you are in the game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;without crashing. Be careful! The enemy will become faster as the game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;progresses. When you crash, press the escape key to exit the game!&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;During game play, press the escape key to exit and save your game. You&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;can select &amp;quot;Load Game&amp;quot; to start the game where you saved it.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;If you want to know who to beat, select &amp;quot;High Scores&amp;quot;. To join &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;fellow space travelers in the fight, select &amp;quot;Multiplayer&amp;quot; then select&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;quot;Connect&amp;quot; on the Multiplayer window to connect to other players or&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;quot;Refresh&amp;quot; to view their updated game status&lt;/span&gt;&lt;span style=&quot; color:#d9d9d9;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;&amp;gt;Set Cheat Mode to &amp;quot;On&amp;quot; and select a level to skip to that level in game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;play.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#d80000;&quot;&gt;Begin Game&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;: Select &amp;quot;Start Game&amp;quot; to begin a new game. You will be launched &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;into a world with astroids, aliens, and projectiles trying to destroy your&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;ship and your score will be based on the length of time you are in the game &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;without crashing. Be careful! The enemy will become faster as the game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;progresses. When you crash, press the escape key to exit the game!&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#d80000;&quot;&gt;Save Game&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;: During game play, press the escape key to exit and save your game. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;You can select &amp;quot;Load Game&amp;quot; to start the game where you saved it.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#d80000;&quot;&gt;Join Other Players&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;: If you want to know who to beat, select &amp;quot;High Scores&amp;quot;. To join &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;fellow space travelers in the fight, select &amp;quot;Multiplayer&amp;quot; then select &amp;quot;Connect&amp;quot; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;on the Multiplayer window to connect to other players or &amp;quot;Refresh&amp;quot; to view their&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;updated game status.&lt;/span&gt;&lt;span style=&quot; color:#d9d9d9;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#d80000;&quot;&gt;Cheat&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;: Set Cheat Mode to &amp;quot;On&amp;quot; and select a level to skip to that level in game&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#d9d9d9;&quot;&gt;play.&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
