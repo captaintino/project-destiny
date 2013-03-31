@@ -55,6 +55,7 @@ void Universe::save()
 
     output = to_string(level) + " ";
     output += to_string(score) + " ";
+
     output += to_string(player->getX()) + " ";
     output += to_string(player->getY()) + " ";
     output += to_string(dimensions.size()) + " ";

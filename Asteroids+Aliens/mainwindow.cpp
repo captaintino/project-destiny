@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimer = new QTimer(this);
     updateTimer->setInterval(33);
     levelTimer = new QTimer(this);
-    levelTimer->setInterval(10000);
+    levelTimer->setInterval(30000);
     cheat = false;
     ui->lblLevel->setShown(false);
     ui->spinCheat->setShown(false);
@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     userName="Player";
     connect(&clientWindow, SIGNAL(connected()), this, SLOT(connectedMultiplayer()));
     connect(&clientWindow, SIGNAL(disconnected()), this, SLOT(disconnectedMultiplayer()));
+    freeze_game = false;
 }
 
 MainWindow::~MainWindow()
@@ -79,6 +80,7 @@ void MainWindow::mainMenuSetShow(bool m)
 
 void MainWindow::on_btnStart_clicked()
 {
+    freeze_game = false;
     the_Score = new QLabel(this);
     the_Score->setGeometry(40,40,500,50); // Needs work *
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
@@ -159,36 +161,43 @@ void MainWindow::levelEnd()
 
 void MainWindow::levelFinished()
 {
+
     updateTimer->stop();
 
     modelUpdater->terminate(); // Not sure if this is the right method
 
     ++level;
-    accelerateBackground();
-    universe->setLevel(level);
-    universe->clearWorlds();
-    universe->createWorlds();
-    for(int i = 0; i < projectiles.size(); ++i){
-        projectiles.at(i)->deleteLater();
-    }
-    projectiles.clear();
-    objects.clear();
-    for(int i = 0; i < 13; ++i)
+    if(!freeze_game)
     {
-        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
-        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        accelerateBackground();
+        universe->setLevel(level);
+        universe->clearWorlds();
+        universe->createWorlds();
+        for(int i = 0; i < objects.size(); ++i){
+            objects.at(i)->deleteLater();
+        }
+        for(int i = 0; i < projectiles.size(); ++i){
+            projectiles.at(i)->deleteLater();
+        }
+        projectiles.clear();
+        objects.clear();
+        for(int i = 0; i < 13; ++i)
+        {
+            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
+            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        }
+        modelUpdater->updateTimer(level);
+        modelUpdater->start();
+        universe->getWorld(0)->lameToWalk();
+        updateTimer->start();
+
+        //put UPDATE username score alive level
+        if(multiplayer)
+            clientWindow.sendUpdate(true);
+
+        qDebug("Current Level is:" + QString::number(level).toAscii());
+        levelTimer->start();
     }
-    modelUpdater->updateTimer(level);
-    modelUpdater->start();
-    universe->getWorld(0)->lameToWalk();
-    updateTimer->start();
-
-    //put UPDATE username score alive level
-    if(multiplayer)
-        clientWindow.sendUpdate(true);
-
-    qDebug("Current Level is:" + QString::number(level).toAscii());
-    levelTimer->start();
 }
 
 void MainWindow::accelerateBackground()
@@ -281,6 +290,7 @@ void MainWindow::on_btnMultiplayer_clicked()
 
 void MainWindow::on_btnLoad_clicked()
 {
+    freeze_game = false;
     ifstream infile("save.txt");
 
     if (!infile)
@@ -323,33 +333,73 @@ void MainWindow::on_btnLoad_clicked()
     user = new Ship_Label(this, universe);
     QObject::connect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
     backgroundTimer->start();
+    int offScreenCount = 0;
+
+    stringstream check;
+    check << line.rdbuf();
     for(int i = 0; i < asteroidcount; ++i)
     {
-        line >> str;
+        check >> str;
         int x = stoi(str);
-        line >> str;
+        check >> str;
         int y = stoi(str);
-        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 1, x, y));
-        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        if(y > 600 || y <= 0)
+            offScreenCount++;
     }
-    line >> str;
+    check >> str;
     int aliencount = stoi(str);
     for(int i = 0; i < aliencount; ++i)
     {
-        line >> str;
+        check >> str;
         int x = stoi(str);
-        line >> str;
+        check >> str;
         int y = stoi(str);
-        objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 2, x, y));
-        connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        if(y > 600 || y <= 0)
+            offScreenCount++;
     }
+    if(offScreenCount < 9)
+    {
+        for(int i = 0; i < asteroidcount; ++i)
+        {
+            line >> str;
+            int x = stoi(str);
+            line >> str;
+            int y = stoi(str);
+            if(y > 600 || y <= 0)
+                offScreenCount++;
+            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 1, x, y));
+            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        }
+        line >> str;
+        int aliencount = stoi(str);
+        for(int i = 0; i < aliencount; ++i)
+        {
+            line >> str;
+            int x = stoi(str);
+            line >> str;
+            int y = stoi(str);
+            if(y > 600 || y <= 0)
+                offScreenCount++;
+            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 2, x, y));
+            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        }
+    } else
+    {
+        levelEnd();
+        levelFinished();
+    }
+    
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
     universe->getWorld(0)->lameToWalk();
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
     updateTimer->start();
     modelUpdater->updateTimer(level);
+
+
+
     QTimer::singleShot(1000, this, SLOT(resumeLevel()));
+    //resumeLevel();
     qDebug("Current Level is:" + QString::number(level).toAscii());
 }
 
@@ -360,19 +410,26 @@ void MainWindow::resumeLevel(){
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    freeze_game = true;
+
     if (e->key() == Qt::Key_Escape) {
-        if (!universe->getShip()->isDead() || !networked)
+        if (!(universe->getShip()->isDead()) && !networked)
             universe->save();
         modelUpdater->terminate();
         updateTimer->stop();
+        QObject::disconnect(updateTimer, SIGNAL(timeout()), this, SLOT(update_positions()));
         levelTimer->stop();
         backgroundTimer->stop();
         QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
+        //QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
+
+
         for (int i = 0; i < objects.size(); ++i) {
             objects.at(i)->deleteLater();
         }
+
         for(int i = 0; i < projectiles.size(); ++i){
             projectiles.at(i)->deleteLater();
         }
