@@ -47,6 +47,7 @@ public:
 
     void checkUserShip();
 
+
     void setUserShip(int new_x, int new_y, int width, int height);
 
     // Getter Methods:
@@ -57,10 +58,13 @@ public:
 signals:
     void shipCrashed();
     void projectileCreated();
+    void userFires();
 
 private slots:
     void shipCrashedSignal();
     void projectileCreatedSignal();
+    void alienScoreSlot();
+    void userFired();
 };
 
 #endif // UNIVERSE_Hl

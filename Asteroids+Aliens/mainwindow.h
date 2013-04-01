@@ -62,6 +62,8 @@ private slots:
 
     void canFire();
 
+    void osuCreationSlot();
+
 private:
     Ui::MainWindow *ui;
     QTimer * backgroundTimer, *updateTimer, *levelTimer, *fireShot;
@@ -69,7 +71,7 @@ private:
     Ship_Label * user;
     int background_counter, level;
     UniverseThread * modelUpdater;
-    vector<on_screen_object *> objects, projectiles;
+    vector<on_screen_object *> objects, projectiles, user_projectiles;
     QThread * itemSpawn;
     HighScoreWindow highScoreWindow;
     InstructionWindow instructionWindow;

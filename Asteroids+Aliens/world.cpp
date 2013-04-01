@@ -104,7 +104,7 @@ void World::checkProjectile()
         Projectile * proj = projectiles.at(cur);
         if(proj->isAlive)
         {
-            qDebug("checking living projectile" + cur);
+            //qDebug("checking living projectile" + cur);
             double projW = proj->getW() / 2;
             double projH = proj->getH() / 2;
             double projX = proj->getX() + projW;
@@ -125,8 +125,11 @@ void World::checkProjectile()
                     {
                         Alien * dead = dynamic_cast<Alien*>(alien);
                         dead->Kill();
+                        proj->explode();
+
                         qDebug("Alien killed...");
-                        alienKilled();
+                        this->alienKilled();
+
                     }
                 }
             }
@@ -144,6 +147,7 @@ void World::checkProjectile()
                               ((projY + projH) < (asterY - asterRad))))
                     {
                         qDebug("Asteroid hit...");
+                        proj->explode();
                     }
                 }
             }
@@ -240,6 +244,7 @@ void World::checkUserShip(Ship * playerShip)
             {
                 playerShip->setHit(true);
                 shipCrashed();
+
             }
         }
     }
@@ -266,7 +271,12 @@ void World::projectileGenerator()
         projectileCountdown = (20 + (rand() % 21));
         if(aliens.size())
         {
+
             Obstacle * shootingAlien = aliens.at(rand() % aliens.size());
+            while(!shootingAlien->isAlive) // only let living aliens shoot.
+            {
+                shootingAlien = aliens.at(rand() % aliens.size());
+            }
             enemyProjectiles.push_back(new Projectile(shootingAlien->getX() + (shootingAlien->getW() / 2),
                                                       (shootingAlien->getY() + shootingAlien->getH())));
             projectileCreated();
@@ -279,6 +289,12 @@ Obstacle * World::getLastProjectile()
 {
     return enemyProjectiles.at(enemyProjectiles.size() - 1);
 }
+
+Obstacle *World::getUserProjectile()
+{
+    return projectiles.at(projectiles.size() - 1);
+}
+
 
 string World::save()
 {

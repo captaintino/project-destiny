@@ -18,7 +18,7 @@ public:
     explicit on_screen_object(QWidget *parent, World *get_world, int initlevel, int type, int x, int y);
     explicit on_screen_object(QWidget *parent, World *get_world, int initlevel, Obstacle * p);
 
-    void update();
+    virtual void update();
 
     void setLevelOver();
 signals:

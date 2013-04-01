@@ -10,6 +10,9 @@ Universe::Universe(int lvl, int i, bool b): level(lvl), score(i), cheat(b)
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
     connect(dimensions.at(0), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
+    connect(dimensions.at(0), SIGNAL(alienKilled()), this, SLOT(alienScoreSlot()));
+    connect(dimensions.at(0), SIGNAL(userShot()), this, SLOT(userFired()));
+
     current_dimension = 0;
 }
 
@@ -82,6 +85,9 @@ void Universe::createWorlds()
     dimensions.push_back(new World(true));
     connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
     connect(dimensions.at(0), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
+    connect(dimensions.at(0), SIGNAL(alienKilled()), this, SLOT(alienScoreSlot()));
+    connect(dimensions.at(0), SIGNAL(userShot()), this, SLOT(userFired()));
+
 }
 
 void Universe::setUserShip(int new_x, int new_y, int width, int height)
@@ -94,7 +100,8 @@ Ship *Universe::getShip()
     return player;
 }
 
-void Universe::shipCrashedSignal(){
+void Universe::shipCrashedSignal()
+{
     shipCrashed();
 }
 
@@ -102,3 +109,15 @@ void Universe::projectileCreatedSignal()
 {
     projectileCreated();
 }
+
+void Universe::alienScoreSlot()
+{
+    score +=25;
+}
+
+void Universe::userFired()
+{
+    userFires();
+}
+
+

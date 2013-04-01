@@ -56,7 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *ev)
 {
-    if(fire){
+    if(!freeze_game && fire){
         universe->getWorld(0)->userFires(universe->getShip());
         // Shoot a projectile
         qDebug("fire");
@@ -88,7 +88,7 @@ void MainWindow::on_btnStart_clicked()
     the_Score->show();
     mainMenuSetShow(false);
     ui->lnUsername->setShown(false);
-    this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     fire = true;
     QApplication::desktop()->cursor().setPos(340,520);
@@ -117,6 +117,10 @@ void MainWindow::on_btnStart_clicked()
     fireShot = new QTimer(this);
     QObject::connect(universe, SIGNAL(shipCrashed()), this, SLOT(userShipCrashed()));
     QObject::connect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+
+    //Generating user projectiles...
+    QObject::connect(universe, SIGNAL(userFires()), this, SLOT(osuCreationSlot()));
+    //-----------------
     universe->save();
     highscores->setUserName(userName);
 }
@@ -141,6 +145,10 @@ void MainWindow::update_positions()
     for(int i=0; i<projectiles.size(); ++i)
     {
         projectiles.at(i)->update();
+    }
+    for(int i=0; i<user_projectiles.size(); ++i)
+    {
+        user_projectiles.at(i)->update();
     }
     QString num = QString::number(universe->getScore());
     int numSize = num.size();
@@ -321,7 +329,7 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->raise();
     the_Score->show();
     fire = true;
-    this->grabMouse(); // <-- we need to have an <Esc> option...
+    //this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
     mainMenuSetShow(false);
     ui->lnUsername->setShown(false);
@@ -421,7 +429,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         levelTimer->stop();
         backgroundTimer->stop();
         QObject::disconnect(backgroundTimer, SIGNAL(timeout()), this, SLOT(rotateBackground()));
-        //QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
+        QObject::disconnect(universe, SIGNAL(projectileCreated()), this, SLOT(makeProjectile()));
         this->releaseMouse();
         this->setCursor(Qt::ArrowCursor);
 
@@ -467,7 +475,14 @@ void MainWindow::disconnectedMultiplayer()
 
 void MainWindow::canFire()
 {
-    qDebug("signal Fired");
+    //qDebug("signal Fired");
     fire = true;
+}
+
+void MainWindow::osuCreationSlot()
+{
+    Obstacle *proj = universe->getWorld(0)->getUserProjectile();
+    user_projectiles.push_back(new on_screen_object(this, universe->getWorld(0), level, proj));
+    //connect(user_projectiles.at(user_projectiles.size() - 1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
