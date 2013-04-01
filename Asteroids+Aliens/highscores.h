@@ -25,20 +25,25 @@ QString username;
 
 
 public:
+    //passes pointer to observer class
     HighScores(HighScoresObserver *win);
-    //saves the high scores to a file
+
+    //gets <userName> from the main window GUI
     void setUserName(const QString & username);
+
+    //saves the highscores to a file
     void save();
 
-    //loads the high scores from a file
+    //loads the highscores from a file
     void load();
 
-    //displays the high scores
+    //displays the highscores
     void display();
 
-    //parses data from highscores.txt
+    //determines where to place highscores in list
     void evaluate();
 
+    //retrieves Universe pointer
     void setUniverse(Universe *uni);
 };
 
