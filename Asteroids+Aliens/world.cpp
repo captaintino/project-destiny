@@ -256,10 +256,11 @@ void World::userFires(Ship * playerShip)
     Projectile * proj = new Projectile(playerShip->getX() + (playerShip->getW() / 2),
                                        playerShip->getY() + (playerShip->getH() / 2));
     proj->setSpeed(-15);
+    proj->setType(":/images/user_projectile.png");
     projectiles.push_back(proj);
     qDebug("projectile created!");
     //emit signal about projectile creation
-    userShot();
+    //userShot();
 }
 //=======================================================================================
 //Generates projectiles based on a random number countdown between 20 and 40.

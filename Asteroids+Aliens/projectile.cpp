@@ -10,7 +10,7 @@ void Projectile::move()
     // delete this guy and make a new guy show up
 }
 
-void Projectile::setType(std::string newType)
+void Projectile::setType(QString newType)
 {
-    type=newType;
+    type = newType;
 }

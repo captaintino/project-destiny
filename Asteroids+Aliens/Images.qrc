@@ -78,5 +78,6 @@
         <file>images/projectile.png</file>
         <file>images/transparent.png</file>
         <file>highscores.txt</file>
+        <file>images/user_projectile.png</file>
     </qresource>
 </RCC>

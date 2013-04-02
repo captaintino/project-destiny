@@ -239,7 +239,7 @@ void MainWindow::userShipCrashed()
 void MainWindow::makeProjectile()
 {
     projectiles.push_back(new on_screen_object(this,universe->getWorld(0),level, universe->getWorld(0)->getLastProjectile()));
-    connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+    //connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
 void MainWindow::deleteLabel()

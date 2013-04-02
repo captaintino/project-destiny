@@ -28,7 +28,7 @@ void on_screen_object::update()
     else
         this->setShown(false);
     this->setGeometry(x(), game_object->getY(), width(), height());
-    /*if(this->game_object->getType() == ":/images/projectile.png")
+    if(this->game_object->getType() == ":/images/user_projectile.png")
     {
         if(y() < 0)
         {
@@ -41,8 +41,8 @@ void on_screen_object::update()
                 this->deleteLater();
             }
         }
-    }*/
-    if(y() > 600)
+    }
+    else if(y() > 600)
     {
         if(levelOver){
             emit deleteMe();
