@@ -22,8 +22,8 @@
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>-20</y>
+     <x>-10</x>
+     <y>-30</y>
      <width>421</width>
      <height>491</height>
     </rect>
@@ -39,8 +39,8 @@ background-position: top right;
    <widget class="QPushButton" name="btnBackToMainMenu">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>430</y>
+      <x>130</x>
+      <y>440</y>
       <width>173</width>
       <height>33</height>
      </rect>

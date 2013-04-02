@@ -19,6 +19,7 @@ void ClientWindow::on_btnClientWinConnect_clicked()
     serverUpdate();
 }
 
+//display other players' info in GUI
 void ClientWindow::dataReceived()
 {
     for (int i = 0; i<labelList.size();i++)
@@ -78,32 +79,13 @@ void ClientWindow::dataReceived()
         labelList.push_back(label);
 
         y+=30;
-
     }
-                                                            //CHAT STUFF
-
-        /*QString username = "unknown";
-        QString msg;
-
-        // get username, text
-        int colonPos = str.indexOf(':');
-        if (colonPos >= 0) {
-            username = str.left(colonPos);
-            msg = str.mid(colonPos + 1);
-        } else {
-            msg = str;
-        }
-        ui->txtChat->insertHtml("<b>" + username + "</b>: " + msg + "<br><br>");
-    }*/
     }
 }
 
+//delete socket, send disconnected signal, disable <btnClientWinConnect> and <btnRefresh>
 void ClientWindow::serverDisconnected()
 {
-
-     //ui->statusBar->showMessage("Disconnected.");         //CHAT STUFF
-     //ui->btnConnect->setEnabled(true);
-     //ui->btnSend->setEnabled(false);
      socket->deleteLater();
      emit disconnected();
      ui->btnClientWinConnect->setEnabled(true);
@@ -140,22 +122,17 @@ void ClientWindow::serverUpdate()
     clientRefresh();
 }
 
-//Refreshes client with current information
+//updates client with current information from server
 void ClientWindow::clientRefresh()
 {
-    /*ui->statusBar->showMessage("Connected.");         //CHAT STUFF
-    ui->btnConnect->setEnabled(false);
-    ui->btnSend->setEnabled(true);
-    ui->txtMessage->setFocus();*/
-
     if(socket==NULL||socket->state() == QAbstractSocket::UnconnectedState)
     {
         return;
     }
     socket->write("REFRESH\n");
-
 }
 
+//send user status in the game
 void ClientWindow::sendUpdate(bool aliveOrDead)
 {
     QString aOrD;
@@ -170,24 +147,13 @@ void ClientWindow::sendUpdate(bool aliveOrDead)
     socket->write(data.toStdString().c_str());
 }
 
-/*void ClientWindow::on_btnSend_clicked()               //CHAT STUFF
-{
-    QString username = ui->lineUsername->text();
-    QString msg;
-    if (username.size() > 0) {
-        msg = username + ":" + ui->txtMessage->toPlainText() + "\n";
-    } else {
-        msg = ui->txtMessage->toPlainText() + "\n";
-    }
-
-    ui->txtMessage->document()->setPlainText("");
-
-    socket->write(msg.toStdString().c_str());
-
-    ui->txtMessage->setFocus();
-}*/
 
 void ClientWindow::on_btnRefresh_clicked()
 {
     clientRefresh();
+}
+
+void ClientWindow::on_btnBackToMenu_clicked()
+{
+    this->close();
 }

@@ -6,7 +6,6 @@ HighScoreWindow::HighScoreWindow(QWidget *parent) :
     ui(new Ui::HighScoreWindow)
 {
     ui->setupUi(this);
-    //ui->lblHighScoreContent->setText("high score");
 }
 
 HighScoreWindow::~HighScoreWindow()
@@ -14,6 +13,7 @@ HighScoreWindow::~HighScoreWindow()
     delete ui;
 }
 
+//pass <usernames> and <scores> to the GUI
 void HighScoreWindow::updateHighScore(vector<string> &usernames, vector<int> &scores)
 {
     ui->lblUsername1->setText(QString::fromStdString(usernames.at(0)));

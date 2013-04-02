@@ -28,20 +28,33 @@ class ClientWindow : public QWidget
 public:
     explicit ClientWindow(QWidget *parent = 0);
     ~ClientWindow();
+
+    //send updated info to server
     void serverUpdate();
+
+    //update client with new info from server
     void clientRefresh();
+
+    //get username from main menu
     void updateUsername(QString user){userName = user; ui->lnUserName->setText(userName);}
+    
+    //send user status in game
     void sendUpdate(bool aliveOrDead);
+    
+    //get universe pointer from Universe
     void updateUniverse(Universe * uni){universe = uni;}
 
 private slots:
     void on_btnClientWinConnect_clicked();
-    void dataReceived();//QTcpSocket *socket);
-    void serverDisconnected();//QTcpSocket * socket);
 
-    //void on_btnSend_clicked();
+    //display other players' info in GUI
+    void dataReceived();
 
+    //delete socket, send disconnected signal, disable <btnClientWinConnect> and <btnRefresh>
+    void serverDisconnected();
     void on_btnRefresh_clicked();
+    void on_btnBackToMenu_clicked();
+
 signals:
     void connected();
     void disconnected();

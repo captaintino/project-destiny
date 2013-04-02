@@ -5,17 +5,19 @@
 
 using namespace std;
 
+//passes pointer to observer class
 HighScores::HighScores(HighScoresObserver * win):observer(win)
 {
 
 }
 
+//gets <userName> from the main window GUI
 void HighScores::setUserName(const QString &username)
 {
     this->username = username;
-    qDebug()<<this->username<<"HighScore 17";
 }
 
+//saves the highscores to a file
 void HighScores::save()
 {
     this->evaluate();
@@ -36,6 +38,7 @@ void HighScores::save()
     outfile.close();
 }
 
+//loads the highscores from a file
 void HighScores::load()
 {
     ifstream infile("highscores.txt");
@@ -66,11 +69,13 @@ void HighScores::load()
     }
 }
 
+//displays the highscores in GUI
 void HighScores::display()
 {
     observer->updateHighScore(usernames,scores);
 }
 
+//determines where to place highscores in list
 void HighScores::evaluate()
 {
     bool erase = false;
@@ -94,6 +99,7 @@ void HighScores::evaluate()
     }
 }
 
+//retrieves Universe pointer
 void HighScores::setUniverse(Universe * uni)
 {
     universe = uni;

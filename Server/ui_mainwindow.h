@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Mar 7 12:04:12 2013
+** Created: Sun Mar 31 14:17:22 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,7 +60,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Chat Server", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Server", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Clients Connected:", 0, QApplication::UnicodeUTF8));
         lblConnected->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

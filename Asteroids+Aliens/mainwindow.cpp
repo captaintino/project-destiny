@@ -215,11 +215,6 @@ void MainWindow::accelerateBackground()
     }
 }
 
-void MainWindow::updateHighScoreUsername(QString &username)
-{
-    username = userName;
-}
-
 void MainWindow::userShipCrashed()
 {
     modelUpdater->terminate();
