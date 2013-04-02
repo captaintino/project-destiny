@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     userName="Player";
     connect(&clientWindow, SIGNAL(connected()), this, SLOT(connectedMultiplayer()));
     connect(&clientWindow, SIGNAL(disconnected()), this, SLOT(disconnectedMultiplayer()));
-    freeze_game = false;
+    freeze_game = true;
 }
 
 MainWindow::~MainWindow()
