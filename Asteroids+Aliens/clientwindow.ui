@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>423</width>
-    <height>458</height>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -132,7 +132,7 @@ background-position: bottom right;</string>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>410</y>
+      <y>450</y>
       <width>241</width>
       <height>27</height>
      </rect>
@@ -156,6 +156,83 @@ color:rgb(217, 217, 217)</string>
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPlainTextEdit" name="chatMessages">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>381</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:white</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="overwriteMode">
+     <bool>false</bool>
+    </property>
+    <property name="backgroundVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SendMessage">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>421</y>
+      <width>101</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>FreeMono</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/transparent.png);
+color:rgb(217, 217, 217)</string>
+    </property>
+    <property name="text">
+     <string>Chat</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="chatMessageToSend">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>420</y>
+      <width>281</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <zorder>btnClientWinConnect</zorder>
+   <zorder>btnRefresh</zorder>
+   <zorder>lnUserName</zorder>
+   <zorder>lnHostName</zorder>
+   <zorder>btnBackToMenu</zorder>
+   <zorder>SendMessage</zorder>
+   <zorder>chatMessageToSend</zorder>
+   <zorder>chatMessages</zorder>
   </widget>
  </widget>
  <resources/>

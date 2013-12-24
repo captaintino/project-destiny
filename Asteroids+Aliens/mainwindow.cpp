@@ -210,7 +210,7 @@ void MainWindow::levelFinished()
         if(multiplayer)
             clientWindow.sendUpdate(true);
 
-        qDebug("Current Level is:" + QString::number(level).toAscii());
+        qDebug() << "Current Level is:" << QString::number(level).toAscii();
         levelTimer->start();
     }
 }
@@ -416,7 +416,7 @@ void MainWindow::on_btnLoad_clicked()
 
 
     QTimer::singleShot(1000, this, SLOT(resumeLevel()));
-    qDebug("Current Level is:" + QString::number(level).toAscii());
+    qDebug() << "Current Level is:" << QString::number(level).toAscii();
 }
 
 void MainWindow::resumeLevel(){

@@ -1,5 +1,6 @@
 #include "clientwindow.h"
 #include "ui_clientwindow.h"
+#include <QDebug>
 
 ClientWindow::ClientWindow(QWidget *parent) :
     QWidget(parent),
@@ -22,74 +23,82 @@ void ClientWindow::on_btnClientWinConnect_clicked()
 //display other players' info in GUI
 void ClientWindow::dataReceived()
 {
-    for (unsigned int i = 0; i<labelList.size();i++)
-    {
-        labelList.at(i)->setShown(false);
-        labelList.at(i)->deleteLater();
-    }
-    labelList.clear();
-
     QString data;
-    stringstream buffer;
-    int numUsers = 0;
-    string username;
-    int score = 0;
-    string state;
-    int level = 0;
-    QLabel * label;
 
     while (socket->canReadLine()){
-    data += socket->readLine();
+        data = socket->readLine();
+        qDebug() << "working111?" << '\n' << data;
 
-    buffer << data.toStdString();
+        if(data.startsWith("CHAT")){
+            qDebug() << "working?" << '\n';
+            data.chop(1);
+            ui->chatMessages->appendPlainText(data.toStdString().substr(4, data.size() - 2).c_str());
+        }
+        else if(data.startsWith("REFR")){
+            for (unsigned int i = 0; i<labelList.size();i++)
+            {
+                labelList.at(i)->setShown(false);
+                labelList.at(i)->deleteLater();
+            }
+            labelList.clear();
+            stringstream buffer;
+            int numUsers = 0;
+            string username;
+            int score = 0;
+            string state;
+            int level = 0;
+            QLabel * label;
 
-    buffer>>numUsers;
-    int y = 90;
+            buffer << data.toStdString().substr(4);
 
-    for (int i = 0;i<numUsers;i++)
-    {
-        buffer>>username>>score>>state>>level;
+            buffer>>numUsers;
+            int y = 90;
 
-        label = new QLabel(this);
-        label->setText(QString::fromStdString(username));
-        label->setGeometry(30,y,66,17);
-        label->setStyleSheet("color:rgb(217, 217, 217)");
-        label->show();
-        labelList.push_back(label);
+            for (int i = 0;i<numUsers;i++)
+            {
+                buffer>>username>>score>>state>>level;
 
-        label = new QLabel(this);
-        label->setText(QString::number(score));
-        label->setGeometry(130,y,66,17);
-        label->setStyleSheet("color:rgb(217, 217, 217)");
-        label->show();
-        labelList.push_back(label);
+                label = new QLabel(this);
+                label->setText(QString::fromStdString(username));
+                label->setGeometry(30,y,66,17);
+                label->setStyleSheet("color:rgb(217, 217, 217)");
+                label->show();
+                labelList.push_back(label);
 
-        label = new QLabel(this);
-        label->setText(QString::fromStdString(state));
-        label->setGeometry(230,y,66,17);
-        label->setStyleSheet("color:rgb(217, 217, 217)");
-        label->show();
-        labelList.push_back(label);
+                label = new QLabel(this);
+                label->setText(QString::number(score));
+                label->setGeometry(130,y,66,17);
+                label->setStyleSheet("color:rgb(217, 217, 217)");
+                label->show();
+                labelList.push_back(label);
 
-        label = new QLabel(this);
-        label->setText(QString::number(level));
-        label->setGeometry(330,y,66,17);
-        label->setStyleSheet("color:rgb(217, 217, 217)");
-        label->show();
-        labelList.push_back(label);
+                label = new QLabel(this);
+                label->setText(QString::fromStdString(state));
+                label->setGeometry(230,y,66,17);
+                label->setStyleSheet("color:rgb(217, 217, 217)");
+                label->show();
+                labelList.push_back(label);
 
-        y+=30;
-    }
+                label = new QLabel(this);
+                label->setText(QString::number(level));
+                label->setGeometry(330,y,66,17);
+                label->setStyleSheet("color:rgb(217, 217, 217)");
+                label->show();
+                labelList.push_back(label);
+
+                y+=30;
+            }
+        }
     }
 }
 
 //delete socket, send disconnected signal, disable <btnClientWinConnect> and <btnRefresh>
 void ClientWindow::serverDisconnected()
 {
-     socket->deleteLater();
-     emit disconnected();
-     ui->btnClientWinConnect->setEnabled(true);
-     ui->btnRefresh->setEnabled(false);
+    socket->deleteLater();
+    emit disconnected();
+    ui->btnClientWinConnect->setEnabled(true);
+    ui->btnRefresh->setEnabled(false);
 }
 
 //Updates server with current information
@@ -156,4 +165,9 @@ void ClientWindow::on_btnRefresh_clicked()
 void ClientWindow::on_btnBackToMenu_clicked()
 {
     this->close();
+}
+
+void ClientWindow::on_SendMessage_clicked()
+{
+    socket->write(("CHAT" + ui->chatMessageToSend->text().toStdString() + '\n').c_str());
 }

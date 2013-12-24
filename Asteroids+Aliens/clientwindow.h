@@ -55,6 +55,8 @@ private slots:
     void on_btnRefresh_clicked();
     void on_btnBackToMenu_clicked();
 
+    void on_SendMessage_clicked();
+
 signals:
     void connected();
     void disconnected();

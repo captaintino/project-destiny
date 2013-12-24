@@ -56,7 +56,7 @@ void MainWindow::dataReceived()
     int loc = 0;
     QTcpSocket *sock = dynamic_cast<QTcpSocket *>(sender());
 
-    for(int i = 0; i < users.size(); ++i){
+    for(unsigned int i = 0; i < users.size(); ++i){
         if(users.at(i)->getSocket() == sock){
             loc = i;
             break;
@@ -69,16 +69,14 @@ void MainWindow::dataReceived()
 
         addToLog("-> " + qstr);
 
-        /*if (qstr.startsWith("*USER ")) {
-            std::string str;
-            std::stringstream ss(qstr.toStdString());
-            ss >> str >> str;
-            qstr = QString::fromStdString(str);
-            sock->write("+OK\n");
-            sock->setUsername(qstr);
-        } else */ if (qstr.startsWith("REFR")) {
+        if (qstr.startsWith("CHAT")) {
+            std::string str = "CHAT" + users.at(loc)->getUsername().toStdString() + ": " + qstr.toStdString().substr(4);
+            for(unsigned int i = 0; i < users.size(); ++i){
+                users.at(i)->getSocket()->write((str + '\n').c_str());
+            }
+        } else if (qstr.startsWith("REFR")) {
             QString output;
-            for (int i = 0; i < users.size(); ++i) {
+            for (unsigned int i = 0; i < users.size(); ++i) {
                 User * user = users.at(i);
                 output += user->getUsername() + " ";
                 output += QString::number(user->getScore()) + " ";
@@ -89,7 +87,7 @@ void MainWindow::dataReceived()
                 }
                 output += QString::number(user->getLevel());
             }
-            sock->write((QString::number(users.size()) + ' ' + output).toAscii() + '\n');
+            sock->write("REFR" + (QString::number(users.size()) + ' ' + output).toAscii() + '\n');
         } else if (qstr.startsWith("UPDATE ")) {
             std::string str;
             User * user = users.at(loc);
@@ -115,22 +113,20 @@ void MainWindow::dataReceived()
             output += " Level:" + QString::number(user->getLevel());
             output += " Score:" + QString::number(user->getScore());
             if (user->getAlive()) {
-                output += " A";
+                output += " A\n";
             } else {
                 output += " D\n";
             }
             addToLog(output);
-            sortUsers(); // THIS METHOD IS NOT WORKING YET, THE USERS ARE UNSORTED
+            sortUsers();
         }
-
-        }
-   // }
+    }
 }
 
 void MainWindow::clientDisconnected()
 {
     QTcpSocket *sock = dynamic_cast<QTcpSocket *>(sender());
-    for (int i = 0; i < users.size(); ++i) {
+    for (unsigned int i = 0; i < users.size(); ++i) {
         if(users.at(i)->getSocket() == sock){
             delete users.at(i);
             users.erase(users.begin() + i);
