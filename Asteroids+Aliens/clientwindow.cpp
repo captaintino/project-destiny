@@ -22,7 +22,7 @@ void ClientWindow::on_btnClientWinConnect_clicked()
 //display other players' info in GUI
 void ClientWindow::dataReceived()
 {
-    for (int i = 0; i<labelList.size();i++)
+    for (unsigned int i = 0; i<labelList.size();i++)
     {
         labelList.at(i)->setShown(false);
         labelList.at(i)->deleteLater();

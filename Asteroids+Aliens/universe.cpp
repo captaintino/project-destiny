@@ -4,7 +4,7 @@
 #include<fstream>
 #include<sstream>
 
-Universe::Universe(int lvl, int i, bool b): score(i), cheat(b), level(lvl)
+Universe::Universe(int lvl, int i, bool b): score(i), level(lvl), cheat(b)
 {
     player = new Ship();
     dimensions.push_back(new World(true));

@@ -30,7 +30,7 @@ void HighScores::save()
         ofstream outfile("highscores.txt");
     }
 
-    for (int i = 0; i < scores.size(); i++)
+    for (unsigned int i = 0; i < scores.size(); i++)
         {
         outfile << usernames.at(i) /*"modifiedScore"*/ << " " << scores.at(i) << endl;
         }
@@ -81,7 +81,7 @@ void HighScores::evaluate()
     bool erase = false;
     int score = universe->getScore();
 
-    for(int i = 0; i < scores.size(); ++i)
+    for(unsigned int i = 0; i < scores.size(); ++i)
     {
         if(score>scores.at(i))
         {

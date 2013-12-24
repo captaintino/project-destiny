@@ -162,7 +162,7 @@ void MainWindow::update_positions()
 void MainWindow::levelEnd()
 {
     levelTimer->stop();
-    for(int i = 0; i < objects.size(); ++i){
+    for(unsigned int i = 0; i < objects.size(); ++i){
         objects.at(i)->setLevelOver();
     }
 }
