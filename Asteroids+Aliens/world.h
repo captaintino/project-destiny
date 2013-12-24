@@ -55,6 +55,8 @@ public:
 
     void projectileGenerator();
 
+    void setHasShip(bool newState){hasShip = newState;}
+
     // Saves the world state
     string save();
 

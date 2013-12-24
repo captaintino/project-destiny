@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     highscorewindow.cpp\
     universethread.cpp \
     clientwindow.cpp
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++0x \
+    --coverage
+QMAKE_LFLAGS += --coverage
 
 HEADERS  += mainwindow.h \
     universe.h \

@@ -49,7 +49,7 @@ MainWindow::~MainWindow()
     delete universe;
     user->deleteLater();
     modelUpdater->deleteLater();
-    for(int i = 0; i < objects.size(); ++i){
+    for(unsigned int i = 0; i < objects.size(); ++i){
         delete objects.at(i);
     }
 }
@@ -138,21 +138,21 @@ void MainWindow::rotateBackground()
 void MainWindow::update_positions()
 {
     user->updateCoords();
-    for(int i=0; i<objects.size(); ++i)
+    for(unsigned int i=0; i<objects.size(); ++i)
     {
         objects.at(i)->update();
     }
-    for(int i=0; i<projectiles.size(); ++i)
+    for(unsigned int i=0; i<projectiles.size(); ++i)
     {
         projectiles.at(i)->update();
     }
-    for(int i=0; i<user_projectiles.size(); ++i)
+    for(unsigned int i=0; i<user_projectiles.size(); ++i)
     {
         user_projectiles.at(i)->update();
     }
     QString num = QString::number(universe->getScore());
-    int numSize = num.size();
-    for(int i = 1; i < (numSize / 3.0); ++i){
+    unsigned int numSize = num.size();
+    for(unsigned int i = 1; i < (numSize / 3.0); ++i){
         num.insert(numSize - (i * 3), ',');
     }
     the_Score->raise();
@@ -181,15 +181,15 @@ void MainWindow::levelFinished()
         universe->setLevel(level);
         universe->clearWorlds();
         universe->createWorlds();
-        for(int i = 0; i < objects.size(); ++i){
+        for(unsigned int i = 0; i < objects.size(); ++i){
             objects.at(i)->deleteLater();
         }
-        for(int i = 0; i < projectiles.size(); ++i){
+        for(unsigned int i = 0; i < projectiles.size(); ++i){
             projectiles.at(i)->deleteLater();
         }
         projectiles.clear();
         objects.clear();
-        for(int i = 0; i < 13; ++i)
+        for(unsigned int i = 0; i < 13; ++i)
         {
             objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
             connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
@@ -237,9 +237,14 @@ void MainWindow::makeProjectile()
     //connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
+void MainWindow::makeObject()
+{
+
+}
+
 void MainWindow::deleteLabel()
 {
-    for(int i = 0; i < objects.size(); ++i){
+    for(unsigned int i = 0; i < objects.size(); ++i){
         if(objects.at(i) == sender()){
             sender()->deleteLater();
             objects.erase(objects.begin() + i);
@@ -270,17 +275,16 @@ void MainWindow::on_btnHighScores_clicked()
 
 void MainWindow::on_btnCheat_clicked()
 {
-    if (ui->btnCheat->text() == "Cheat Mode: OFF") {
+    if (!cheat) {
         ui->btnCheat->setText("Cheat Mode: ON");
-        cheat = true;
         ui->lblLevel->setShown(true);
         ui->spinCheat->setShown(true);
     } else {
         ui->btnCheat->setText("Cheat Mode: OFF");
-        cheat = false;
         ui->lblLevel->setShown(false);
         ui->spinCheat->setShown(false);
     }
+    cheat = !cheat;
 
 }
 
@@ -429,11 +433,11 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         this->setCursor(Qt::ArrowCursor);
 
 
-        for (int i = 0; i < objects.size(); ++i) {
+        for (unsigned int i = 0; i < objects.size(); ++i) {
             objects.at(i)->deleteLater();
         }
 
-        for(int i = 0; i < projectiles.size(); ++i){
+        for(unsigned int i = 0; i < projectiles.size(); ++i){
             projectiles.at(i)->deleteLater();
         }
         projectiles.clear();

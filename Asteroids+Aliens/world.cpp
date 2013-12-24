@@ -18,19 +18,19 @@ World::World(bool hasAShip):hasShip(hasAShip), projectileCountdown(40)
 
 World::~World()
 {
-    for(int i = 0; i < asteroids.size();++i){
+    for(unsigned int i = 0; i < asteroids.size();++i){
         delete asteroids.at(i);
     }
     asteroids.clear();
-    for(int i = 0; i < aliens.size(); ++i){
+    for(unsigned int i = 0; i < aliens.size(); ++i){
         delete aliens.at(i);
     }
     aliens.clear();
-    for(int i = 0; i < enemyProjectiles.size();++i){
+    for(unsigned int i = 0; i < enemyProjectiles.size();++i){
         delete enemyProjectiles.at(i);
     }
     enemyProjectiles.clear();
-    for(int i = 0; i < projectiles.size();++i){
+    for(unsigned int i = 0; i < projectiles.size();++i){
         delete projectiles.at(i);
     }
     projectiles.clear();
@@ -39,16 +39,16 @@ World::~World()
 // Move positions of all the items in the world
 void World::move()
 {
-    for(int i = 0; i < asteroids.size(); ++i){
+    for(unsigned int i = 0; i < asteroids.size(); ++i){
         asteroids.at(i)->move(); // Move all the asteroids
     }
-    for(int i = 0; i < aliens.size(); ++i){
+    for(unsigned int i = 0; i < aliens.size(); ++i){
         aliens.at(i)->move(); // Move all the aliens
     }
-    for(int i = 0; i < enemyProjectiles.size(); ++i){
+    for(unsigned int i = 0; i < enemyProjectiles.size(); ++i){
         enemyProjectiles.at(i)->move(); // Move all the projectiles
     }
-    for(int i = 0; i < projectiles.size(); ++i){
+    for(unsigned int i = 0; i < projectiles.size(); ++i){
         projectiles.at(i)->move(); // move user projectiles
         if(projectiles.at(i)->getY() < 0)
         {
@@ -75,7 +75,7 @@ void World::lameToWalk()
 // Find <object_to_delete> in the world and delete it
 void World::deleteObject(Obstacle *object_to_delete)
 {
-    for(int i = 0; i < asteroids.size(); ++i)
+    for(unsigned int i = 0; i < asteroids.size(); ++i)
     {
         if(asteroids.at(i) == object_to_delete)
         {
@@ -84,7 +84,7 @@ void World::deleteObject(Obstacle *object_to_delete)
             return;
         }
     }
-    for(int i = 0; i < aliens.size(); ++i)
+    for(unsigned int i = 0; i < aliens.size(); ++i)
     {
         if(aliens.at(i) == object_to_delete)
         {
@@ -99,7 +99,7 @@ void World::deleteObject(Obstacle *object_to_delete)
 // checks every user projectile against all enemies in the world.
 void World::checkProjectile()
 {
-    for(int cur = 0; cur < projectiles.size(); ++cur)
+    for(unsigned int cur = 0; cur < projectiles.size(); ++cur)
     {
         Projectile * proj = projectiles.at(cur);
         if(proj->isAlive)
@@ -160,7 +160,7 @@ void World::checkProjectile()
 void World::checkUserShip(Ship * playerShip)
 {
 
-    for(int cur = 0; cur < asteroids.size(); ++cur)
+    for(unsigned int cur = 0; cur < asteroids.size(); ++cur)
     {
         double shipRad = playerShip->getW() / 2;
         double shipX = playerShip->getX() + shipRad;
@@ -191,7 +191,7 @@ void World::checkUserShip(Ship * playerShip)
             }
         }
     }
-    for(int cur = 0; cur < aliens.size(); ++cur)
+    for(unsigned int cur = 0; cur < aliens.size(); ++cur)
     {
         double shipRad = playerShip->getW() / 2;
         double shipX = playerShip->getX() + shipRad;
@@ -222,7 +222,7 @@ void World::checkUserShip(Ship * playerShip)
             }
         }
     }
-    for(int cur = 0; cur < enemyProjectiles.size(); ++cur)
+    for(unsigned int cur = 0; cur < enemyProjectiles.size(); ++cur)
     {
 
         double shipRad = playerShip->getW() / 2;
@@ -301,13 +301,13 @@ string World::save()
 {
     string output;
     output = to_string(asteroids.size()) + " ";
-    for (int i = 0; i < asteroids.size(); ++i) {
+    for (unsigned int i = 0; i < asteroids.size(); ++i) {
         Asteroid *a = dynamic_cast<Asteroid *>(asteroids.at(i));
         output += to_string(a->getX()) + " " + to_string(a->getY()) + " ";
     }
 
     output += to_string(aliens.size()) + " ";
-    for (int i = 0; i < aliens.size(); ++i) {
+    for (unsigned int i = 0; i < aliens.size(); ++i) {
         Alien *a = dynamic_cast<Alien *>(aliens.at(i));
         output += to_string(a->getX()) + " " + to_string(a->getY()) + " ";
     }
@@ -368,11 +368,9 @@ Obstacle *World::objectFactory(int x, int y, int speed, int type)
     case 0:
         asteroids.push_back(new Asteroid(x, y, speed));
         return asteroids.at(asteroids.size() - 1);
-        break;
-    case 1:
+    case 1: //default?
         aliens.push_back(new Alien(x, y, speed));
         return aliens.at(aliens.size() - 1);
-        break;
     }
-
+    return NULL;
 }

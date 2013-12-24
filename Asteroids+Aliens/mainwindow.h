@@ -38,6 +38,7 @@ private slots:
     void levelEnd();
     void userShipCrashed();
     void makeProjectile();
+    void makeObject(); // Working on this
 
     void deleteLabel();
     void levelFinished();
