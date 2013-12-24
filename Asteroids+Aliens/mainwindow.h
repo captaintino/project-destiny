@@ -62,6 +62,7 @@ private slots:
     void canFire();
 
     void osuCreationSlot();
+    void removeLevelLabel();
 
 private:
     Ui::MainWindow *ui;
@@ -74,7 +75,7 @@ private:
     QThread * itemSpawn;
     HighScoreWindow highScoreWindow;
     InstructionWindow instructionWindow;
-    QLabel * the_Score;
+    QLabel * the_Score, * the_Level;
     HighScores * highscores;
     bool cheat, multiplayer, fire, networked, freeze_game;
     ClientWindow clientWindow;

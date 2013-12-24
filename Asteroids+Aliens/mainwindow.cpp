@@ -86,6 +86,9 @@ void MainWindow::on_btnStart_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
+    the_Level = new QLabel(this);
+    the_Level->setGeometry(350,250,100,100); // Needs work *
+    the_Level->setStyleSheet("QLabel { color : #df7121; font-size : 100px}");
     mainMenuSetShow(false);
     ui->lnUsername->setShown(false);
     //this->grabMouse(); // <-- we need to have an <Esc> option...
@@ -181,6 +184,10 @@ void MainWindow::levelFinished()
         universe->setLevel(level);
         universe->clearWorlds();
         universe->createWorlds();
+        the_Level->setText(QString::number(level));
+        the_Level->raise();
+        the_Level->show();
+        QTimer::singleShot(1500, this, SLOT(removeLevelLabel()));
         for(unsigned int i = 0; i < objects.size(); ++i){
             objects.at(i)->deleteLater();
         }
@@ -327,6 +334,9 @@ void MainWindow::on_btnLoad_clicked()
     the_Score->setStyleSheet("QLabel { color : #df7121; font-size : 50px}");
     the_Score->raise();
     the_Score->show();
+    the_Level = new QLabel(this);
+    the_Level->setGeometry(350,250,100,100); // Needs work *
+    the_Level->setStyleSheet("QLabel { color : #df7121; font-size : 100px}");
     fire = true;
     //this->grabMouse(); // <-- we need to have an <Esc> option...
     this->setCursor(Qt::BlankCursor);
@@ -406,7 +416,6 @@ void MainWindow::on_btnLoad_clicked()
 
 
     QTimer::singleShot(1000, this, SLOT(resumeLevel()));
-    //resumeLevel();
     qDebug("Current Level is:" + QString::number(level).toAscii());
 }
 
@@ -474,7 +483,6 @@ void MainWindow::disconnectedMultiplayer()
 
 void MainWindow::canFire()
 {
-    //qDebug("signal Fired");
     fire = true;
 }
 
@@ -483,5 +491,11 @@ void MainWindow::osuCreationSlot()
     Obstacle *proj = universe->getWorld(0)->getUserProjectile();
     user_projectiles.push_back(new on_screen_object(this, universe->getWorld(0), level, proj));
     //connect(user_projectiles.at(user_projectiles.size() - 1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+}
+
+void MainWindow::removeLevelLabel()
+{
+    the_Level->lower();
+    the_Level->hide();
 }
 
