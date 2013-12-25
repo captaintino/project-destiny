@@ -9,5 +9,5 @@ UniverseThread::UniverseThread(Universe * initUni, int level): QThread(){
 
 void UniverseThread::terminate(){
     timer->stop();
-    QThread::finished();
+    //QThread::finished();
 }

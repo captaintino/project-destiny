@@ -27,10 +27,8 @@ void ClientWindow::dataReceived()
 
     while (socket->canReadLine()){
         data = socket->readLine();
-        qDebug() << "working111?" << '\n' << data;
 
         if(data.startsWith("CHAT")){
-            qDebug() << "working?" << '\n';
             data.chop(1);
             ui->chatMessages->appendPlainText(data.toStdString().substr(4, data.size() - 2).c_str());
         }
@@ -138,7 +136,7 @@ void ClientWindow::clientRefresh()
     {
         return;
     }
-    socket->write("REFRESH\n");
+    socket->write("REFR\n");
 }
 
 //send user status in the game
@@ -169,5 +167,9 @@ void ClientWindow::on_btnBackToMenu_clicked()
 
 void ClientWindow::on_SendMessage_clicked()
 {
+    if(socket==NULL||socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        return;
+    }
     socket->write(("CHAT" + ui->chatMessageToSend->text().toStdString() + '\n').c_str());
 }

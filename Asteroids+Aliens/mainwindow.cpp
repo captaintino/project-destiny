@@ -10,8 +10,6 @@
 #include <sstream>
 #include <QKeyEvent>
 
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWindow)
@@ -41,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
     modelUpdater->terminate();
     backgroundTimer->deleteLater();
     updateTimer->deleteLater();
@@ -49,9 +46,12 @@ MainWindow::~MainWindow()
     delete universe;
     user->deleteLater();
     modelUpdater->deleteLater();
+    clientWindow.deleteLater();
+    highScoreWindow.deleteLater();
     for(unsigned int i = 0; i < objects.size(); ++i){
         delete objects.at(i);
     }
+    delete ui;
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *ev)
@@ -419,6 +419,13 @@ void MainWindow::on_btnLoad_clicked()
     qDebug() << "Current Level is:" << QString::number(level).toAscii();
 }
 
+void MainWindow::closeEvent(QCloseEvent *)
+{
+    // This kinda blows up - the deconstructor doesn't work
+    // But this will end the program when the mainwindow is closed
+   this->~MainWindow();
+}
+
 void MainWindow::resumeLevel(){
     modelUpdater->start();
     levelTimer->start();
@@ -498,4 +505,3 @@ void MainWindow::removeLevelLabel()
     the_Level->lower();
     the_Level->hide();
 }
-

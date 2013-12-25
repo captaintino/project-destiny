@@ -52,6 +52,8 @@ private slots:
 
     void on_btnLoad_clicked();
 
+    void closeEvent(QCloseEvent *);
+
     void keyPressEvent(QKeyEvent *e);
 
     void on_lnUsername_editingFinished();
