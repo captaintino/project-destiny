@@ -7,12 +7,14 @@
 Universe::Universe(int lvl, int i, bool b): score(i), level(lvl), cheat(b)
 {
     player = new Ship();
-    dimensions.push_back(new World(true));
-    connect(dimensions.at(0), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
-    connect(dimensions.at(0), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
-    connect(dimensions.at(0), SIGNAL(alienKilled()), this, SLOT(alienScoreSlot()));
-    connect(dimensions.at(0), SIGNAL(userShot()), this, SLOT(userFired()));
-
+    for(int i = 0; i < /*NUM-WORLDS*/ 1; ++i){
+        dimensions.push_back(new World(false));
+        connect(dimensions.at(i), SIGNAL(shipCrashed()), this, SLOT(shipCrashedSignal()));
+        connect(dimensions.at(i), SIGNAL(projectileCreated()), this, SLOT(projectileCreatedSignal()));
+        connect(dimensions.at(i), SIGNAL(alienKilled()), this, SLOT(alienScoreSlot()));
+        connect(dimensions.at(i), SIGNAL(userShot()), this, SLOT(userFired()));
+    }
+    dimensions.at(0)->setHasShip(true);
     current_dimension = 0;
 }
 

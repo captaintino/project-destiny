@@ -7,7 +7,6 @@ Projectile::Projectile(int initx, int inity):Obstacle(initx, inity, 50, 5, ":/im
 void Projectile::move()
 {
     y+=speed;
-    // delete this guy and make a new guy show up
 }
 
 void Projectile::setType(QString newType)

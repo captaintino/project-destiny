@@ -93,7 +93,6 @@ void World::deleteObject(Obstacle *object_to_delete)
             return;
         }
     }
-
 }
 //=======================================================================
 // checks every user projectile against all enemies in the world.
@@ -272,7 +271,6 @@ void World::projectileGenerator()
         projectileCountdown = (20 + (rand() % 21));
         if(aliens.size())
         {
-
             Obstacle * shootingAlien = aliens.at(rand() % aliens.size());
             while(!shootingAlien->isAlive) // only let living aliens shoot.
             {
@@ -323,7 +321,6 @@ void World::load()
 // Create an object in the model and return a pointer to it
 Obstacle* World::createObject(int level)
 {
-
     int lane = (rand() % 13); //Pick random lane to place object into
     while(!lanes[lane]){      //Check and repeat until we find a random lane that is clear
         lane = (rand() % 13);
@@ -339,7 +336,12 @@ Obstacle *World::createLameOjbect(int type, int x, int y)
 {
     if (type == 0) {
         return objectFactory(61.5 * (asteroids.size() + aliens.size()), -60 -(60*(rand()%10)), 0, type); // This code is designed to be called 13 times
-    } else {
+
+        // ADDITIONAL OBJECTS CODE. NOT WORKING.
+
+//    } else if(type == -1){
+//        return objectFactory(0, -60, 0, type);
+    }else {
         return objectFactory(x, y, 0, type);
     }
 }
@@ -350,9 +352,43 @@ void World::resetLane(){
     lanesToReset.erase(lanesToReset.begin()); // shift vector over
 }
 
+//void World::lameWalker()
+//{
+    // ADDITIONAL OBJECTS CODE. NOT WORKING.
+
+//    int lane = (rand() % 13); //Pick random lane to place object into
+//    while(!lanes[lane]){      //Check and repeat until we find a random lane that is clear
+//        lane = (rand() % 13);
+//    }
+//    lanes[lane] = false; // set lane to closed
+//    QTimer::singleShot(200, this, SLOT(resetLane())); // Fire off timer that will reopen the lane
+//    lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
+//    waiting.at(0)->setX(61.5 * lane);
+//    if(waiting.at(0)->getType() == ":/images/asteroid.png"){
+//        asteroids.push_back(waiting.at(0));
+//        waiting.erase(waiting.begin());
+//    } else {
+//        aliens.push_back(waiting.at(0));
+//        waiting.erase(waiting.begin());
+//    }
+//}
+
 // Randomly creates either an alien or an asteroid, places it in the proper vector and returns it
 Obstacle *World::objectFactory(int x, int y, int speed, int type)
 {
+    // ADDITIONAL OBJECTS CODE. NOT WORKING.
+
+//    if(type == -1){
+//        switch(rand() % 2){
+//        case 0:
+//            waiting.push_back(new Asteroid(x, y, 10));
+//        case 1:
+//            waiting.push_back(new Alien(x, y, 10));
+//        }
+//        // create an object, place it in a holding vector, and set it to be used after some time
+//        QTimer::singleShot((3 + (waiting.size() * 3)) * 500, this, SLOT(lameWalker()));
+//        return waiting.at(waiting.size() - 1);
+//    }
     int chooser;
     if (type == 0) {
         //if(level > 5){

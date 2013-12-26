@@ -201,6 +201,15 @@ void MainWindow::levelFinished()
             objects.push_back(new on_screen_object(this,universe->getWorld(0),level, 0, 0, 0));
             connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
         }
+
+        // OBJECT ADDITION CODE
+//        for(unsigned int i = 0; i < sqrt(level); ++i)
+//        {
+//            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, -1, 0, 0));
+//            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+//        }
+        // OBJECT ADDITION CODE
+
         modelUpdater->updateTimer(level);
         modelUpdater->start();
         universe->getWorld(0)->lameToWalk();
@@ -244,11 +253,6 @@ void MainWindow::makeProjectile()
     //connect(projectiles.at(projectiles.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
 }
 
-void MainWindow::makeObject()
-{
-
-}
-
 void MainWindow::deleteLabel()
 {
     for(unsigned int i = 0; i < objects.size(); ++i){
@@ -262,7 +266,6 @@ void MainWindow::deleteLabel()
         QTimer::singleShot(500, this, SLOT(levelFinished()));
     }
 }
-
 
 
 void MainWindow::on_btnInstructions_clicked()
@@ -423,7 +426,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 {
     // This kinda blows up - the deconstructor doesn't work
     // But this will end the program when the mainwindow is closed
-   this->~MainWindow();
+    this->~MainWindow();
 }
 
 void MainWindow::resumeLevel(){

@@ -23,6 +23,7 @@ public:
     virtual void move() = 0;
 
     virtual void setSpeed(int newSpeed) { speed = newSpeed; }
+    virtual void setX(int newX){x = newX;}
 
     virtual std::string save() = 0;
 };
