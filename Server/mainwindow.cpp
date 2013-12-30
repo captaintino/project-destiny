@@ -28,6 +28,39 @@ void MainWindow::sortUsers()
     std::sort(users.begin(), users.end(), sortUserByScore);
 }
 
+void MainWindow::endRound()
+{
+    addToLog(("Round Over " + users.at(0)->getUsername().toStdString() + " won").c_str());
+    users.at(0)->incrementRoundsWon();
+    for(User * us: users){
+        us->setAlive(true);
+        us->setScore(0);
+        us->setLevel(1);
+        //Alert everyone that the round ended, who won, and tell the client to refresh
+        us->getSocket()->write(("CHATADMIN: " + users.at(0)->getUsername().toStdString() + " has won the round\nROUN\n").c_str());
+    }
+    for(User * us: users){
+        writeRefresh(us->getSocket());
+    }
+}
+
+void MainWindow::writeRefresh(QTcpSocket * sock)
+{
+    QString output;
+    for (unsigned int i = 0; i < users.size(); ++i) {
+        User * user = users.at(i);
+        output += user->getUsername() + " ";
+        output += QString::number(user->getScore()) + " ";
+        if (user->getAlive()) {
+            output += "A ";
+        } else {
+            output += "D ";
+        }
+        output += QString::number(user->getLevel());
+    }
+    sock->write("REFR" + (QString::number(users.size()) + ' ' + output).toAscii() + '\n');
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -38,6 +71,11 @@ void MainWindow::addToLog(QString msg)
 {
     QDateTime now = QDateTime::currentDateTime();
     ui->txtLog->appendPlainText(now.toString("hh:mm:ss") + " " + msg);
+}
+
+void MainWindow::addToAdminLog(QString msg)
+{
+    ui->adminLog->appendPlainText(msg);
 }
 
 void MainWindow::clientConnected()
@@ -75,20 +113,9 @@ void MainWindow::dataReceived()
                 users.at(i)->getSocket()->write((str + '\n').c_str());
             }
         } else if (qstr.startsWith("REFR")) {
-            QString output;
-            for (unsigned int i = 0; i < users.size(); ++i) {
-                User * user = users.at(i);
-                output += user->getUsername() + " ";
-                output += QString::number(user->getScore()) + " ";
-                if (user->getAlive()) {
-                    output += "A ";
-                } else {
-                    output += "D ";
-                }
-                output += QString::number(user->getLevel());
-            }
-            sock->write("REFR" + (QString::number(users.size()) + ' ' + output).toAscii() + '\n');
+            writeRefresh(sock);
         } else if (qstr.startsWith("UPDATE ")) {
+            bool roundOver = false;
             std::string str;
             User * user = users.at(loc);
             std::stringstream ss(qstr.toStdString());
@@ -104,6 +131,12 @@ void MainWindow::dataReceived()
                 user->setAlive(true);
             } else if (qstr == "dead") {
                 user->setAlive(false);
+                roundOver = true;
+                for (User * us : users){ // is everyone dead?
+                    if(us->getAlive()){
+                        roundOver = false;  // if Someone is alive, round is not over
+                        break;}
+                }
             }
             ss >> str;
             qstr = QString::fromStdString(str);
@@ -119,6 +152,10 @@ void MainWindow::dataReceived()
             }
             addToLog(output);
             sortUsers();
+            // Everyone is dead
+            if(roundOver){
+                endRound();
+            }
         }
     }
 }
@@ -136,4 +173,42 @@ void MainWindow::clientDisconnected()
     --connectCount;
     ui->lblConnected->setText(QString::number(connectCount));
     addToLog("Client disconnected.");
+}
+
+void MainWindow::on_administrate_clicked()
+{
+    QString command = ui->adminCommands->text();
+    if(command.length() > 0){
+        if(command.startsWith('/')){
+            if(command.startsWith("/users")){
+                addToAdminLog("Users:");
+                for(User * us: users){
+                    addToAdminLog(us->getUsername());
+                }
+                addToAdminLog("");
+            }else if(command.startsWith("/kick")){
+                command = command.remove(0,5).trimmed();
+                for (unsigned int i = 0; i < users.size(); ++i) {
+                    if(users.at(i)->getUsername() == command){
+                        delete users.at(i);
+                        users.erase(users.begin() + i);
+                        for(User * us: users){
+                            us->getSocket()->write(("CHATADMIN kicked " + command.toStdString() + '\n').c_str());
+                        }
+                        break;
+                    }
+                }
+            }else if(command.startsWith("/")){
+
+            }else if(command.startsWith("/")){
+
+            }else if(command.startsWith("/")){
+
+            }
+        }else{
+            for(User * us: users){
+                us->getSocket()->write(("CHATADMIN: " + command.toStdString() + '\n').c_str());
+            }
+        }
+    }
 }

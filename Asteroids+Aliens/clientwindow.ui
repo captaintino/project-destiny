@@ -190,10 +190,10 @@ color:rgb(217, 217, 217)</string>
    <widget class="QPushButton" name="SendMessage">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>421</y>
-      <width>101</width>
-      <height>25</height>
+      <x>308</x>
+      <y>418</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -205,8 +205,7 @@ color:rgb(217, 217, 217)</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/images/transparent.png);
-color:rgb(217, 217, 217)</string>
+     <string notr="true">color:rgb(216, 216, 216)</string>
     </property>
     <property name="text">
      <string>Chat</string>
