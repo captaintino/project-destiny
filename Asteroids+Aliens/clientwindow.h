@@ -24,9 +24,10 @@ class ClientWindow;
 class ClientWindow : public QWidget
 {
     Q_OBJECT
+    QWidget * mainwindow;
 
 public:
-    explicit ClientWindow(QWidget *parent = 0);
+    explicit ClientWindow(QWidget * main, QWidget *parent = 0);
     ~ClientWindow();
 
     //send updated info to server

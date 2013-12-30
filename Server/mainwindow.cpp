@@ -173,6 +173,15 @@ void MainWindow::clientDisconnected()
     --connectCount;
     ui->lblConnected->setText(QString::number(connectCount));
     addToLog("Client disconnected.");
+    bool roundOver = true;
+    for (User * us : users){ // is everyone dead?
+        if(us->getAlive()){
+            roundOver = false;  // if Someone is alive, round is not over
+            break;}
+    }
+    if(roundOver){
+        endRound();
+    }
 }
 
 void MainWindow::on_administrate_clicked()
@@ -194,6 +203,15 @@ void MainWindow::on_administrate_clicked()
                         users.erase(users.begin() + i);
                         for(User * us: users){
                             us->getSocket()->write(("CHATADMIN kicked " + command.toStdString() + '\n').c_str());
+                        }
+                        bool roundOver = true;
+                        for (User * us : users){ // is everyone dead?
+                            if(us->getAlive()){
+                                roundOver = false;  // if Someone is alive, round is not over
+                                break;}
+                        }
+                        if(roundOver){
+                            endRound();
                         }
                         break;
                     }

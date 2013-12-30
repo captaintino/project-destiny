@@ -1,11 +1,13 @@
 #include "clientwindow.h"
 #include "ui_clientwindow.h"
 #include <QDebug>
+#include<mainwindow.h>
 
-ClientWindow::ClientWindow(QWidget *parent) :
+ClientWindow::ClientWindow(QWidget *main, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ClientWindow),
-    userName("Player")
+    userName("Player"),
+    mainwindow(main)
 {
     ui->setupUi(this);
 }
@@ -87,6 +89,10 @@ void ClientWindow::dataReceived()
                 y+=30;
             }
         }
+        else if(data.startsWith("ROUN")){
+            //Allow user to start new game
+            dynamic_cast<MainWindow*>(mainwindow)->lockStartButton(true);
+        }
     }
 }
 
@@ -97,6 +103,8 @@ void ClientWindow::serverDisconnected()
     emit disconnected();
     ui->btnClientWinConnect->setEnabled(true);
     ui->btnRefresh->setEnabled(false);
+    ui->chatMessages->setEnabled(false);
+    dynamic_cast<MainWindow*>(mainwindow)->lockStartButton(true);
 }
 
 //Updates server with current information
@@ -120,6 +128,7 @@ void ClientWindow::serverUpdate()
     emit connected();
     ui->btnClientWinConnect->setEnabled(false);
     ui->btnRefresh->setEnabled(true);
+    ui->chatMessages->setEnabled(true);
 
     QString data = QString("UPDATE ") + userName + " 0 alive 1\n";
     qDebug() << "Sending " << data.toStdString().c_str();       // When this goes away, we can eliminate the QString <data>

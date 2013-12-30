@@ -31,6 +31,7 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void mainMenuSetShow(bool m);
     void accelerateBackground();
+    void lockStartButton(bool b);
 private slots:
     void on_btnStart_clicked();
     void rotateBackground();

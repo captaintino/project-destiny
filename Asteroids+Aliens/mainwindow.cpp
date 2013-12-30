@@ -12,7 +12,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    clientWindow(this)
 {
     ui->setupUi(this);
     setMouseTracking(true);
@@ -230,6 +231,11 @@ void MainWindow::accelerateBackground()
     }
 }
 
+void MainWindow::lockStartButton(bool b)
+{
+    ui->btnStart->setEnabled(b);
+}
+
 void MainWindow::userShipCrashed()
 {
     modelUpdater->terminate();
@@ -242,8 +248,10 @@ void MainWindow::userShipCrashed()
     qDebug("Exiting update... user has crashed.");
     if(!cheat)
         highscores->save();
-    if(multiplayer)
+    if(multiplayer){
         clientWindow.sendUpdate(false);
+        lockStartButton(false);
+    }
 }
 
 void MainWindow::makeProjectile()
