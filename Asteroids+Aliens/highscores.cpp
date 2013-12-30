@@ -6,10 +6,7 @@
 using namespace std;
 
 //passes pointer to observer class
-HighScores::HighScores(HighScoresObserver * win):observer(win)
-{
-
-}
+HighScores::HighScores(HighScoresObserver * win):observer(win){}
 
 //gets <userName> from the main window GUI
 void HighScores::setUserName(const QString &username)
@@ -87,15 +84,10 @@ void HighScores::evaluate()
         {
             scores.insert(scores.begin() + i,score);
             usernames.insert(usernames.begin() + i,this->username.toStdString());
-            erase = true;
+            scores.pop_back();
+            usernames.pop_back();
             break;
         }
-    }
-
-    if(erase==true)
-    {
-        scores.erase(scores.begin()+5);
-        usernames.erase(usernames.begin()+5);
     }
 }
 

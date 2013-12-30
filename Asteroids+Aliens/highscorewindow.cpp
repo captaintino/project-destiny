@@ -27,8 +27,6 @@ void HighScoreWindow::updateHighScore(vector<string> &usernames, vector<int> &sc
     ui->lblScore3->setText(QString::number(scores.at(2)));
     ui->lblScore4->setText(QString::number(scores.at(3)));
     ui->lblScore5->setText(QString::number(scores.at(4)));
-
-
 }
 
 void HighScoreWindow::on_btnBackToMainMenu_clicked()

@@ -71,7 +71,6 @@ void Universe::save()
     }
 
     outfile << output;
-
 }
 
 void Universe::clearWorlds()
@@ -116,7 +115,7 @@ void Universe::projectileCreatedSignal()
 
 void Universe::alienScoreSlot()
 {
-    score +=500; // Upped from 25 to 500, more balancing may be required
+    score +=1000; // Upped from 25 to 500 to 1000, more balancing may be required
 }
 
 void Universe::userFired()

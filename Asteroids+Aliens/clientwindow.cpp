@@ -4,10 +4,10 @@
 
 ClientWindow::ClientWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ClientWindow)
+    ui(new Ui::ClientWindow),
+    userName("Player")
 {
     ui->setupUi(this);
-    userName = "Player";
 }
 
 ClientWindow::~ClientWindow()
@@ -108,7 +108,6 @@ void ClientWindow::serverUpdate()
         hostname = ui->lnHostName->text();
     else
         hostname = "localhost";
-    QString score = "0";
     socket = new QTcpSocket(this);
 
     socket->connectToHost(hostname, 5000);
@@ -122,8 +121,8 @@ void ClientWindow::serverUpdate()
     ui->btnClientWinConnect->setEnabled(false);
     ui->btnRefresh->setEnabled(true);
 
-    QString data = QString("UPDATE ") + userName + " " + score + " alive 1\n";
-    qDebug() << "Sending " << data.toStdString().c_str();
+    QString data = QString("UPDATE ") + userName + " 0 alive 1\n";
+    qDebug() << "Sending " << data.toStdString().c_str();       // When this goes away, we can eliminate the QString <data>
     socket->write(data.toStdString().c_str());
 
     clientRefresh();
@@ -148,9 +147,8 @@ void ClientWindow::sendUpdate(bool aliveOrDead)
     }else{
         aOrD = " dead";
     }
-    QString score = QString::number(universe->getScore());
-    QString data = QString("UPDATE ") + userName + " " + score + aOrD + " " + QString::number(universe->getLevel()) + '\n';
-    qDebug() << "Sending " << data.toStdString().c_str();
+    QString data = QString("UPDATE ") + userName + " " + QString::number(universe->getScore()) + aOrD + " " + QString::number(universe->getLevel()) + '\n';
+    qDebug() << "Sending " << data.toStdString().c_str();       // When this goes away, we can eliminate the QString <data>
     socket->write(data.toStdString().c_str());
 }
 

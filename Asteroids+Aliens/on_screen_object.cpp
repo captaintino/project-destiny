@@ -15,18 +15,18 @@ on_screen_object::on_screen_object(QWidget *parent, World *get_world, int initle
     game_object = p;
     this->setGeometry(game_object->getX(), game_object->getY(), game_object->getW(), game_object->getH());
     setScaledContents(true);
-    QPixmap image = QPixmap(game_object->getType());
-    this->setPixmap(image);   
+    this->setPixmap(QPixmap(game_object->getType()));
     this->show();
 }
 
 void on_screen_object::update()
 {
+    this->setShown(game_object->isAlive ? true : false);
     if(game_object->isAlive)
         this->setShown(true);
     else
         this->setShown(false);
-    this->setGeometry(x(), game_object->getY(), width(), height());
+    this->setGeometry(game_object->getX(), game_object->getY(), width(), height());
     if(this->game_object->getType() == ":/images/user_projectile.png")
     {
         if(y() <= 0)

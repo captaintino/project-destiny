@@ -17,7 +17,7 @@ private:
     Q_OBJECT;
     vector<Obstacle *> asteroids;
     vector<Obstacle *> aliens;
-    //vector<Obstacle *> waiting;
+    vector<Obstacle *> waiting;
     vector<Projectile *> enemyProjectiles;
     vector<Projectile *> projectiles;
     vector<int> lanesToReset;
@@ -65,7 +65,7 @@ public:
     void load();
 private slots:
     void resetLane();
-    //void lameWalker();
+    void lameWalker();
 
 signals:
     void shipCrashed();

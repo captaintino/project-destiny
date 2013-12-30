@@ -141,17 +141,17 @@ void MainWindow::rotateBackground()
 void MainWindow::update_positions()
 {
     user->updateCoords();
-    for(unsigned int i=0; i<objects.size(); ++i)
+    for(on_screen_object * obj : objects)
     {
-        objects.at(i)->update();
+        obj->update();
     }
-    for(unsigned int i=0; i<projectiles.size(); ++i)
+    for(on_screen_object * obj : projectiles)
     {
-        projectiles.at(i)->update();
+        obj->update();
     }
-    for(unsigned int i=0; i<user_projectiles.size(); ++i)
+    for(on_screen_object * obj : user_projectiles)
     {
-        user_projectiles.at(i)->update();
+        obj->update();
     }
     QString num = QString::number(universe->getScore());
     unsigned int numSize = num.size();
@@ -165,14 +165,13 @@ void MainWindow::update_positions()
 void MainWindow::levelEnd()
 {
     levelTimer->stop();
-    for(unsigned int i = 0; i < objects.size(); ++i){
-        objects.at(i)->setLevelOver();
+    for(on_screen_object * obj : objects){
+        obj->setLevelOver();
     }
 }
 
 void MainWindow::levelFinished()
 {
-
     updateTimer->stop();
 
     modelUpdater->terminate(); // Not sure if this is the right method
@@ -203,11 +202,11 @@ void MainWindow::levelFinished()
         }
 
         // OBJECT ADDITION CODE
-//        for(unsigned int i = 0; i < sqrt(level); ++i)
-//        {
-//            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, -1, 0, 0));
-//            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
-//        }
+        for(unsigned int i = 1; i < sqrt(level); ++i)
+        {
+            objects.push_back(new on_screen_object(this,universe->getWorld(0),level, -1, 0, 0));
+            connect(objects.at(objects.size()-1), SIGNAL(deleteMe()), this, SLOT(deleteLabel()));
+        }
         // OBJECT ADDITION CODE
 
         modelUpdater->updateTimer(level);
@@ -215,11 +214,11 @@ void MainWindow::levelFinished()
         universe->getWorld(0)->lameToWalk();
         updateTimer->start();
 
-        //put UPDATE username score alive level
+        // Update server with current statistics
         if(multiplayer)
             clientWindow.sendUpdate(true);
 
-        qDebug() << "Current Level is:" << QString::number(level).toAscii();
+        qDebug() << "Current Level is:" << QString::number(level).toAscii(); // Unnecesary
         levelTimer->start();
     }
 }
@@ -295,7 +294,6 @@ void MainWindow::on_btnCheat_clicked()
         ui->spinCheat->setShown(false);
     }
     cheat = !cheat;
-
 }
 
 void MainWindow::on_btnMultiplayer_clicked()
@@ -438,7 +436,9 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     freeze_game = true;
 
-    if (e->key() == Qt::Key_Escape) {
+    switch(e->key())
+    {
+    case Qt::Key_Escape:
         if (!(universe->getShip()->isDead()) && !networked)
             universe->save();
         modelUpdater->terminate();
@@ -468,6 +468,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         mainMenuSetShow(true);
         ui->btnCheat->setText("Cheat Mode: OFF");
         cheat = false;
+        break;
     }
 }
 

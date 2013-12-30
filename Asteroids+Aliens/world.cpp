@@ -11,9 +11,7 @@
 
 World::World(bool hasAShip):hasShip(hasAShip), projectileCountdown(40)
 {
-    for(int i = 0; i < 13; ++i){
-        lanes[i] = true;
-    }
+    memset(lanes, 1, 13);
 }
 
 World::~World()
@@ -39,14 +37,15 @@ World::~World()
 // Move positions of all the items in the world
 void World::move()
 {
-    for(unsigned int i = 0; i < asteroids.size(); ++i){
-        asteroids.at(i)->move(); // Move all the asteroids
+
+    for(Obstacle * obj: asteroids){
+        obj->move(); // Move all the asteroids
     }
-    for(unsigned int i = 0; i < aliens.size(); ++i){
-        aliens.at(i)->move(); // Move all the aliens
+    for(Obstacle * obj: aliens){
+        obj->move(); // Move all the aliens
     }
-    for(unsigned int i = 0; i < enemyProjectiles.size(); ++i){
-        enemyProjectiles.at(i)->move(); // Move all the projectiles
+    for(Projectile * proj: enemyProjectiles){
+        proj->move(); // Move all the enemy projectiles
     }
     for(unsigned int i = 0; i < projectiles.size(); ++i){
         projectiles.at(i)->move(); // move user projectiles
@@ -54,6 +53,9 @@ void World::move()
         {
             delete projectiles.at(i);
             projectiles.erase(projectiles.begin() + i);
+
+            // WAS NOT HERE PRIOR TO 12/30/2013
+            --i;
         }
     }
     projectileGenerator();
@@ -153,12 +155,9 @@ void World::checkProjectile()
         }
     }
 }
-
 //======================================================================
-
 void World::checkUserShip(Ship * playerShip)
 {
-
     for(unsigned int cur = 0; cur < asteroids.size(); ++cur)
     {
         double shipRad = playerShip->getW() / 2;
@@ -326,7 +325,7 @@ Obstacle* World::createObject(int level)
         lane = (rand() % 13);
     }
     lanes[lane] = false; // set lane to closed
-    QTimer::singleShot(500/sqrt(level), this, SLOT(resetLane())); // Fire off timer that will reopen the lane
+    QTimer::singleShot(500/sqrt((level+1)/2), this, SLOT(resetLane())); // Fire off timer that will reopen the lane
     lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
     return objectFactory(61.5 * lane, -60, 8, 0); // add item to world and return it
 }
@@ -334,15 +333,16 @@ Obstacle* World::createObject(int level)
 // Create a non-moving object
 Obstacle *World::createLameOjbect(int type, int x, int y)
 {
-    if (type == 0) {
+    switch (type) {
+    case 0:
         return objectFactory(61.5 * (asteroids.size() + aliens.size()), -60 -(60*(rand()%10)), 0, type); // This code is designed to be called 13 times
-
-        // ADDITIONAL OBJECTS CODE. NOT WORKING.
-
-//    } else if(type == -1){
-//        return objectFactory(0, -60, 0, type);
-    }else {
+        break;
+    case -1:
+        return objectFactory(0, -60, 8, type);
+        break;
+    default:
         return objectFactory(x, y, 0, type);
+        break;
     }
 }
 
@@ -352,61 +352,63 @@ void World::resetLane(){
     lanesToReset.erase(lanesToReset.begin()); // shift vector over
 }
 
-//void World::lameWalker()
-//{
-    // ADDITIONAL OBJECTS CODE. NOT WORKING.
+void World::lameWalker()
+{
+    //ADDITIONAL OBJECTS CODE. NOT WORKING.
 
-//    int lane = (rand() % 13); //Pick random lane to place object into
-//    while(!lanes[lane]){      //Check and repeat until we find a random lane that is clear
-//        lane = (rand() % 13);
-//    }
-//    lanes[lane] = false; // set lane to closed
-//    QTimer::singleShot(200, this, SLOT(resetLane())); // Fire off timer that will reopen the lane
-//    lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
-//    waiting.at(0)->setX(61.5 * lane);
-//    if(waiting.at(0)->getType() == ":/images/asteroid.png"){
-//        asteroids.push_back(waiting.at(0));
-//        waiting.erase(waiting.begin());
-//    } else {
-//        aliens.push_back(waiting.at(0));
-//        waiting.erase(waiting.begin());
-//    }
-//}
+    int lane = (rand() % 13); //Pick random lane to place object into
+    while(!lanes[lane]){      //Check and repeat until we find a random lane that is clear
+        lane = (rand() % 13);
+    }
+    lanes[lane] = false; // set lane to closed
+    QTimer::singleShot(250, this, SLOT(resetLane())); // Fire off timer that will reopen the lane
+    lanesToReset.push_back(lane); // Add an item to the vector for which lane to clear
+    waiting.at(0)->setX(61.5 * lane);
+    if(waiting.at(0)->getType().startsWith(":/images/ast")){
+        asteroids.push_back(waiting.at(0));
+        waiting.erase(waiting.begin());
+    } else {
+        aliens.push_back(waiting.at(0));
+        waiting.erase(waiting.begin());
+    }
+}
 
 // Randomly creates either an alien or an asteroid, places it in the proper vector and returns it
 Obstacle *World::objectFactory(int x, int y, int speed, int type)
 {
-    // ADDITIONAL OBJECTS CODE. NOT WORKING.
-
-//    if(type == -1){
-//        switch(rand() % 2){
-//        case 0:
-//            waiting.push_back(new Asteroid(x, y, 10));
-//        case 1:
-//            waiting.push_back(new Alien(x, y, 10));
-//        }
-//        // create an object, place it in a holding vector, and set it to be used after some time
-//        QTimer::singleShot((3 + (waiting.size() * 3)) * 500, this, SLOT(lameWalker()));
-//        return waiting.at(waiting.size() - 1);
-//    }
-    int chooser;
-    if (type == 0) {
-        //if(level > 5){
-        chooser = rand() % 2;
-    } else {
-        chooser = type - 1;
+    switch(type){
+    case -1:
+        switch(rand() % 2){
+        case 0:
+            waiting.push_back(new Asteroid(x, y, speed));
+            break;
+        case 1:
+            waiting.push_back(new Alien(x, y, speed));
+            break;
+        }
+        // create an object, place it in a holding vector, and set it to be used after some time
+        QTimer::singleShot((3 + (waiting.size() * 3)) * 500, this, SLOT(lameWalker()));
+        return waiting.at(waiting.size() - 1);
+    default:
+        int chooser;
+        if (type == 0) {
+            //if(level > 5){
+            chooser = rand() % 2;
+        } else {
+            chooser = type - 1;
+        }
+        //}
+        //else{
+        //    int chooser = 0;
+        //}
+        switch(chooser){
+        case 0:
+            asteroids.push_back(new Asteroid(x, y, speed));
+            return asteroids.at(asteroids.size() - 1);
+        case 1: //default?
+            aliens.push_back(new Alien(x, y, speed));
+            return aliens.at(aliens.size() - 1);
+        }
+        return NULL;
     }
-    //}
-    //else{
-    //    int chooser = 0;
-    //}
-    switch(chooser){
-    case 0:
-        asteroids.push_back(new Asteroid(x, y, speed));
-        return asteroids.at(asteroids.size() - 1);
-    case 1: //default?
-        aliens.push_back(new Alien(x, y, speed));
-        return aliens.at(aliens.size() - 1);
-    }
-    return NULL;
 }

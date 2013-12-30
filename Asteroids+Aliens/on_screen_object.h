@@ -24,7 +24,6 @@ public:
 signals:
     void deleteMe();
 public slots:
-    
 };
 
 #endif // ON_SCREEN_OBJECT_H
