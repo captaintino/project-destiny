@@ -192,13 +192,22 @@ void MainWindow::on_administrate_clicked()
             if(command.startsWith("/users")){
                 addToAdminLog("Users:");
                 for(User * us: users){
-                    addToAdminLog(us->getUsername());
+                    addToAdminLog(us->getUsername() + " Score: " + QString::number(us->getScore()) + " " + (us->getAlive() ? "Alive" : "Dead") + " Level: " + QString::number(us->getLevel()) + " Rounds won: " + QString::number(us->getRoundsWon()));
                 }
                 addToAdminLog("");
+            }else if(command.startsWith("/user")){
+                command = command.remove(0,5).trimmed();
+                for (unsigned int i = 0; i < users.size(); ++i) {
+                    if(users.at(i)->getUsername() == command){
+                        addToAdminLog(users.at(i)->getUsername() + " Score: " + QString::number(users.at(i)->getScore()) + " " + (users.at(i)->getAlive() ? "Alive" : "Dead") + " Level: " + QString::number(users.at(i)->getLevel()) + " Rounds won: " + QString::number(users.at(i)->getRoundsWon()));
+                        break;
+                    }
+                }
             }else if(command.startsWith("/kick")){
                 command = command.remove(0,5).trimmed();
                 for (unsigned int i = 0; i < users.size(); ++i) {
                     if(users.at(i)->getUsername() == command){
+                        addToAdminLog("Kicked " + users.at(i)->getUsername());
                         delete users.at(i);
                         users.erase(users.begin() + i);
                         for(User * us: users){
@@ -220,10 +229,9 @@ void MainWindow::on_administrate_clicked()
 
             }else if(command.startsWith("/")){
 
-            }else if(command.startsWith("/")){
-
             }
         }else{
+            addToLog(("CHATADMIN: " + command.toStdString() + '\n').c_str());
             for(User * us: users){
                 us->getSocket()->write(("CHATADMIN: " + command.toStdString() + '\n').c_str());
             }

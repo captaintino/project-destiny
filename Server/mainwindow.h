@@ -37,6 +37,7 @@ public:
     QString getUsername() { return username; }
     int getLevel() { return level; }
     int getScore() { return score; }
+    int getRoundsWon() { return score; }
     bool getAlive() { return alive; }
     QTcpSocket * getSocket() { return socket; }
 

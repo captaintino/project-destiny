@@ -14,7 +14,7 @@ using namespace std;
 class World: public QObject
 {
 private:
-    Q_OBJECT;
+    Q_OBJECT
     vector<Obstacle *> asteroids;
     vector<Obstacle *> aliens;
     vector<Obstacle *> waiting;
