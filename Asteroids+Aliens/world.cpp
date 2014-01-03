@@ -130,9 +130,12 @@ void World::checkProjectile()
 
                         qDebug("Alien killed...");
                         this->alienKilled();
-
+                        break; //Projectile is used; get out of here
                     }
                 }
+            }
+            if(!proj->isAlive){// If the projectile was destroyed killing an alien, don't check asteroids, go to next projectile
+                continue;
             }
             for(Obstacle * aster :asteroids)
             {
@@ -149,6 +152,7 @@ void World::checkProjectile()
                     {
                         qDebug("Asteroid hit...");
                         proj->explode();
+                        break; //Projectile is used; get out of here
                     }
                 }
             }
@@ -158,12 +162,12 @@ void World::checkProjectile()
 //======================================================================
 void World::checkUserShip(Ship * playerShip)
 {
+    double shipRad = playerShip->getW() / 2;
+    double shipX = playerShip->getX() + shipRad;
+    double shipY = playerShip->getY() + shipRad;
+
     for(unsigned int cur = 0; cur < asteroids.size(); ++cur)
     {
-        double shipRad = playerShip->getW() / 2;
-        double shipX = playerShip->getX() + shipRad;
-        double shipY = playerShip->getY() + shipRad;
-
         Obstacle * obj = asteroids.at(cur);
         if(obj->isAlive)
         {
@@ -191,10 +195,6 @@ void World::checkUserShip(Ship * playerShip)
     }
     for(unsigned int cur = 0; cur < aliens.size(); ++cur)
     {
-        double shipRad = playerShip->getW() / 2;
-        double shipX = playerShip->getX() + shipRad;
-        double shipY = playerShip->getY() + shipRad;
-
         Obstacle * obj = aliens.at(cur);
         if(obj->isAlive)
         {
@@ -222,11 +222,6 @@ void World::checkUserShip(Ship * playerShip)
     }
     for(unsigned int cur = 0; cur < enemyProjectiles.size(); ++cur)
     {
-
-        double shipRad = playerShip->getW() / 2;
-        double shipX = playerShip->getX() + shipRad;
-        double shipY = playerShip->getY() + shipRad;
-
         Obstacle * obj = enemyProjectiles.at(cur);
         if(obj->isAlive)
         {
