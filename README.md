@@ -1,4 +1,3 @@
 A two-dimensional space shooter involving the player dodging incoming projectiles/debris and destroying enemies in order to survive in ever increasing difficulty.
 
-|Pages|[Screen Shots](ScreenShots.md)|[Test Plan](TestPlan.md)|[Instructions](Instructions.md)|[Bugs](Bugs.md)|[Roles](Roles.md)|[Features](Features.md)|[Road Map](RoadMap.md)|[Project Proposal](ProjectProposal.md)|[Network Protocol](NetworkProtocol.md)|[Game File Format](GameFileFormat.md)|
-|:----|:-----------------------------|:-----------------------|:------------------------------|:--------------|:----------------|:----------------------|:---------------------|:-------------------------------------|:-------------------------------------|:------------------------------------|
+--
